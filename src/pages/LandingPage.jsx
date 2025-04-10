@@ -9,6 +9,7 @@ import Layanan2 from '../assets/layanan/2.png'
 import Layanan3 from '../assets/layanan/3.png'
 import Layanan4 from '../assets/layanan/4.png'
 import Background from '../assets/bgmount.png'
+import Background2 from '../assets/bgmount2.png'
 import Tools from '../assets/tools.png'
 import Logo2 from '../assets/seven.png'
 import guide1 from '../assets/guide/yasinhabibie.png'
@@ -16,8 +17,9 @@ import guide2 from '../assets/guide/fajrul.png'
 import { G1, G2, G3, G4, G5, G6 } from '../assets/gallery'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faMousePointer, faImages } from '@fortawesome/free-solid-svg-icons'
+import { faMousePointer, faImages, faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 import Card1 from '../component/Card1'
+import Testimoni from '../component/Testimoni'
 
 const LandingPage = () => {
     return (
@@ -56,7 +58,7 @@ const LandingPage = () => {
                 </div>
             </div>
 
-            <div className="relative min-h-screen mt-10 px-60 py-10">
+            <div className="relative mt-10 px-60 py-10">
                 <img src={Background} alt="background" className="absolute top-0 left-0 w-full h-full z-0" />
 
                 <div className='mt-40 flex items-center gap-10 relative z-0'>
@@ -181,6 +183,43 @@ const LandingPage = () => {
                 <div className='flex gap-10 justify-center mt-10'>
                     <Card1 imageUrl={guide1} name={"Yasin Habibie"} />
                     <Card1 imageUrl={guide2} name={"Fajrul"} />
+                </div>
+            </div>
+
+            <div className='relative px-60 py-10'>
+                <img src={Background2} alt="background2" className="absolute top-0 left-0 w-full h-full z-0" />
+
+                <div className='flex items-center justify-center gap-4 relative'>
+                    <FontAwesomeIcon
+                        icon={faQuoteLeft}
+                        className='text-3xl'
+                    />
+
+                    <h1 className='text-3xl font-bold'>Testimoni</h1>
+
+                    <FontAwesomeIcon
+                        icon={faQuoteRight}
+                        className='text-3xl'
+                    />
+                </div>
+
+                <div className='flex mt-40'>
+                    <div className='flex gap-10'>
+                        <Testimoni
+                            text="Pengalaman pendakian bersama GakPakeRem Adventure luar biasa! Guide yang profesional, perjalanan yang aman, dan keindahan alam yang tak 
+                            terlupakan. Saya ikut open trip dan bisa bertemu banyak teman baru. Pasti akan ikut lagi!"
+                            username="Anonim"
+                            mount="Gunung Lompobattang"
+                            rating={4}
+                        />
+                        <Testimoni
+                            text="Pengalaman pendakian bersama GakPakeRem Adventure luar biasa! Guide yang profesional, perjalanan yang aman, dan keindahan alam yang tak 
+                            terlupakan. Saya ikut open trip dan bisa bertemu banyak teman baru. Pasti akan ikut lagi!"
+                            username="Anonim"
+                            mount="Gunung Lompobattang"
+                            rating={4}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

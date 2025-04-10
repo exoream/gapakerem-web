@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import React from 'react'
 import LandingPage from "../pages/LandingPage";
 import Navbar from "../component/Navbar";
+import Footer from "../component/Footer";
 
 const AppRoutes = () => {
     return (
@@ -11,6 +12,7 @@ const AppRoutes = () => {
                     <>
                         <Navbar />
                         <LandingPage />
+                        <Footer />
                     </>
                 }
                 />
