@@ -55,9 +55,6 @@ const LandingPage = () => {
                 </div>
             </div>
 
-
-
-
             <div className='px-60 py-10'>
                 <div className='flex gap-10 justify-center items-center'>
                     <img src={Icon1} className='h-10' />

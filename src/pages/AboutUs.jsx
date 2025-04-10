@@ -31,9 +31,7 @@ const AboutUs = () => {
                         <img src={Photo3} alt="Photo3" className='h-40 w-40 rounded-lg' />
                     </div>
                 </div>
-
             </div>
-
         </div>
     )
 }

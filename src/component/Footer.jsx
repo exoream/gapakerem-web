@@ -6,7 +6,7 @@ import { faInstagram, faYoutube, faTiktok } from '@fortawesome/free-brands-svg-i
 const Footer = () => {
     return (
         <div
-            className="flex justify-between gap-20 px-20 py-10 text-white"
+            className="flex justify-between gap-20 px-20 py-10 text-white mt-50"
             style={{
                 backgroundImage: `url('/src/assets/bgalt.png')`,
                 backgroundSize: 'cover',
