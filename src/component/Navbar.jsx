@@ -14,14 +14,19 @@ const Navbar = () => {
         setIsLogin(!!token);
     }, []);
 
+    const navLinkClass = (path) =>
+        location.pathname === path
+            ? 'text-[#FF6500] font-semibold'
+            : 'hover:text-[#FF6500] transition';
+
     return (
         <div className='py-5 px-20 flex justify-between items-center'>
             <img src={Logo} alt='Logo' className='h-10' />
 
             <div className='flex gap-10'>
-                <Link className='hover:text-[#FF6500]' to="/">Home</Link>
-                <Link className='hover:text-[#FF6500]' to="/tentangkami">Tentang</Link>
-                <Link className='hover:text-[#FF6500]' to="/daftartrip">Daftar Trip</Link>
+                <Link to="/" className={navLinkClass('/')}>Home</Link>
+                <Link to="/tentangkami" className={navLinkClass('/tentangkami')}>Tentang</Link>
+                <Link to="/daftartrip" className={navLinkClass('/daftartrip')}>Daftar Trip</Link>
             </div>
 
             <div className='flex justify-center items-center gap-10'>

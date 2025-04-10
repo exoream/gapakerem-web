@@ -7,6 +7,7 @@ import AboutUs from "../pages/AboutUs";
 import Trip from "../pages/Trip";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Profile from "../pages/profile";
 
 const AppRoutes = () => {
     return (
@@ -45,6 +46,14 @@ const AppRoutes = () => {
                 <Route path="register" element={
                     <>
                         <Register />
+                    </>
+                }
+                />
+                <Route path="profile" element={
+                    <>
+                        <Navbar />
+                        <Profile />
+                        <Footer />
                     </>
                 }
                 />
