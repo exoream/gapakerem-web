@@ -12,7 +12,7 @@ const Navbar = () => {
             <div className='flex gap-10'>
                 <Link className='hover:text-[#FF6500]' to="/">Home</Link>
                 <Link className='hover:text-[#FF6500]' to="/tentangkami">Tentang</Link>
-                <Link className='hover:text-[#FF6500]'>Daftar Trip</Link>
+                <Link className='hover:text-[#FF6500]' to="/daftartrip">Daftar Trip</Link>
             </div>
 
             <div className='flex gap-10'>

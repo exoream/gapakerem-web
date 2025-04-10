@@ -4,6 +4,7 @@ import LandingPage from "../pages/LandingPage";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import AboutUs from "../pages/AboutUs";
+import Trip from "../pages/Trip";
 
 const AppRoutes = () => {
     return (
@@ -21,6 +22,14 @@ const AppRoutes = () => {
                     <>
                         <Navbar />
                         <AboutUs />
+                        <Footer />
+                    </>
+                }
+                />
+                <Route path="daftartrip" element={
+                    <>
+                        <Navbar />
+                        <Trip />
                         <Footer />
                     </>
                 }

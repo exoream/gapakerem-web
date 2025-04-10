@@ -28,7 +28,6 @@ const Testimoni = ({ text, username, mount, rating }) => {
                     />
                 ))}
             </div>
-
         </div>
     );
 };
