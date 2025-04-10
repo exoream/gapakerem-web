@@ -10,8 +10,8 @@ const Navbar = () => {
             <img src={Logo} alt='Logo' className='h-10' />
 
             <div className='flex gap-10'>
-                <Link className='hover:text-[#FF6500]'>Home</Link>
-                <Link className='hover:text-[#FF6500]'>Tentang</Link>
+                <Link className='hover:text-[#FF6500]' to="/">Home</Link>
+                <Link className='hover:text-[#FF6500]' to="/tentangkami">Tentang</Link>
                 <Link className='hover:text-[#FF6500]'>Daftar Trip</Link>
             </div>
 

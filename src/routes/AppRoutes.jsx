@@ -3,6 +3,7 @@ import React from 'react'
 import LandingPage from "../pages/LandingPage";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
+import AboutUs from "../pages/AboutUs";
 
 const AppRoutes = () => {
     return (
@@ -12,6 +13,14 @@ const AppRoutes = () => {
                     <>
                         <Navbar />
                         <LandingPage />
+                        <Footer />
+                    </>
+                }
+                />
+                <Route path="tentangkami" element={
+                    <>
+                        <Navbar />
+                        <AboutUs />
                         <Footer />
                     </>
                 }
