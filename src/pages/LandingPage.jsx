@@ -11,9 +11,13 @@ import Layanan4 from '../assets/layanan/4.png'
 import Background from '../assets/bgmount.png'
 import Tools from '../assets/tools.png'
 import Logo2 from '../assets/seven.png'
+import guide1 from '../assets/guide/yasinhabibie.png'
+import guide2 from '../assets/guide/fajrul.png'
+import { G1, G2, G3, G4, G5, G6 } from '../assets/gallery'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faMousePointer } from '@fortawesome/free-solid-svg-icons'
+import { faMousePointer, faImages } from '@fortawesome/free-solid-svg-icons'
+import Card1 from '../component/Card1'
 
 const LandingPage = () => {
     return (
@@ -109,12 +113,12 @@ const LandingPage = () => {
                     <div className="relative flex flex-col items-center">
                         <FontAwesomeIcon
                             icon={faInstagram}
-                            className="absolute top-0 right-0 text-orange-300 text-5xl rotate-12"
+                            className="absolute top-0 right-0 text-[#FFC100] opacity-50 text-5xl rotate-12"
                         />
 
                         <FontAwesomeIcon
                             icon={faInstagram}
-                            className="absolute left-[-10px] top-1/2 -translate-y-1/2 text-orange-300 text-5xl -rotate-12"
+                            className="absolute left-[-10px] top-1/2 -translate-y-1/2 text-[#FFC100] opacity-50 text-5xl -rotate-12"
                         />
 
                         <div className="absolute right-[0.1px] top-1/2 -translate-y-1/2 flex flex-col items-center">
@@ -136,7 +140,47 @@ const LandingPage = () => {
                             </span>
                         </div>
                     </div>
+                </div>
+            </div>
 
+            <div className='py-20 px-60 mt-10'>
+                <div className='flex items-center justify-center gap-10'>
+                    <div className='h-5 w-1/3 bg-[#FFC100] rounded-lg' />
+                    <h1 className='text-3xl text-[#FFC100]'>Gallery</h1>
+                    <div className='h-5 w-1/3 bg-[#FFC100] rounded-lg' />
+                </div>
+
+                <FontAwesomeIcon
+                    icon={faImages}
+                    className='absolute left-[10%] opacity-50 -rotate-12 text-[#FFC100] text-5xl'
+                />
+
+                <FontAwesomeIcon
+                    icon={faImages}
+                    className='absolute right-[10%] opacity-50 rotate-12 text-[#FFC100] text-5xl'
+                />
+
+                <p className='text-center mt-4'>
+                    Lihat koleksi foto dan video dari petualangan mendaki kami.
+                </p>
+
+                <div className='grid grid-cols-3 gap-10 mt-10'>
+                    <img src={G1} alt='Gallery 1' className='w-full h-auto rounded-lg object-cover' />
+                    <img src={G2} alt='Gallery 2' className='w-full h-auto rounded-lg object-cover' />
+                    <img src={G3} alt='Gallery 3' className='w-full h-auto rounded-lg object-cover' />
+                    <img src={G4} alt='Gallery 4' className='w-full h-auto rounded-lg object-cover' />
+                    <img src={G5} alt='Gallery 5' className='w-full h-auto rounded-lg object-cover' />
+                    <img src={G6} alt='Gallery 6' className='w-full h-auto rounded-lg object-cover' />
+                </div>
+
+                <div className='h-5 bg-[#FFC100] rounded-lg mt-25' />
+            </div>
+            <div className='py-20 px-60'>
+                <p className='text-center'>Jelajahi Gunung Bersama Guide & Porter Berpengalaman</p>
+                <h1 className='text-3xl text-[#FFC100] text-center mt-5'>Guide</h1>
+                <div className='flex gap-10 justify-center mt-10'>
+                    <Card1 imageUrl={guide1} name={"Yasin Habibie"} />
+                    <Card1 imageUrl={guide2} name={"Fajrul"} />
                 </div>
             </div>
         </div>
