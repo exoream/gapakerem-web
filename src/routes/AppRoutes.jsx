@@ -5,6 +5,7 @@ import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import AboutUs from "../pages/AboutUs";
 import Trip from "../pages/Trip";
+import Login from "../pages/Login";
 
 const AppRoutes = () => {
     return (
@@ -31,6 +32,12 @@ const AppRoutes = () => {
                         <Navbar />
                         <Trip />
                         <Footer />
+                    </>
+                }
+                />
+                <Route path="login" element={
+                    <>
+                        <Login />
                     </>
                 }
                 />
