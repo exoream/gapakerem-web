@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../assets/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const [isLogin, setIsLogin] = useState(false);
+
+    useEffect(() => {
+        const token = Cookies.get('token');
+        setIsLogin(!!token);
+    }, []);
+
     return (
         <div className='py-5 px-20 flex justify-between items-center'>
             <img src={Logo} alt='Logo' className='h-10' />
@@ -15,13 +24,27 @@ const Navbar = () => {
                 <Link className='hover:text-[#FF6500]' to="/daftartrip">Daftar Trip</Link>
             </div>
 
-            <div className='flex gap-10'>
-                <Link>
-                    <FontAwesomeIcon icon={faShoppingCart} className='text-[#FF6500]' />
-                </Link>
-                <Link>
-                    <FontAwesomeIcon icon={faUser} className='text-[#FF6500]' />
-                </Link>
+            <div className='flex justify-center items-center gap-10'>
+                {isLogin ? (
+                    <Link to="/ordertrip">
+                        <FontAwesomeIcon icon={faShoppingCart} className='text-[#FF6500] cursor-pointer' />
+                    </Link>
+                ) : (
+                    <FontAwesomeIcon icon={faShoppingCart} className='text-gray-400 cursor-not-allowed' />
+                )}
+
+                {isLogin ? (
+                    <Link to="/profile">
+                        <FontAwesomeIcon icon={faUser} className='text-[#FF6500] cursor-pointer' />
+                    </Link>
+                ) : (
+                    <button
+                        onClick={() => navigate('/login')}
+                        className='text-[#FF6500] border border-[#FF6500] px-4 py-1 rounded-full hover:bg-[#FF6500] hover:text-white transition'
+                    >
+                        Login
+                    </button>
+                )}
             </div>
         </div>
     );
