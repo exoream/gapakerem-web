@@ -6,6 +6,7 @@ import Footer from "../component/Footer";
 import AboutUs from "../pages/AboutUs";
 import Trip from "../pages/Trip";
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const AppRoutes = () => {
     return (
@@ -38,6 +39,12 @@ const AppRoutes = () => {
                 <Route path="login" element={
                     <>
                         <Login />
+                    </>
+                }
+                />
+                <Route path="register" element={
+                    <>
+                        <Register />
                     </>
                 }
                 />

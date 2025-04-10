@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import Logo from '../assets/logo.png'
@@ -82,10 +82,10 @@ const Login = () => {
 
                     <div className="mb-5 grid grid-cols-3 items-center gap-4">
                         <label htmlFor="email" className="font-medium text-gray-500">
-                            Email
+                            Username
                         </label>
                         <input
-                            type="username"
+                            type="text"
                             name="username"
                             className="col-span-2 border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent w-full p-3"
                             onChange={handleChange}
@@ -115,6 +115,11 @@ const Login = () => {
                     >
                         Login
                     </button>
+
+                    <div className='mt-5 flex justify-between text-[#FFC100]'>
+                        <Link><h4>Lupa Password?</h4></Link>
+                        <Link to="/register"><h4>Belum Punya Akun?</h4></Link>
+                    </div>
 
                     {loading && (
                         <div className="flex justify-center items-center mt-10">
