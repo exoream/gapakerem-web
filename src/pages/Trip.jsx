@@ -17,11 +17,14 @@ const Trip = () => {
                 setLoading(false);
             })
             .catch((error) => {
+                setLoading(false);
                 console.error("Error fetching data:", error);
                 alert(error.response.data.message);
                 setErrorMessage(error.response.data.message);
                 setError(true);
-                setLoading(false);
+                setTimeout(() => {
+                    setError(false);
+                }, 3000);
             });
     }, []);
 
