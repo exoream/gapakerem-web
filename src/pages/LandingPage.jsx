@@ -9,6 +9,11 @@ import Layanan2 from '../assets/layanan/2.png'
 import Layanan3 from '../assets/layanan/3.png'
 import Layanan4 from '../assets/layanan/4.png'
 import Background from '../assets/bgmount.png'
+import Tools from '../assets/tools.png'
+import Logo2 from '../assets/seven.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faMousePointer } from '@fortawesome/free-solid-svg-icons'
 
 const LandingPage = () => {
     return (
@@ -85,9 +90,55 @@ const LandingPage = () => {
                         <p className='text-sm'>Layanan porter untuk membawa alat dan logistik, memudahkan peserta fokus pada pengalaman pendakian.</p>
                     </div>
                 </div>
-
             </div>
 
+            <div className='py-20 px-60'>
+                <div className='flex items-center justify-center gap-10'>
+                    <div className='h-5 w-1/3 bg-[#FFC100] rounded-lg' />
+                    <h1 className='text-3xl font-bold text-gray-500'>Butuh Perlengkapan Mendaki?</h1>
+                </div>
+
+                <div className='mt-20 flex justify-center items-center gap-20'>
+                    <div className='w-1/3'>
+                        <p>
+                            Kami di <span className='text-[#FFC100] font-semibold'>Gapakerem Outdoor & Service</span> menyediakan peralatan berkualitas tinggi untuk
+                            perjalanan yang aman dan nyaman. Sewa sekarang dan fokuslah pada petualangan
+                        </p>
+                        <img src={Tools} alt='image1' />
+                    </div>
+                    <div className="relative flex flex-col items-center">
+                        <FontAwesomeIcon
+                            icon={faInstagram}
+                            className="absolute top-0 right-0 text-orange-300 text-5xl rotate-12"
+                        />
+
+                        <FontAwesomeIcon
+                            icon={faInstagram}
+                            className="absolute left-[-10px] top-1/2 -translate-y-1/2 text-orange-300 text-5xl -rotate-12"
+                        />
+
+                        <div className="absolute right-[0.1px] top-1/2 -translate-y-1/2 flex flex-col items-center">
+                            <FontAwesomeIcon
+                                icon={faMousePointer}
+                                className="text-gray-400 text-3xl -rotate-20"
+                            />
+                            <span className="text-sm text-gray-500 mt-1">klik disini</span>
+                        </div>
+
+                        <img src={Logo2} alt="Logo2" className="h-75 w-75" />
+
+                        <div className="mt-4 text-center">
+                            <span className="mr-2 italic font-semibold">
+                                Lihat koleksi perlengkapan kami di instagram
+                            </span>
+                            <span className="p-2 border rounded-full font-semibold underline">
+                                @outsevencamp
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     )
 }
