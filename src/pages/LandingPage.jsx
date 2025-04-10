@@ -1,4 +1,5 @@
 import React from 'react'
+import Logo from '../assets/logo.png'
 import Icon1 from '../assets/mount.png'
 import Photo1 from '../assets/photo/1.png'
 import Photo2 from '../assets/photo/2.png'
@@ -24,7 +25,40 @@ import Testimoni from '../component/Testimoni'
 const LandingPage = () => {
     return (
         <div className='py-10'>
-            <div className='px-60'>
+            <div className='px-40 py-20 flex justify-center items-center gap-10'>
+                <img src={Logo} alt="Logo" className='h-100' />
+
+                <div className='relative text-center'>
+                    <img
+                        src={Icon1}
+                        className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-75 h-28'
+                    />
+
+                    <h1 className='font-bold text-5xl relative z-10'>
+                        GaPakeRem Adventure
+                    </h1>
+
+                    <h4 className='text-3xl relative z-10 mt-2'>
+                        Lifetime brotherhood
+                    </h4>
+
+                    <div className='relative mt-10 h-10'>
+                        <img
+                            src={Icon1}
+                            className='absolute left-[20%] top-0 h-8 opacity-75'
+                        />
+                        <img
+                            src={Icon1}
+                            className='absolute left-[60%] top-2 h-10 opacity-75'
+                        />
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div className='px-60 py-10'>
                 <div className='flex gap-10 justify-center items-center'>
                     <img src={Icon1} className='h-10' />
                     <div className='relative'>
