@@ -1,13 +1,16 @@
 import { React, useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../component/Loading';
+import Cookies from 'js-cookie';
 
 const TripDetail = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const { id } = location.state;
     const [trip, setTrip] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingBook, setLoadingBook] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -22,6 +25,53 @@ const TripDetail = () => {
         const { name, value } = event.target;
         setInput({ ...input, [name]: value });
     };
+
+    const handleBook = (event) => {
+        event.preventDefault();
+
+        const token = Cookies.get('token');
+
+        if (!token) {
+            alert("Silakan login terlebih dahulu");
+            return;
+        }
+
+        setLoadingBook(true);
+
+        const { total_participant, name_participant, no_hp, meeting_point } = input;
+
+        axios.post(
+            `https://gapakerem.vercel.app/bookings/${trip.trip_type}`,
+            {
+                id_trip: id,
+                total_participants: Number(total_participant),
+                name_participants: name_participant,
+                no_hp: no_hp,
+                meeting_point: meeting_point,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        )
+            .then((res) => {
+                alert("Booking Berhasil");
+                navigate('/');
+            })
+            .catch((error) => {
+                console.error("Error Response:", error.response);
+                setErrorMessage(error.response.data.message);
+                setError(true);
+                setTimeout(() => {
+                    setError(false);
+                }, 3000);
+            })
+            .finally(() => {
+                setLoadingBook(false);
+            });
+    };
+
 
     useEffect(() => {
         if (error) return
@@ -89,7 +139,7 @@ const TripDetail = () => {
             </div>
             <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
             <div className="mt-10">
-                <form>
+                <form onSubmit={handleBook}>
                     <div className="mb-5 grid grid-cols-3 items-center gap-4">
                         <label htmlFor="total_participant" className="font-medium text-gray-500">
                             Jumlah Orang
@@ -163,7 +213,7 @@ const TripDetail = () => {
                         </button>
                     </div>
 
-                    {loading && (
+                    {loadingBook && (
                         <div className="flex justify-center items-center mt-10">
                             <div className="relative w-12 h-12">
                                 <div className="absolute inset-0 border-4 border-[#FFC100] border-t-transparent rounded-full animate-spin"></div>
