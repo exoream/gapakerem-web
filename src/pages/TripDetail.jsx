@@ -11,6 +11,18 @@ const TripDetail = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    const [input, setInput] = useState({
+        total_participant: "",
+        name_participant: "",
+        no_hp: "",
+        meeting_point: ""
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setInput({ ...input, [name]: value });
+    };
+
     useEffect(() => {
         if (error) return
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
@@ -74,6 +86,91 @@ const TripDetail = () => {
                         ))}
                     </div>
                 </div>
+            </div>
+            <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
+            <div className="mt-10">
+                <form>
+                    <div className="mb-5 grid grid-cols-3 items-center gap-4">
+                        <label htmlFor="total_participant" className="font-medium text-gray-500">
+                            Jumlah Orang
+                        </label>
+                        <input
+                            type="number"
+                            name="total_participant"
+                            id="total_participant"
+                            className="max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent w-full p-3"
+                            onChange={handleChange}
+                            value={input.total_participant}
+                            disabled={loading}
+                        />
+                    </div>
+
+                    <div className="mb-5 grid grid-cols-3 items-center gap-4">
+                        <label htmlFor="name_participant" className="font-medium text-gray-500">
+                            Nama Peserta
+                        </label>
+                        <textarea
+                            name="name_participant"
+                            id="name_participant"
+                            className="max-w-sm border border-gray-300 text-gray-900 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent w-full p-3"
+                            onChange={handleChange}
+                            value={input.name_participant}
+                            disabled={loading}
+                            rows={3}
+                        />
+                    </div>
+
+
+                    <div className="mb-5 grid grid-cols-3 items-center gap-4">
+                        <label htmlFor="no_hp" className="font-medium text-gray-500">
+                            No. HP
+                        </label>
+                        <input
+                            type="text"
+                            name="no_hp"
+                            id="no_hp"
+                            className="max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent w-full p-3"
+                            onChange={handleChange}
+                            value={input.no_hp}
+                            disabled={loading}
+                        />
+                    </div>
+
+                    <div className="mb-5 grid grid-cols-3 items-center gap-4">
+                        <label htmlFor="meeting_point" className="font-medium text-gray-500">
+                            Meeting Point
+                        </label>
+                        <select
+                            name="meeting_point"
+                            id="meeting_point"
+                            className="max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent w-full p-3"
+                            onChange={handleChange}
+                            value={input.meeting_point}
+                            disabled={loading}
+                        >
+                            <option value="">Pilih Meeting Point</option>
+                            <option value="Basecamp">Basecamp</option>
+                        </select>
+                    </div>
+
+                    <div className="flex justify-center">
+                        <button
+                            type="submit"
+                            className="w-1/3 bg-[#FFC100] mt-10 text-white font-semibold py-3 rounded-full hover:opacity-90 transition"
+                            disabled={loading}
+                        >
+                            Daftar
+                        </button>
+                    </div>
+
+                    {loading && (
+                        <div className="flex justify-center items-center mt-10">
+                            <div className="relative w-12 h-12">
+                                <div className="absolute inset-0 border-4 border-[#FFC100] border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        </div>
+                    )}
+                </form>
             </div>
         </div>
     );
