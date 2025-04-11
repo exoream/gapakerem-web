@@ -87,9 +87,7 @@ const TripDetail = () => {
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
-                alert(error.response.data.message);
                 setErrorMessage(error.response.data.message);
-                setTrip(response.data.data.trips);
                 setError(true);
                 setLoading(false);
             });

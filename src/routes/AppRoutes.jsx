@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Profile from "../pages/profile";
 import TripDetail from "../pages/TripDetail";
+import Book from "../pages/Book";
 
 const AppRoutes = () => {
     return (
@@ -61,6 +62,14 @@ const AppRoutes = () => {
                     <>
                         <Navbar />
                         <Profile />
+                        <Footer />
+                    </>
+                }
+                />
+                <Route path="bookings" element={
+                    <>
+                        <Navbar />
+                        <Book />
                         <Footer />
                     </>
                 }
