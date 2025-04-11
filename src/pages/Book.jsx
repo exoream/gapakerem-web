@@ -80,7 +80,7 @@ const Book = () => {
                                 </h4>
                             </div>
 
-                            <Link to={`/bookings/${book.mountain_name}`}>
+                            <Link to={`/bookings/${book.mountain_name}`} state={{ id: book.id }}>
                                 <button className="bg-[#FFC100] w-10 h-10 flex items-center justify-center rounded-full text-white hover:bg-yellow-400 transition">
                                     <FontAwesomeIcon icon={faChevronRight} />
                                 </button>

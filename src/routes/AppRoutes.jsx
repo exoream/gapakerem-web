@@ -10,6 +10,7 @@ import Register from "../pages/Register";
 import Profile from "../pages/profile";
 import TripDetail from "../pages/TripDetail";
 import Book from "../pages/Book";
+import BookingDetail from "../pages/BookingDetail";
 
 const AppRoutes = () => {
     return (
@@ -74,6 +75,13 @@ const AppRoutes = () => {
                     </>
                 }
                 />
+                <Route path="/bookings/:mountain_name" element={
+                    <>
+                        <Navbar />
+                        <BookingDetail />
+                        <Footer />
+                    </>
+                } />
             </Routes>
         </>
     )
