@@ -46,7 +46,7 @@ const Profile = () => {
     }
 
     return (
-        <div className="flex items-center justify-center mt-20">
+        <div className="flex items-center justify-center mt-10">
             <div className="w-full max-w-lg border border-gray-300 rounded-lg p-10 bg-white">
                 <div className="w-full max-w-md">
                     <h1 className="text-3xl font-bold text-[#FFC100] mb-8">

@@ -168,7 +168,6 @@ const TripDetail = () => {
                         />
                     </div>
 
-
                     <div className="mb-5 grid grid-cols-3 items-center gap-4">
                         <label htmlFor="no_hp" className="font-medium text-gray-500">
                             No. HP
