@@ -57,7 +57,7 @@ const Book = () => {
                 <select
                     value={tripType}
                     onChange={(e) => setTripType(e.target.value)}
-                    className='border border-gray-300 rounded px-4 py-2'
+                    className='border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent'
                 >
                     <option value="open">Open Trip</option>
                     <option value="private">Private Trip</option>

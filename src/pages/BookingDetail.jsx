@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../component/Loading';
 import Cookies from 'js-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 const BookingDetail = () => {
     const location = useLocation();
@@ -13,6 +15,10 @@ const BookingDetail = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [paymentProof, setPaymentProof] = useState(null);
+
+    const [feedback, setFeedback] = useState("")
+    const [rating, setRating] = useState(0)
+    const [hover, setHover] = useState(0)
 
     useEffect(() => {
         const token = Cookies.get('token');
@@ -166,6 +172,44 @@ const BookingDetail = () => {
                 </div>
             )}
 
+            <div className='mt-20 h-2 w-full bg-[#FFC100] rounded-lg' />
+
+            <form className="flex flex-col justify-center gap-4 mt-4 mt-20 max-w-lg">
+                <p>Jangan lupa bagikan pengalamanmu setelah trip!</p>
+
+                <textarea
+                    className="border border-gray-300 p-2 rounded mt-5 focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent"
+                    rows="4"
+                    placeholder="Tulis feedback kamu disini..."
+                />
+
+                <div className="flex gap-2">
+                    {[...Array(5)].map((_, index) => {
+                        const starValue = index + 1;
+                        return (
+                            <FontAwesomeIcon
+                                key={index}
+                                icon={faStar}
+                                className={`text-2xl cursor-pointer transition ${starValue <= (hover || rating) ? 'text-yellow-400' : 'text-gray-300'
+                                    }`}
+                                onClick={() => setRating(starValue)}
+                                onMouseEnter={() => setHover(starValue)}
+                                onMouseLeave={() => setHover(0)}
+                            />
+                        )
+                    })}
+                </div>
+
+                <div className="mt-5">
+                    <button
+                        type="submit"
+                        className="bg-[#FFC100] text-white px-4 py-2 rounded hover:bg-yellow-400 transition"
+                        disabled={loading}
+                    >
+                        Submit Feedback
+                    </button>
+                </div>
+            </form>
 
             {error && (
                 <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
