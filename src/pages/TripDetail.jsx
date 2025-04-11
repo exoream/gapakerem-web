@@ -87,9 +87,7 @@ const TripDetail = () => {
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
-                alert(error.response.data.message);
                 setErrorMessage(error.response.data.message);
-                setTrip(response.data.data.trips);
                 setError(true);
                 setLoading(false);
             });
@@ -169,7 +167,6 @@ const TripDetail = () => {
                             rows={3}
                         />
                     </div>
-
 
                     <div className="mb-5 grid grid-cols-3 items-center gap-4">
                         <label htmlFor="no_hp" className="font-medium text-gray-500">

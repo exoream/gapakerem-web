@@ -23,7 +23,6 @@ const Trip = () => {
             }))
             .catch((error) => {
                 console.error("Error fetching data:", error);
-                alert(error.response.data.message);
                 setErrorMessage(error.response.data.message);
                 setError(true);
                 setLoading(false);
@@ -42,7 +41,7 @@ const Trip = () => {
                 </h1>
                 <p>Pendakian bersama grup terbuka, dengan jadwal dan rute yang sudah ditentukan.</p>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10'>
+                <div className='grid grid-cols-3 gap-10 mt-10'>
                     {openTrip.length > 0 ? openTrip.map((trip, index) => (
                         <Link to={`/trip/${trip.mountain_name}`} key={index} state={{ id: trip.id }}
                             className='border-2 border-gray-300 rounded-lg hover:scale-105 duration-300'>
@@ -62,7 +61,7 @@ const Trip = () => {
                 </h1>
                 <p>Pendakian eksklusif untuk grup, dengan kebebasan mengatur jadwal dan rute perjalanan.</p>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10'>
+                <div className='grid grid-cols-3 gap-10 mt-10'>
                     {privateTrip.length > 0 ? privateTrip.map((trip, index) => (
                         <Link to={`/trip/${trip.mountain_name}`} key={index} className='border-2 border-gray-500 rounded-lg hover:scale-105 duration-300'>
                             <img src={trip.mountain_photo} alt={trip.mountain_name} className='w-full h-50 object-cover rounded-md' />

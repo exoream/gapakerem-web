@@ -31,7 +31,7 @@ const Navbar = () => {
 
             <div className='flex justify-center items-center gap-10'>
                 {isLogin ? (
-                    <Link to="/ordertrip">
+                    <Link to="/bookings">
                         <FontAwesomeIcon icon={faShoppingCart} className='text-[#FF6500] cursor-pointer' />
                     </Link>
                 ) : (
