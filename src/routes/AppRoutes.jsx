@@ -8,6 +8,7 @@ import Trip from "../pages/Trip";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Profile from "../pages/profile";
+import TripDetail from "../pages/TripDetail";
 
 const AppRoutes = () => {
     return (
@@ -37,6 +38,13 @@ const AppRoutes = () => {
                     </>
                 }
                 />
+                <Route path="/trip/:mountain_name" element={
+                    <>
+                        <Navbar />
+                        <TripDetail />
+                        <Footer />
+                    </>
+                } />
                 <Route path="login" element={
                     <>
                         <Login />

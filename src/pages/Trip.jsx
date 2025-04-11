@@ -44,7 +44,8 @@ const Trip = () => {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10'>
                     {openTrip.length > 0 ? openTrip.map((trip, index) => (
-                        <Link to={`/trip/${trip.mountain_name}`} key={index} className='border-2 border-gray-300 rounded-lg hover:scale-105 duration-300'>
+                        <Link to={`/trip/${trip.mountain_name}`} key={index} state={{ id: trip.id }}
+                            className='border-2 border-gray-300 rounded-lg hover:scale-105 duration-300'>
                             <img src={trip.mountain_photo} alt={trip.mountain_name} className='w-full h-50 object-cover rounded-md' />
                             <div className="p-4 mt-2">
                                 <h2 className='text-xl font-semibold text-[#FFC100]'>{trip.mountain_name}</h2>
@@ -74,7 +75,11 @@ const Trip = () => {
                 </div>
             </div>
 
-            {error && <p className='text-red-500 text-center mt-10'>{errorMessage}</p>}
+            {error && (
+                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
+                    {errorMessage}
+                </div>
+            )}
         </div>
     );
 };
