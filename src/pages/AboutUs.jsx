@@ -2,7 +2,6 @@ import React from 'react'
 import Logo from '../assets/logo/logo.png'
 import { P1, P2, P3 } from '../assets/photo'
 import Background from '../assets/background/aboutus.png'
-import Icon1 from '../assets/icon/mount.png'
 
 const AboutUs = () => {
     return (
@@ -36,11 +35,6 @@ const AboutUs = () => {
                         <img src={P3} alt="Photo3" className='h-40 w-40 rounded-lg mr-40' />
                     </div>
                 </div>
-            </div>
-            <div className='mt-10 flex justify-center items-bottom'>
-                <img src={Icon1} alt="mount" className='h-10' />
-                <img src={Icon1} alt="mount" className='h-20' />
-                <img src={Icon1} alt="mount" className='h-10' />
             </div>
         </div>
     )
