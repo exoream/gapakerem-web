@@ -30,7 +30,7 @@ const Book = () => {
         const token = Cookies.get('token');
         setLoading(true);
 
-        axios.get(`https://gapakerem.vercel.app/bookings?page=1&trip_type=${tripType}`, {
+        axios.get(`https://gapakerem.vercel.app/bookings/profile?page=1&trip_type=${tripType}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
