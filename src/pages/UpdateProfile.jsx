@@ -33,7 +33,7 @@ const UpdateProfile = () => {
             .then(() => {
                 setLoading(false);
                 alert("Berhasil Update Profile");
-                navigate('/');
+                navigate('/profile');
             })
             .catch((error) => {
                 console.error("Error :", error);
