@@ -2,9 +2,9 @@ import { React, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import Logo from '../assets/logo.png'
-import Background from '../assets/bgmount3.png'
-import Icon1 from '../assets/mount.png'
+import Logo from '../assets/logo/logo.png'
+import Background from '../assets/background/bgmount3.png'
+import Icon1 from '../assets/icon/mount.png'
 
 const Login = () => {
     const navigate = useNavigate();

@@ -1,19 +1,24 @@
 import React from 'react'
-import Logo from '../assets/logo.png'
-import Photo1 from '../assets/photo/1.png'
-import Photo2 from '../assets/photo/2.png'
-import Photo3 from '../assets/photo/3.png'
+import Logo from '../assets/logo/logo.png'
+import { P1, P2, P3 } from '../assets/photo'
+import Background from '../assets/background/aboutus.png'
 
 const AboutUs = () => {
     return (
-        <div className='py-10'>
-            <h1 className='text-center text-[#FFC100] text-5xl font-bold py-20'>Tentang Kami</h1>
-
-            <div className='px-60 py-10 space-y-10'>
+        <div className='px-60'>
+            <div
+                className="bg-cover bg-center bg-no-repeat rounded-lg"
+                style={{ backgroundImage: `url(${Background})` }}
+            >
+                <h1 className="text-center text-[#FFC100] text-5xl font-bold py-20 bg-black/40 rounded-lg">
+                    Tentang Kami
+                </h1>
+            </div>
+            <div className='mt-10'>
                 <div className='flex items-center justify-between gap-10'>
-                    <div className='w-1/3 flex flex-col gap-5'>
-                        <img src={Logo} alt="Logo" className='h-40 w-40 object-contain' />
-                        <img src={Photo1} alt="Photo1" className='h-40 w-40 object-cover rounded-lg' />
+                    <div className='w-1/3 flex flex-col items-center gap-5'>
+                        <img src={Logo} alt="Logo" className='h-40 w-40 object-contain mr-20' />
+                        <img src={P1} alt="Photo1" className='h-40 w-40 object-cover rounded-lg ml-20' />
                     </div>
 
                     <p className='w-2/3 text-justify leading-relaxed'>
@@ -21,14 +26,13 @@ const AboutUs = () => {
                     </p>
                 </div>
 
-                <div className='flex items-center justify-between gap-10'>
+                <div className='mt-10 flex items-center justify-between gap-10'>
                     <p className='w-2/3 text-justify leading-relaxed'>
-                        Nama GaPakeRem sendiri memiliki makna bahwa setiap kegiatan yang dilakukan oleh komunitas ini selalu berjalan tanpa henti, mencerminkan semangat yang terus berkembang. GakPakeRem berawal dari hobi dan keresahan pemilik yang tidak bisa bergabung dengan organisasi pecinta alam pada umumnya, sehingga menciptakan ruang sendiri untuk menyalurkan passion di dunia pendakian.
-                    </p>
+                        Nama "GaPakeRem" sendiri memiliki makna bahwa setiap kegiatan yang dilakukan oleh komunitas ini selalu berjalan tanpa henti, mencerminkan semangat yang terus berkembang. GakPakeRem berawal dari hobi dan keresahan pemilik yang tidak bisa bergabung dengan organisasi pecinta alam (mapala). Hal ini mendorong pemilik untuk membentuk komunitas yang awalnya hanya fokus pada kegiatan pendakian bersama. Seiring berjalannya waktu, beberapa kerabat pemilik pun mulai tertarik untuk ikut serta dalam kegiatan pendakian. Tak lama kemudian, seorang teman memberikan saran untuk mendirikan sebuah komunitas yang lebih formal, yang akhirnya menjadi GakPakeRem Adventure.                    </p>
 
-                    <div className='w-1/3 flex flex-col items-end gap-5'>
-                        <img src={Photo2} alt="Photo2" className='h-40 w-40 rounded-lg' />
-                        <img src={Photo3} alt="Photo3" className='h-40 w-40 rounded-lg' />
+                    <div className='w-1/3 flex flex-col items-center gap-5'>
+                        <img src={P2} alt="Photo2" className='h-40 w-40 rounded-lg ml-40' />
+                        <img src={P3} alt="Photo3" className='h-40 w-40 rounded-lg mr-40' />
                     </div>
                 </div>
             </div>

@@ -1,21 +1,15 @@
 import React from 'react'
-import Logo from '../assets/logo.png'
-import Icon1 from '../assets/mount.png'
-import Photo1 from '../assets/photo/1.png'
-import Photo2 from '../assets/photo/2.png'
-import Photo3 from '../assets/photo/3.png'
-import Photo4 from '../assets/photo/4.png'
-import Layanan1 from '../assets/layanan/1.png'
-import Layanan2 from '../assets/layanan/2.png'
-import Layanan3 from '../assets/layanan/3.png'
-import Layanan4 from '../assets/layanan/4.png'
-import Background from '../assets/bgmount.png'
-import Background2 from '../assets/bgmount2.png'
-import Tools from '../assets/tools.png'
-import Logo2 from '../assets/seven.png'
-import guide1 from '../assets/guide/yasinhabibie.png'
-import guide2 from '../assets/guide/fajrul.png'
+import Logo from '../assets/logo/logo.png'
+import Icon1 from '../assets/icon/mount.png'
+import { P1, P2, P3, P4 } from '../assets/photo'
+import { L1, L2, L3, L4 } from '../assets/service'
 import { G1, G2, G3, G4, G5, G6 } from '../assets/gallery'
+import Background from '../assets/background/bgmount.png'
+import Background2 from '../assets/background/bgmount2.png'
+import Tools from '../assets/icon/tools.png'
+import Logo2 from '../assets/logo/seven.png'
+import Guide1 from '../assets/guide/yasinhabibie.png'
+import Guide2 from '../assets/guide/fajrul.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faMousePointer, faImages, faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
@@ -70,10 +64,10 @@ const LandingPage = () => {
 
                 <div className="flex justify-between items-center mt-10 gap-10">
                     <div className="grid grid-cols-2 gap-4 w-1/3">
-                        <img src={Photo1} className="h-30 object-cover rounded-lg" />
-                        <img src={Photo2} className="h-40 object-cover rounded-lg" />
-                        <img src={Photo3} className="h-40 object-cover rounded-lg" />
-                        <img src={Photo4} className="h-30 object-cover rounded-lg" />
+                        <img src={P1} className="h-30 object-cover rounded-lg" />
+                        <img src={P2} className="h-40 object-cover rounded-lg" />
+                        <img src={P3} className="h-40 object-cover rounded-lg" />
+                        <img src={P4} className="h-30 object-cover rounded-lg" />
                     </div>
 
                     <div className="w-2/3">
@@ -100,28 +94,28 @@ const LandingPage = () => {
                 <div className='mt-20 mb-20 grid grid-cols-2 gap-10 relative z-10'>
                     <div className='flex flex-col gap-2 items-center'>
                         <div className='w-20 h-20 bg-gray-500 rounded-full overflow-hidden'>
-                            <img src={Layanan1} alt='layanan1' className='w-full h-full object-cover' />
+                            <img src={L1} alt='layanan1' className='w-full h-full object-cover' />
                         </div>
                         <h4 className='font-semibold text-gray-500'>Pendaki Open Trip</h4>
                         <p className='text-sm'>Pendakian bersama grup terbuka untuk umum dengan pemanduan profesional, cocok bagi individu yang ingin menikmati pendakian seru dan bertemu teman baru.</p>
                     </div>
                     <div className='flex flex-col gap-2 items-center'>
                         <div className='w-20 h-20 bg-gray-500 rounded-full overflow-hidden'>
-                            <img src={Layanan2} alt='layanan2' className='w-full h-full object-cover' />
+                            <img src={L2} alt='layanan2' className='w-full h-full object-cover' />
                         </div>
                         <h4 className='font-semibold text-gray-500'>Pendaki Private Trip</h4>
                         <p className='text-sm'>Layanan pendakian eksklusif untuk grup dengan fleksibilitas rute dan waktu yang dapat disesuaikan sesuai kebutuhan.</p>
                     </div>
                     <div className='flex flex-col gap-2 items-center'>
                         <div className='w-20 h-20 bg-gray-500 rounded-full overflow-hidden'>
-                            <img src={Layanan3} alt='layanan3' className='w-full h-full object-cover' />
+                            <img src={L3} alt='layanan3' className='w-full h-full object-cover' />
                         </div>
                         <h4 className='font-semibold text-gray-500'>Pemandu Bersertifikat</h4>
                         <p className='text-sm'>Pendakian dipandu oleh guide bersertifikat APGI yang berpengalaman, memastikan pengalaman aman, nyaman dan menyenangkan.</p>
                     </div>
                     <div className='flex flex-col gap-2 items-center'>
                         <div className='w-20 h-20 bg-gray-500 rounded-full overflow-hidden'>
-                            <img src={Layanan4} alt='layanan4' className='w-full h-full object-cover' />
+                            <img src={L4} alt='layanan4' className='w-full h-full object-cover' />
                         </div>
                         <h4 className='font-semibold text-gray-500'>Jasa Porter</h4>
                         <p className='text-sm'>Layanan porter untuk membawa alat dan logistik, memudahkan peserta fokus pada pengalaman pendakian.</p>
@@ -212,8 +206,8 @@ const LandingPage = () => {
                 <p className='text-center'>Jelajahi Gunung Bersama Guide & Porter Berpengalaman</p>
                 <h1 className='text-3xl text-[#FFC100] text-center mt-5'>Guide</h1>
                 <div className='flex gap-10 justify-center mt-10'>
-                    <Card1 imageUrl={guide1} name={"Yasin Habibie"} />
-                    <Card1 imageUrl={guide2} name={"Fajrul"} />
+                    <Card1 imageUrl={Guide1} name={"Yasin Habibie"} />
+                    <Card1 imageUrl={Guide2} name={"Fajrul"} />
                 </div>
             </div>
 

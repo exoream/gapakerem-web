@@ -2,6 +2,8 @@ import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../component/Loading';
 import { Link } from 'react-router-dom';
+import Background from '../assets/background/trip.png'
+import Icon1 from '../assets/icon/mount.png'
 
 const Trip = () => {
     const [openTrip, setOpenTrip] = useState([]);
@@ -32,10 +34,17 @@ const Trip = () => {
     if (loading) return <Loading />;
 
     return (
-        <div className='px-10 md:px-60 py-10'>
-            <h1 className='text-center text-[#FFC100] text-5xl font-bold py-20'>Daftar Trip</h1>
+        <div className='px-60'>
+            <div
+                className="bg-cover bg-center bg-no-repeat rounded-lg"
+                style={{ backgroundImage: `url(${Background})` }}
+            >
+                <h1 className="text-center text-[#FFC100] text-5xl font-bold py-20 bg-black/40 rounded-lg">
+                    Daftar Trip
+                </h1>
+            </div>
 
-            <div>
+            <div className="mt-10">
                 <h1 className='text-3xl mb-4 inline-block bg-orange-200 rounded-lg px-2'>
                     <span className='text-[#FFC100]'>Open</span> Trip
                 </h1>
@@ -43,14 +52,28 @@ const Trip = () => {
 
                 <div className='grid grid-cols-3 gap-10 mt-10'>
                     {openTrip.length > 0 ? openTrip.map((trip, index) => (
-                        <Link to={`/trip/${trip.mountain_name}`} key={index} state={{ id: trip.id }}
-                            className='border-2 border-gray-300 rounded-lg hover:scale-105 duration-300'>
-                            <img src={trip.mountain_photo} alt={trip.mountain_name} className='w-full h-50 object-cover rounded-md' />
-                            <div className="p-4 mt-2">
-                                <h2 className='text-xl font-semibold text-[#FFC100]'>{trip.mountain_name}</h2>
-                                <p className='font-bold'>Rp {trip.price.toLocaleString('id-ID')}</p>
+                        <Link
+                            to={`/trip/${trip.mountain_name}`}
+                            key={index}
+                            state={{ id: trip.id }}
+                            className="relative border-2 border-gray-300 rounded-lg hover:scale-105 duration-300"
+                        >
+                            <img
+                                src={trip.mountain_photo}
+                                alt={trip.mountain_name}
+                                className="w-full h-50 object-cover rounded-md"
+                            />
+                            <div className="p-4">
+                                <h2 className="text-xl font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
+                                <p className="font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
                             </div>
+                            <img
+                                src={Icon1}
+                                alt="mount"
+                                className="h-10 absolute bottom-0 right-0 opacity-50"
+                            />
                         </Link>
+
                     )) : <p className="text-gray-500">Tidak ada data trip tersedia.</p>}
                 </div>
             </div>

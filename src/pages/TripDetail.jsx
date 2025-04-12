@@ -13,6 +13,7 @@ const TripDetail = () => {
     const [loadingBook, setLoadingBook] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [showConfirmBook, setShowConfirmBook] = useState(false);
 
     const [input, setInput] = useState({
         total_participant: "",
@@ -93,6 +94,12 @@ const TripDetail = () => {
             });
     }, [id]);
 
+    const confirmAndBook = async () => {
+        await handleBook();
+        setShowConfirmBook(false);
+    };
+
+
     if (loading) return <Loading />;
 
     return (
@@ -137,7 +144,10 @@ const TripDetail = () => {
             </div>
             <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
             <div className="mt-10">
-                <form onSubmit={handleBook}>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    setShowConfirmBook(true);
+                }}>
                     <div className="mb-5 grid grid-cols-3 items-center gap-4">
                         <label htmlFor="total_participant" className="font-medium text-gray-500">
                             Jumlah Orang
@@ -219,6 +229,26 @@ const TripDetail = () => {
                     )}
                 </form>
             </div>
+
+            {showConfirmBook && (
+                <div className="fixed top-4 right-4 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-50 w-72">
+                    <h2 className="text-base font-semibold mb-3 text-gray-800">Booking Trip ini?</h2>
+                    <div className="flex justify-end gap-2">
+                        <button
+                            onClick={confirmAndBook}
+                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded text-sm"
+                        >
+                            Ya
+                        </button>
+                        <button
+                            onClick={() => setShowConfirmBook(false)}
+                            className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1.5 rounded text-sm"
+                        >
+                            Batal
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
