@@ -29,7 +29,7 @@ const BookingDetail = () => {
         </div>
 
         setLoading(true);
-        axios.get(`https://gapakerem.vercel.app/bookings/${id}`, {
+        axios.get(`https://gapakerem.vercel.app/bookings/profile/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -115,6 +115,14 @@ const BookingDetail = () => {
             });
     };
 
+    const formatRupiah = (value) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(value);
+    };
+
 
     const paymentStatus = (status) => {
         switch (status) {
@@ -137,19 +145,30 @@ const BookingDetail = () => {
 
             <div className="grid grid-cols-3 items-center gap-4 max-w-xl mt-10">
                 <label className="font-medium text-gray-500">Nama Peserta</label>
-                <input
-                    type="text"
+                <textarea
                     value={book.participant_name}
                     readOnly
-                    className="col-span-2 mt-2 max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none w-full p-3"
+                    rows={3}
+                    className="col-span-2 mt-2 max-w-sm border border-gray-300 text-gray-900 text-sm rounded-xl focus:outline-none w-full p-3 resize-none"
                 />
+
             </div>
 
             <div className="grid grid-cols-3 items-center gap-4 max-w-xl">
                 <label className="font-medium text-gray-500">Total Pembayaran</label>
                 <input
                     type="text"
-                    value={book.total_price}
+                    value={formatRupiah(book.total_price)}
+                    readOnly
+                    className="col-span-2 mt-2 max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none w-full p-3"
+                />
+            </div>
+
+            <div className="grid grid-cols-3 items-center gap-4 max-w-xl">
+                <label className="font-medium text-gray-500">Tanggal Dibooking</label>
+                <input
+                    type="text"
+                    value={new Date(book.created_at).toLocaleDateString('id-ID')}
                     readOnly
                     className="col-span-2 mt-2 max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none w-full p-3"
                 />
@@ -158,9 +177,9 @@ const BookingDetail = () => {
             <div className="grid grid-cols-3 items-center gap-4 max-w-xl mt-10">
                 <label className="font-medium text-gray-500">Status</label>
                 <span
-                    className={`px-2 py-1 rounded-full text-sm ${paymentStatus(book.status)?.color}`}
+                    className={`px-2 py-1 rounded-full text-sm ${paymentStatus(book.payment_status)?.color}`}
                 >
-                    {paymentStatus(book.status)?.text}
+                    {paymentStatus(book.payment_status)?.text}
                 </span>
             </div>
 
