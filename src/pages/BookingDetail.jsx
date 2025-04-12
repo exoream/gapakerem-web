@@ -11,11 +11,11 @@ const BookingDetail = () => {
     const { id } = location.state;
     const [book, setBook] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [loadingUpload, setLoadingUpload] = useState(false);
+    const [loadingUploadFeedback, setLoadingUploadFeedback] = useState(false);
+    const [loadingUploadPaymentProof, setLoadingUploadPaymentProof] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [paymentProof, setPaymentProof] = useState(null);
-
     const [feedback, setFeedback] = useState("")
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
@@ -53,7 +53,7 @@ const BookingDetail = () => {
         e.preventDefault();
         if (!paymentProof) return alert("Silakan pilih file terlebih dahulu.");
 
-        setLoadingUpload(true);
+        setLoadingUploadPaymentProof(true);
 
         const formData = new FormData();
         formData.append('payment_proof', paymentProof);
@@ -67,7 +67,7 @@ const BookingDetail = () => {
             },
         })
             .then(() => {
-                setLoadingUpload(false);
+                setLoadingUploadPaymentProof(false);
                 alert("Bukti pembayaran berhasil diupload!");
                 window.location.reload();
             })
@@ -75,7 +75,7 @@ const BookingDetail = () => {
                 console.error("Error :", error);
                 setErrorMessage(error.response.data.message);
                 setError(true);
-                setLoading(false);
+                setLoadingUploadPaymentProof(false);
                 setTimeout(() => {
                     setError(false);
                 }, 3000);
@@ -85,7 +85,7 @@ const BookingDetail = () => {
     const handleFeedbackSubmit = (e) => {
         e.preventDefault();
 
-        setLoadingUpload(true)
+        setLoadingUploadFeedback(true)
 
         const token = Cookies.get('token');
 
@@ -102,13 +102,13 @@ const BookingDetail = () => {
                 alert('Feedback berhasil dikirim!');
                 setFeedback("");
                 setRating(0);
-                setLoadingUpload(false)
+                setLoadingUploadFeedback(false)
             })
             .catch((err) => {
                 console.error("Error :", error);
                 setErrorMessage(error.response.data.message);
                 setError(true);
-                setLoading(false);
+                setLoadingUploadFeedback(false);
                 setTimeout(() => {
                     setError(false);
                 }, 3000);
@@ -201,7 +201,7 @@ const BookingDetail = () => {
                 </div>
             )}
 
-            {book.status === 'unpaid' && !book.payment_proof && (
+            {book.payment_status === 'unpaid' && !book.payment_proof && (
                 <div>
                     <form
                         onSubmit={(e) => handleUpload(e)}
@@ -213,16 +213,24 @@ const BookingDetail = () => {
                             accept="image/*"
                             onChange={(e) => setPaymentProof(e.target.files[0])}
                             className="border border-gray-300 p-2 rounded"
-                            disabled={loadingUpload}
+                            disabled={loadingUploadPaymentProof}
                         />
                         <button
                             type="submit"
                             className="bg-[#FFC100] text-white px-4 py-2 rounded hover:bg-yellow-400 transition"
-                            disabled={loadingUpload}
+                            disabled={loadingUploadPaymentProof}
                         >
                             Upload Bukti Pembayaran
                         </button>
                     </form>
+
+                    {loadingUploadPaymentProof && (
+                        <div className="flex justify-center items-center mt-10">
+                            <div className="relative w-12 h-12">
+                                <div className="absolute inset-0 border-4 border-[#FFC100] border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -237,7 +245,7 @@ const BookingDetail = () => {
                     className="border border-gray-300 p-2 rounded mt-5 focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent"
                     rows="4"
                     placeholder="Tulis feedback kamu disini..."
-                    disabled={loadingUpload}
+                    disabled={loadingUploadFeedback}
                 />
 
                 <div className="flex gap-2">
@@ -261,14 +269,14 @@ const BookingDetail = () => {
                     <button
                         type="submit"
                         className="bg-[#FFC100] text-white px-4 py-2 rounded hover:bg-yellow-400 transition"
-                        disabled={loadingUpload}
+                        disabled={loadingUploadFeedback}
                     >
                         Submit Feedback
                     </button>
                 </div>
             </form>
 
-            {loadingUpload && (
+            {loadingUploadFeedback && (
                 <div className="flex justify-center items-center mt-10">
                     <div className="relative w-12 h-12">
                         <div className="absolute inset-0 border-4 border-[#FFC100] border-t-transparent rounded-full animate-spin"></div>
