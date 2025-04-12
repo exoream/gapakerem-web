@@ -10,6 +10,7 @@ const Profile = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+    const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
     useEffect(() => {
         const token = Cookies.get('token');
@@ -36,10 +37,11 @@ const Profile = () => {
             });
     }, []);
 
-    const handleLogout = () => {
+    const handleLogoutConfirm = () => {
         Cookies.remove('token');
         navigate('/login');
-    }
+    };
+
 
     if (loading) {
         return <Loading />;
@@ -106,13 +108,13 @@ const Profile = () => {
                         <button
                             className="bg-[#FFC100] hover:bg-yellow-400 text-white py-2 px-4 rounded-full"
                         >
-                            <Link to="/gantipassword">
+                            <Link to="/updatepassword">
                                 Ganti Password
                             </Link>
                         </button>
 
                         <button
-                            onClick={handleLogout}
+                            onClick={() => setShowConfirmLogout(true)}
                             className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-full"
                         >
                             Logout
@@ -124,6 +126,26 @@ const Profile = () => {
             {error && (
                 <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
                     {errorMessage}
+                </div>
+            )}
+
+            {showConfirmLogout && (
+                <div className="fixed top-4 right-4 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-50 w-72">
+                    <h2 className="text-base font-semibold mb-3 text-gray-800">Yakin ingin logout?</h2>
+                    <div className="flex justify-end gap-2">
+                        <button
+                            onClick={handleLogoutConfirm}
+                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded text-sm"
+                        >
+                            Ya
+                        </button>
+                        <button
+                            onClick={() => setShowConfirmLogout(false)}
+                            className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1.5 rounded text-sm"
+                        >
+                            Batal
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
