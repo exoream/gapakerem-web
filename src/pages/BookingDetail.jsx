@@ -148,7 +148,7 @@ const BookingDetail = () => {
                 <textarea
                     value={book.participant_name}
                     readOnly
-                    rows={3} // bisa kamu sesuaikan
+                    rows={3}
                     className="col-span-2 mt-2 max-w-sm border border-gray-300 text-gray-900 text-sm rounded-xl focus:outline-none w-full p-3 resize-none"
                 />
 
@@ -159,6 +159,16 @@ const BookingDetail = () => {
                 <input
                     type="text"
                     value={formatRupiah(book.total_price)}
+                    readOnly
+                    className="col-span-2 mt-2 max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none w-full p-3"
+                />
+            </div>
+
+            <div className="grid grid-cols-3 items-center gap-4 max-w-xl">
+                <label className="font-medium text-gray-500">Tanggal Dibooking</label>
+                <input
+                    type="text"
+                    value={new Date(book.created_at).toLocaleDateString('id-ID')}
                     readOnly
                     className="col-span-2 mt-2 max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none w-full p-3"
                 />

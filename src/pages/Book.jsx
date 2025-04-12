@@ -71,6 +71,9 @@ const Book = () => {
                                         {status.text}
                                     </span>
                                 </h4>
+                                <h4 className='mt-4 text-sm text-gray-500'>
+                                    Tanggal Dibooking: {new Date(book.created_at).toLocaleDateString('id-ID')}
+                                </h4>
                             </div>
 
                             <Link to={`/bookings/${book.mountain_name}`} state={{ id: book.id }}>
