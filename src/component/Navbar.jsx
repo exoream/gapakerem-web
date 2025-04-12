@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
-import Logo from '../assets/logo.png';
+import Logo from '../assets/logo/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 

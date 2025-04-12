@@ -1,14 +1,15 @@
 import React from 'react'
-import Logo from '../assets/logo.png'
+import Logo from '../assets/logo/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faYoutube, faTiktok } from '@fortawesome/free-brands-svg-icons'
+import Background from '../assets/background/bgalt.png'
 
 const Footer = () => {
     return (
         <div
             className="flex justify-between gap-20 px-20 py-10 text-white mt-50"
             style={{
-                backgroundImage: `url('/src/assets/bgalt.png')`,
+                backgroundImage: `url(${Background})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
             }}

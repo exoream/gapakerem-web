@@ -2,6 +2,8 @@ import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../component/Loading';
 import { Link } from 'react-router-dom';
+import Background from '../assets/background/trip.png'
+import Icon1 from '../assets/icon/mount.png'
 
 const Trip = () => {
     const [openTrip, setOpenTrip] = useState([]);
@@ -32,10 +34,17 @@ const Trip = () => {
     if (loading) return <Loading />;
 
     return (
-        <div className='px-10 md:px-60 py-10'>
-            <h1 className='text-center text-[#FFC100] text-5xl font-bold py-20'>Daftar Trip</h1>
+        <div className='px-60'>
+            <div
+                className="bg-cover bg-center bg-no-repeat rounded-lg"
+                style={{ backgroundImage: `url(${Background})` }}
+            >
+                <h1 className="text-center text-[#FFC100] text-5xl font-bold py-20 bg-black/40 rounded-lg">
+                    Daftar Trip
+                </h1>
+            </div>
 
-            <div>
+            <div className="mt-10">
                 <h1 className='text-3xl mb-4 inline-block bg-orange-200 rounded-lg px-2'>
                     <span className='text-[#FFC100]'>Open</span> Trip
                 </h1>
