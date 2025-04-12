@@ -55,6 +55,19 @@ const Profile = () => {
                         Profile
                     </h1>
 
+                    <div className="relative flex justify-center mb-5 mt-10">
+                        {profile.photo ? (
+                            <img
+                                src={profile.photo}
+                                className="w-32 h-32 object-cover rounded-full border border-gray-300"
+                                alt="Profile"
+                            />
+                        ) : (
+                            <div className="w-32 h-32 bg-gray-300 rounded-full flex items-center justify-center text-white" />
+                        )}
+                    </div>
+
+
                     <div className="mb-5">
                         <label className="font-medium text-gray-500">Username</label>
                         <input

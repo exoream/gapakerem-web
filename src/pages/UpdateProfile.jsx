@@ -56,14 +56,14 @@ const UpdateProfile = () => {
                     </h1>
 
                     <div className="mt-10 flex flex-col items-center">
-                        <div className="relative w-32 h-32 mb-4">
+                        <div className="relative  mb-4">
                             <img
                                 src={
                                     photoProfile
                                         ? URL.createObjectURL(photoProfile)
                                         : '/default-profile.png'
                                 }
-                                className="w-full h-full object-cover rounded-full border border-gray-300"
+                                className="w-32 h-32 object-cover rounded-full border border-gray-300"
                             />
 
                             <label className="absolute bottom-0 right-0 bg-[#FFC100] text-white w-6 h-6 flex items-center justify-center rounded-full cursor-pointer hover:bg-yellow-400 transition">
