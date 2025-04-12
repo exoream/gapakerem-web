@@ -106,7 +106,7 @@ const Profile = () => {
                         <button
                             className="bg-[#FFC100] hover:bg-yellow-400 text-white py-2 px-4 rounded-full"
                         >
-                            <Link to="/gantipassword">
+                            <Link to="/updatepassword">
                                 Ganti Password
                             </Link>
                         </button>

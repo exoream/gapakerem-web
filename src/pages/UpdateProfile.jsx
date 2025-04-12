@@ -20,6 +20,7 @@ const UpdateProfile = () => {
 
         const formData = new FormData();
         formData.append('photo', photoProfile);
+        formData.append('name', profile.name);
 
         const token = Cookies.get('token');
 
@@ -45,15 +46,16 @@ const UpdateProfile = () => {
             });
     };
 
+
     return (
         <div className="flex items-center justify-center mt-10">
             <div className="w-full max-w-lg border border-gray-300 rounded-lg p-10 bg-white">
                 <form className="w-full max-w-md" onSubmit={handleUpdate}>
-                    <h1 className="text-3xl font-bold text-[#FFC100] mb-8">
+                    <h1 className="text-3xl font-bold text-[#FFC100]">
                         Update Profile
                     </h1>
 
-                    <div className="mb-5 flex flex-col items-center">
+                    <div className="mt-10 flex flex-col items-center">
                         <div className="relative w-32 h-32 mb-4">
                             <img
                                 src={
@@ -76,17 +78,17 @@ const UpdateProfile = () => {
                             </label>
                         </div>
 
-                        <label className="font-medium text-gray-500 self-start mb-2">Nama</label>
+                        <label className="mt-5 font-medium text-gray-500 self-start">Nama</label>
                         <input
                             type="text"
                             value={profile.name}
                             onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                            className="mb-6 border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none w-full p-3"
+                            className="border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none w-full p-3"
                             disabled={loading}
                         />
                     </div>
 
-                    <div className="flex justify-center mt-8">
+                    <div className="flex justify-center mt-20">
                         <button
                             className="w-full bg-[#FFC100] hover:bg-yellow-400 text-white py-2 px-4 rounded-full"
                             disabled={loading}
