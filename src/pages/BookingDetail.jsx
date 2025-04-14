@@ -11,11 +11,11 @@ const BookingDetail = () => {
     const { id } = location.state;
     const [book, setBook] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [loadingUpload, setLoadingUpload] = useState(false);
+    const [loadingUploadFeedback, setLoadingUploadFeedback] = useState(false);
+    const [loadingUploadPaymentProof, setLoadingUploadPaymentProof] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [paymentProof, setPaymentProof] = useState(null);
-
     const [feedback, setFeedback] = useState("")
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
@@ -53,7 +53,7 @@ const BookingDetail = () => {
         e.preventDefault();
         if (!paymentProof) return alert("Silakan pilih file terlebih dahulu.");
 
-        setLoadingUpload(true);
+        setLoadingUploadPaymentProof(true);
 
         const formData = new FormData();
         formData.append('payment_proof', paymentProof);
@@ -67,7 +67,7 @@ const BookingDetail = () => {
             },
         })
             .then(() => {
-                setLoadingUpload(false);
+                setLoadingUploadPaymentProof(false);
                 alert("Bukti pembayaran berhasil diupload!");
                 window.location.reload();
             })
@@ -75,7 +75,7 @@ const BookingDetail = () => {
                 console.error("Error :", error);
                 setErrorMessage(error.response.data.message);
                 setError(true);
-                setLoading(false);
+                setLoadingUploadPaymentProof(false);
                 setTimeout(() => {
                     setError(false);
                 }, 3000);
@@ -85,7 +85,7 @@ const BookingDetail = () => {
     const handleFeedbackSubmit = (e) => {
         e.preventDefault();
 
-        setLoadingUpload(true)
+        setLoadingUploadFeedback(true)
 
         const token = Cookies.get('token');
 
@@ -102,13 +102,13 @@ const BookingDetail = () => {
                 alert('Feedback berhasil dikirim!');
                 setFeedback("");
                 setRating(0);
-                setLoadingUpload(false)
+                setLoadingUploadFeedback(false)
             })
             .catch((err) => {
                 console.error("Error :", error);
                 setErrorMessage(error.response.data.message);
                 setError(true);
-                setLoading(false);
+                setLoadingUploadFeedback(false);
                 setTimeout(() => {
                     setError(false);
                 }, 3000);
@@ -183,6 +183,28 @@ const BookingDetail = () => {
                 </span>
             </div>
 
+            <div className="mt-10 flex justify-start gap-6">
+                <a
+                    href="https://wa.me/nomor-telepon?text=Halo,%20saya%20ingin%20reschedule%20trip%20saya."
+                    className="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-lg gap-3 font-medium transition"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <i className="fab fa-whatsapp text-xl"></i>
+                    <span>Reschedule Trip?</span>
+                </a>
+
+                <a
+                    href="https://wa.me/nomor-telepon?text=Halo,%20saya%20ingin%20membatalkan%20trip%20saya."
+                    className="bg-red-500 text-white hover:bg-red-600 px-4 py-2 rounded-lg gap-3 font-medium transition"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <i className="fab fa-whatsapp text-xl"></i>
+                    <span>Cancel Trip?</span>
+                </a>
+            </div>
+
             <div className="grid grid-cols-3 items-center gap-4 max-w-xl mt-10">
                 <label className="font-medium text-gray-500">No. Rekening</label>
                 <p className="col-span-2">1136609602 (BSI) - MUH YASIN HABIBIE</p>
@@ -201,7 +223,7 @@ const BookingDetail = () => {
                 </div>
             )}
 
-            {book.status === 'unpaid' && !book.payment_proof && (
+            {book.payment_status === 'unpaid' && !book.payment_proof && (
                 <div>
                     <form
                         onSubmit={(e) => handleUpload(e)}
@@ -212,63 +234,73 @@ const BookingDetail = () => {
                             type="file"
                             accept="image/*"
                             onChange={(e) => setPaymentProof(e.target.files[0])}
-                            className="border border-gray-300 p-2 rounded"
-                            disabled={loadingUpload}
+                            className="border border-gray-300 p-2 rounded-lg"
+                            disabled={loadingUploadPaymentProof}
                         />
                         <button
                             type="submit"
-                            className="bg-[#FFC100] text-white px-4 py-2 rounded hover:bg-yellow-400 transition"
-                            disabled={loadingUpload}
+                            className="bg-[#FFC100] text-white px-4 py-2 rounded-lg hover:bg-yellow-400 transition"
+                            disabled={loadingUploadPaymentProof}
                         >
                             Upload Bukti Pembayaran
                         </button>
                     </form>
+
+                    {loadingUploadPaymentProof && (
+                        <div className="flex justify-center items-center mt-10">
+                            <div className="relative w-12 h-12">
+                                <div className="absolute inset-0 border-4 border-[#FFC100] border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
 
             <div className='mt-20 h-2 w-full bg-[#FFC100] rounded-lg' />
 
-            <form className="flex flex-col justify-center gap-4 mt-4 mt-20 max-w-lg" onSubmit={handleFeedbackSubmit}>
-                <p>Jangan lupa bagikan pengalamanmu setelah trip!</p>
+            <div>
+                <form className="flex flex-col justify-center gap-4 mt-4 mt-20 max-w-lg" onSubmit={handleFeedbackSubmit}>
+                    <p>Jangan lupa bagikan pengalamanmu setelah trip!</p>
 
-                <textarea
-                    value={feedback}
-                    onChange={(e) => setFeedback(e.target.value)}
-                    className="border border-gray-300 p-2 rounded mt-5 focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent"
-                    rows="4"
-                    placeholder="Tulis feedback kamu disini..."
-                    disabled={loadingUpload}
-                />
+                    <textarea
+                        value={feedback}
+                        onChange={(e) => setFeedback(e.target.value)}
+                        className="border border-gray-300 p-2 rounded mt-5 focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent"
+                        rows="4"
+                        placeholder="Tulis feedback kamu disini..."
+                        disabled={loadingUploadFeedback}
+                    />
 
-                <div className="flex gap-2">
-                    {[...Array(5)].map((_, index) => {
-                        const starValue = index + 1;
-                        return (
-                            <FontAwesomeIcon
-                                key={index}
-                                icon={faStar}
-                                className={`text-2xl cursor-pointer transition ${starValue <= (hover || rating) ? 'text-yellow-400' : 'text-gray-300'
-                                    }`}
-                                onClick={() => setRating(starValue)}
-                                onMouseEnter={() => setHover(starValue)}
-                                onMouseLeave={() => setHover(0)}
-                            />
-                        )
-                    })}
-                </div>
+                    <div className="flex gap-2">
+                        {[...Array(5)].map((_, index) => {
+                            const starValue = index + 1;
+                            return (
+                                <FontAwesomeIcon
+                                    key={index}
+                                    icon={faStar}
+                                    className={`text-2xl cursor-pointer transition ${starValue <= (hover || rating) ? 'text-yellow-400' : 'text-gray-300'
+                                        }`}
+                                    onClick={() => setRating(starValue)}
+                                    onMouseEnter={() => setHover(starValue)}
+                                    onMouseLeave={() => setHover(0)}
+                                />
+                            )
+                        })}
+                    </div>
 
-                <div className="mt-5">
-                    <button
-                        type="submit"
-                        className="bg-[#FFC100] text-white px-4 py-2 rounded hover:bg-yellow-400 transition"
-                        disabled={loadingUpload}
-                    >
-                        Submit Feedback
-                    </button>
-                </div>
-            </form>
+                    <div className="mt-5">
+                        <button
+                            type="submit"
+                            className="bg-[#FFC100] text-white px-4 py-2 rounded-lg hover:bg-yellow-400 transition"
+                            disabled={loadingUploadFeedback}
+                        >
+                            Submit Feedback
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-            {loadingUpload && (
+            {loadingUploadFeedback && (
                 <div className="flex justify-center items-center mt-10">
                     <div className="relative w-12 h-12">
                         <div className="absolute inset-0 border-4 border-[#FFC100] border-t-transparent rounded-full animate-spin"></div>

@@ -86,12 +86,26 @@ const Trip = () => {
 
                 <div className='grid grid-cols-3 gap-10 mt-10'>
                     {privateTrip.length > 0 ? privateTrip.map((trip, index) => (
-                        <Link to={`/trip/${trip.mountain_name}`} key={index} className='border-2 border-gray-500 rounded-lg hover:scale-105 duration-300'>
-                            <img src={trip.mountain_photo} alt={trip.mountain_name} className='w-full h-50 object-cover rounded-md' />
-                            <div className="p-4 mt-2">
-                                <h2 className='text-xl font-semibold text-[#859F3D]'>{trip.mountain_name}</h2>
-                                <p className='font-bold'>Rp {trip.price.toLocaleString('id-ID')}</p>
+                        <Link
+                            to={`/trip/${trip.mountain_name}`}
+                            key={index}
+                            state={{ id: trip.id }}
+                            className="relative border-2 border-gray-300 rounded-lg hover:scale-105 duration-300"
+                        >
+                            <img
+                                src={trip.mountain_photo}
+                                alt={trip.mountain_name}
+                                className="w-full h-50 object-cover rounded-md"
+                            />
+                            <div className="p-4">
+                                <h2 className="text-xl font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
+                                <p className="font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
                             </div>
+                            <img
+                                src={Icon1}
+                                alt="mount"
+                                className="h-10 absolute bottom-0 right-0 opacity-50"
+                            />
                         </Link>
                     )) : <p className="text-gray-500">Tidak ada data trip tersedia.</p>}
                 </div>

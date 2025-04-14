@@ -13,18 +13,35 @@ const TripDetail = () => {
     const [loadingBook, setLoadingBook] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [showConfirmBook, setShowConfirmBook] = useState(false);
+    const [guides, setGuides] = useState([]);
+    const [porters, setPorters] = useState([]);
+    const [selectedPorters, setSelectedPorters] = useState([]);
+    const [selectedTab, setSelectedTab] = useState("agenda");
 
     const [input, setInput] = useState({
         total_participant: "",
         name_participant: "",
         no_hp: "",
-        meeting_point: ""
+        meeting_point: "",
+        // Private trip fields
+        id_guide: "",
+        total_days: "",
+        start_date: "",
     });
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInput({ ...input, [name]: value });
+    };
+
+    const handlePorterSelection = (porterId) => {
+        setSelectedPorters(prev => {
+            if (prev.includes(porterId)) {
+                return prev.filter(id => id !== porterId);
+            } else {
+                return [...prev, porterId];
+            }
+        });
     };
 
     const handleBook = (event) => {
@@ -39,17 +56,28 @@ const TripDetail = () => {
 
         setLoadingBook(true);
 
-        const { total_participant, name_participant, no_hp, meeting_point } = input;
+        const { total_participant, name_participant, no_hp, meeting_point, id_guide, total_days, start_date } = input;
+
+        let bookingData = {
+            id_trip: id,
+            total_participants: Number(total_participant),
+            name_participants: name_participant,
+            no_hp: no_hp,
+            meeting_point: meeting_point,
+        };
+
+        if (trip.trip_type === "private") {
+            bookingData.private_trip = {
+                id_guide: Number(id_guide),
+                total_days: Number(total_days),
+                start_date: start_date,
+                porters: selectedPorters
+            };
+        }
 
         axios.post(
             `https://gapakerem.vercel.app/bookings/${trip.trip_type}`,
-            {
-                id_trip: id,
-                total_participants: Number(total_participant),
-                name_participants: name_participant,
-                no_hp: no_hp,
-                meeting_point: meeting_point,
-            },
+            bookingData,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -73,7 +101,6 @@ const TripDetail = () => {
             });
     };
 
-
     useEffect(() => {
         if (error) return
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
@@ -81,10 +108,15 @@ const TripDetail = () => {
         </div>
 
         setLoading(true);
+
         axios.get(`https://gapakerem.vercel.app/trips/${id}`)
             .then((response) => {
                 setTrip(response.data.data);
                 setLoading(false);
+
+                if (response.data.data.trip_type === "private") {
+                    fetchGuidesAndPorters();
+                }
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
@@ -94,11 +126,22 @@ const TripDetail = () => {
             });
     }, [id]);
 
-    const confirmAndBook = async () => {
-        await handleBook();
-        setShowConfirmBook(false);
-    };
+    const fetchGuidesAndPorters = () => {
+        const token = Cookies.get('token');
+        if (!token) return;
 
+        axios.get("https://gapakerem.vercel.app/guides", {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(response => setGuides(response.data.data))
+            .catch(error => console.error("Error fetching guides:", error));
+
+        axios.get("https://gapakerem.vercel.app/porters", {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(response => setPorters(response.data.data))
+            .catch(error => console.error("Error fetching porters:", error));
+    };
 
     if (loading) return <Loading />;
 
@@ -122,12 +165,13 @@ const TripDetail = () => {
                     </p>
                 </div>
             </div>
+
             <div className="flex justify-center items-center gap-50">
                 <div className="mt-10">
                     <h2 className="text-lg font-bold mb-4 text-center">Guide</h2>
                     <div className="flex flex-col items-center">
-                        <img src={trip.guide.photo} alt={trip.guide.name} className="w-20 h-20 rounded-full object-cover" />
-                        <p className="mt-2 text-center">{trip.guide.name}</p>
+                        <img src={trip.guide?.photo} alt={trip.guide?.name} className="w-20 h-20 rounded-full object-cover" />
+                        <p className="mt-2 text-center">{trip.guide?.name}</p>
                     </div>
                 </div>
                 <div className="mt-10">
@@ -142,12 +186,10 @@ const TripDetail = () => {
                     </div>
                 </div>
             </div>
+
             <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
             <div className="mt-10">
-                <form onSubmit={(e) => {
-                    e.preventDefault();
-                    setShowConfirmBook(true);
-                }}>
+                <form onSubmit={handleBook}>
                     <div className="mb-5 grid grid-cols-3 items-center gap-4">
                         <label htmlFor="total_participant" className="font-medium text-gray-500">
                             Jumlah Orang
@@ -160,6 +202,7 @@ const TripDetail = () => {
                             onChange={handleChange}
                             value={input.total_participant}
                             disabled={loading}
+                            required
                         />
                     </div>
 
@@ -175,6 +218,7 @@ const TripDetail = () => {
                             value={input.name_participant}
                             disabled={loading}
                             rows={3}
+                            required
                         />
                     </div>
 
@@ -190,6 +234,7 @@ const TripDetail = () => {
                             onChange={handleChange}
                             value={input.no_hp}
                             disabled={loading}
+                            required
                         />
                     </div>
 
@@ -204,11 +249,97 @@ const TripDetail = () => {
                             onChange={handleChange}
                             value={input.meeting_point}
                             disabled={loading}
+                            required
                         >
                             <option value="">Pilih Meeting Point</option>
                             <option value="Basecamp">Basecamp</option>
+                            <option value="Terminal Batu">Terminal Batu</option>
                         </select>
                     </div>
+
+                    {trip.trip_type === "private" && (
+                        <>
+                            <div className="mt-8 mb-4">
+                                <h3 className="text-xl text-[#FFC100] font-semibold">Detail Private Trip</h3>
+                            </div>
+
+                            <div className="mb-5 grid grid-cols-3 items-center gap-4">
+                                <label htmlFor="id_guide" className="font-medium text-gray-500">
+                                    Pilih Guide
+                                </label>
+                                <select
+                                    name="id_guide"
+                                    id="id_guide"
+                                    className="max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent w-full p-3"
+                                    onChange={handleChange}
+                                    value={input.id_guide}
+                                    disabled={loading}
+                                    required
+                                >
+                                    <option value="">Pilih Guide</option>
+                                    {guides.map(guide => (
+                                        <option key={guide.id} value={guide.id}>
+                                            {guide.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="mb-5 grid grid-cols-3 items-center gap-4">
+                                <label htmlFor="total_days" className="font-medium text-gray-500">
+                                    Jumlah Hari
+                                </label>
+                                <input
+                                    type="number"
+                                    name="total_days"
+                                    id="total_days"
+                                    className="max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent w-full p-3"
+                                    onChange={handleChange}
+                                    value={input.total_days}
+                                    disabled={loading}
+                                    required
+                                />
+                            </div>
+
+                            <div className="mb-5 grid grid-cols-3 items-center gap-4">
+                                <label htmlFor="start_date" className="font-medium text-gray-500">
+                                    Tanggal Mulai
+                                </label>
+                                <input
+                                    type="date"
+                                    name="start_date"
+                                    id="start_date"
+                                    className="max-w-sm border border-gray-300 text-gray-900 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-[#FFC100] focus:border-transparent w-full p-3"
+                                    onChange={handleChange}
+                                    value={input.start_date}
+                                    disabled={loading}
+                                    required
+                                />
+                            </div>
+
+                            <div className="mb-5 grid grid-cols-3 items-start gap-4">
+                                <label className="font-medium text-gray-500 pt-2">
+                                    Pilih Porter
+                                </label>
+                                <div className="grid grid-cols-2 gap-4">
+                                    {porters.map(porter => (
+                                        <div key={porter.id} className="flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                id={`porter-${porter.id}`}
+                                                className="mr-2 h-4 w-4 text-[#FFC100] focus:ring-[#FFC100] border-gray-300 rounded"
+                                                onChange={() => handlePorterSelection(porter.id)}
+                                                checked={selectedPorters.includes(porter.id)}
+                                            />
+                                            <label htmlFor={`porter-${porter.id}`}>
+                                                {porter.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </>
+                    )}
 
                     <div className="flex justify-center">
                         <button
@@ -228,27 +359,57 @@ const TripDetail = () => {
                         </div>
                     )}
                 </form>
-            </div>
 
-            {showConfirmBook && (
-                <div className="fixed top-4 right-4 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-50 w-72">
-                    <h2 className="text-base font-semibold mb-3 text-gray-800">Booking Trip ini?</h2>
-                    <div className="flex justify-end gap-2">
+                <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
+                <div className="mt-10">
+                    <div className="flex space-x-4 mb-4">
                         <button
-                            onClick={confirmAndBook}
-                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded text-sm"
+                            className={`px-4 py-2 rounded-lg transition ${selectedTab === 'agenda' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
+                            onClick={() => setSelectedTab('agenda')}
                         >
-                            Ya
+                            Agenda
                         </button>
+
                         <button
-                            onClick={() => setShowConfirmBook(false)}
-                            className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1.5 rounded text-sm"
+                            className={`px-4 py-2 rounded-lg transition ${selectedTab === 'equipment' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
+                            onClick={() => setSelectedTab('equipment')}
                         >
-                            Batal
+                            Perlengkapan
                         </button>
+
+                        <button
+                            className={`px-4 py-2 rounded-lg transition ${selectedTab === 'estimation_time' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
+                            onClick={() => setSelectedTab('estimation_time')}
+                        >
+                            Estimasi Waktu
+                        </button>
+
+                    </div>
+
+                    <div className="mt-10">
+                        {selectedTab === 'agenda' && (
+                            <div>
+                                <h4 className="font-bold text-lg">Agenda</h4>
+                                <p className="mt-4">{trip.agenda}</p>
+                            </div>
+                        )}
+
+                        {selectedTab === 'equipment' && (
+                            <div>
+                                <h4 className="font-bold text-lg">Perlengkapan</h4>
+                                <p className="mt-4">{trip.equipment}</p>
+                            </div>
+                        )}
+
+                        {selectedTab === 'estimation_time' && (
+                            <div>
+                                <h4 className="font-bold text-lg">Estimasi Waktu</h4>
+                                <p className="mt-4">{trip.estimation_time}</p>
+                            </div>
+                        )}
                     </div>
                 </div>
-            )}
+            </div>
         </div>
     );
 };

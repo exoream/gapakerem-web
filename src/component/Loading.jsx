@@ -5,7 +5,7 @@ const Loading = () => {
                 <div className="absolute inset-0 border-4 border-[#FFC100] border-t-transparent rounded-full animate-spin"></div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Loading;
