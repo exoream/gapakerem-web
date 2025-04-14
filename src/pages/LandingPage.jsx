@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react';
 import Logo from '../assets/logo/logo.png'
 import Icon1 from '../assets/icon/mount.png'
 import { P1, P2, P3, P4 } from '../assets/photo'
@@ -15,8 +15,39 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faMousePointer, faImages, faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 import Card1 from '../component/Card1'
 import Testimoni from '../component/Testimoni'
+import axios from 'axios';
+import Loading from '../component/Loading';
+import Slide from '../component/Slide';
 
 const LandingPage = () => {
+    const [guide, setGuide] = useState([]);
+    const [porter, setPorter] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        setLoading(true);
+        axios.all([
+            axios.get('https://gapakerem.vercel.app/guides'),
+            axios.get('https://gapakerem.vercel.app/porters')
+        ])
+            .then(axios.spread((openRes, privateRes) => {
+                setGuide(openRes.data.data.guides);
+                setPorter(privateRes.data.data.porters);
+                console.log(openRes);
+                setLoading(false);
+            }))
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+                setErrorMessage(error.response.data.message);
+                setError(true);
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) return <Loading />;
+
     return (
         <div className='py-10'>
             <div className='px-40 py-20 flex justify-center items-center gap-10'>
@@ -170,7 +201,7 @@ const LandingPage = () => {
                 </div>
             </div>
 
-            <div className='py-20 px-60 mt-10'>
+            <div className='py-10 px-60 mt-20'>
                 <div className='flex items-center justify-center gap-10'>
                     <div className='h-5 w-1/3 bg-[#FFC100] rounded-lg' />
                     <h1 className='text-3xl text-[#FFC100]'>Gallery</h1>
@@ -200,18 +231,30 @@ const LandingPage = () => {
                     <img src={G6} alt='Gallery 6' className='w-full h-auto rounded-lg object-cover' />
                 </div>
 
-                <div className='h-5 bg-[#FFC100] rounded-lg mt-25' />
+                <div className='h-5 bg-[#FFC100] rounded-lg mt-20' />
             </div>
-            <div className='py-20 px-60'>
+            <div className='px-60 py-10'>
                 <p className='text-center'>Jelajahi Gunung Bersama Guide & Porter Berpengalaman</p>
-                <h1 className='text-3xl text-[#FFC100] text-center mt-5'>Guide</h1>
-                <div className='flex gap-10 justify-center mt-10'>
-                    <Card1 imageUrl={Guide1} name={"Yasin Habibie"} />
-                    <Card1 imageUrl={Guide2} name={"Fajrul"} />
+
+                <div>
+                    <h1 className='text-3xl text-[#FFC100] text-center mt-5'>-- Guide --</h1>
+                    <Slide
+                        items={guide}
+                        renderItem={(item) => <Card1 imageUrl={item.photo} name={item.name} />}
+                        itemsPerView={3}
+                    />
+                </div>
+                <div className="mt-10">
+                    <h1 className='text-3xl text-[#FFC100] text-center mt-5'>-- Porter --</h1>
+                    <Slide
+                        items={porter}
+                        renderItem={(item) => <Card1 imageUrl={item.photo} name={item.name} />}
+                        itemsPerView={3}
+                    />
                 </div>
             </div>
 
-            <div className='relative px-60 py-10'>
+            <div className='relative px-60 py-10 mt-20'>
                 <img src={Background2} alt="background2" className="absolute top-0 left-0 w-full h-full z-0" />
 
                 <div className='flex items-center justify-center gap-4 relative'>
