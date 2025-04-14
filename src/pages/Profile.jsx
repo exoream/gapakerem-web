@@ -67,7 +67,6 @@ const Profile = () => {
                         )}
                     </div>
 
-
                     <div className="mb-5">
                         <label className="font-medium text-gray-500">Username</label>
                         <input

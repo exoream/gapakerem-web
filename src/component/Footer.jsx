@@ -7,7 +7,7 @@ import Icon1 from '../assets/icon/mount.png'
 
 const Footer = () => {
     return (
-        <div className='mt-40'>
+        <div className='mt-20'>
             <div className='flex justify-center'>
                 <img src={Icon1} alt="mount" className='h-10' />
                 <img src={Icon1} alt="mount" className='h-20' />
@@ -31,9 +31,9 @@ const Footer = () => {
                     <div>
                         <h1 className="text-2xl text-[#FFC100] mb-2">Ikuti Kami</h1>
                         <div className="flex gap-10 text-5xl">
-                            <FontAwesomeIcon icon={faInstagram} />
-                            <FontAwesomeIcon icon={faYoutube} />
-                            <FontAwesomeIcon icon={faTiktok} />
+                            <FontAwesomeIcon icon={faInstagram} className='hover:text-[#FFC100] transition' />
+                            <FontAwesomeIcon icon={faYoutube} className='hover:text-[#FFC100] transition' />
+                            <FontAwesomeIcon icon={faTiktok} className='hover:text-[#FFC100] transition' />
                         </div>
                     </div>
 

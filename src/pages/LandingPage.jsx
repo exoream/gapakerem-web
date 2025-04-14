@@ -6,12 +6,11 @@ import { L1, L2, L3, L4 } from '../assets/service'
 import { G1, G2, G3, G4, G5, G6 } from '../assets/gallery'
 import Background from '../assets/background/bgmount.png'
 import Background2 from '../assets/background/bgmount2.png'
+import Background3 from '../assets/background/bgmount4.png'
 import Tools from '../assets/icon/tools.png'
 import Logo2 from '../assets/logo/seven.png'
-import Guide1 from '../assets/guide/yasinhabibie.png'
-import Guide2 from '../assets/guide/fajrul.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { faMousePointer, faImages, faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 import Card1 from '../component/Card1'
 import Testimoni from '../component/Testimoni'
@@ -29,7 +28,6 @@ const LandingPage = () => {
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        // Initialize AOS animation library
         AOS.init({
             duration: 800,
             once: false,
@@ -59,36 +57,30 @@ const LandingPage = () => {
     return (
         <div className='overflow-x-hidden'>
             {/* Hero Section */}
-            <section className='px-8 md:px-20 lg:px-50 py-16 md:py-20'>
+            <section className='px-8 md:px-20 lg:px-50 py-16 md:py-20 mb-20'>
                 <div className='flex flex-col md:flex-row justify-center items-center gap-8 md:gap-10'>
+                    <img src={Background3} alt="background" className="absolute bottom-0 left-0 w-full z-0 h-100 w-100 opacity-50" />
+
+
                     <div data-aos="fade-right">
                         <img src={Logo} alt="Logo" className='h-24 md:h-28 lg:h-100' />
                     </div>
 
                     <div className='relative text-center' data-aos="fade-left">
-                        <img
-                            src={Icon1}
-                            className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-75 h-20 md:h-24 lg:h-28'
-                        />
 
                         <h1 className='font-bold text-3xl md:text-4xl lg:text-5xl relative z-10'>
                             GaPakeRem Adventure
                         </h1>
 
-                        <h4 className='text-xl md:text-2xl lg:text-3xl relative z-10 mt-2'>
+                        <h4 className='text-xl text-[#FF6500] md:text-2xl lg:text-3xl relative z-10 mt-2'>
                             Lifetime brotherhood
                         </h4>
 
-                        <div className='relative mt-6 md:mt-8 lg:mt-10 h-10'>
-                            <img
-                                src={Icon1}
-                                className='absolute left-[20%] top-0 h-6 md:h-8 opacity-75'
-                            />
-                            <img
-                                src={Icon1}
-                                className='absolute left-[60%] top-2 h-8 md:h-10 opacity-75'
-                            />
-                        </div>
+                        <button
+                            className="bg-[#FF6500] text-2xl text-white px-4 py-2 rounded-lg shadow-lg hover:bg-yellow-400 transition mt-10"
+                        >
+                            Mulai Petualanganmu!
+                        </button>
                     </div>
                 </div>
             </section>
@@ -129,9 +121,8 @@ const LandingPage = () => {
             </section>
 
             {/* Services Section */}
-            <section className="relative px-8 md:px-20 lg:px-40 py-16 md:py-20">
+            <section className="relative px-8 md:px-20 lg:px-50 py-16 md:py-20">
                 <img src={Background} alt="background" className="absolute top-0 left-0 w-full h-full z-0" />
-
 
                 <div className='mt-20 md:mt-32 lg:mt-40 flex items-center gap-6 md:gap-10 relative z-10' data-aos="fade-right">
                     <h1 className='text-2xl md:text-3xl font-bold text-gray-500'>Layanan trip Kami</h1>
@@ -334,6 +325,21 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
+
+            <div className="mt-40 text-center text-[#FFC100] font-extrabold opacity-10 whitespace-nowrap pointer-events-none select-none">
+                <span className="text-[150px]">GAPAKEREM</span><span className="text-[50px]">Adventure</span>
+            </div>
+
+            <a
+                href="https://wa.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
+            >
+                <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
+                <span className="font-medium">Chat via WhatsApp</span>
+            </a>
+
         </div>
     )
 }
