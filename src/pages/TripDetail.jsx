@@ -16,6 +16,7 @@ const TripDetail = () => {
     const [guides, setGuides] = useState([]);
     const [porters, setPorters] = useState([]);
     const [selectedPorters, setSelectedPorters] = useState([]);
+    const [selectedTab, setSelectedTab] = useState("agenda");
 
     const [input, setInput] = useState({
         total_participant: "",
@@ -65,7 +66,6 @@ const TripDetail = () => {
             meeting_point: meeting_point,
         };
 
-        // Add private trip data if trip type is private
         if (trip.trip_type === "private") {
             bookingData.private_trip = {
                 id_guide: Number(id_guide),
@@ -109,13 +109,11 @@ const TripDetail = () => {
 
         setLoading(true);
 
-        // Fetch trip details
         axios.get(`https://gapakerem.vercel.app/trips/${id}`)
             .then((response) => {
                 setTrip(response.data.data);
                 setLoading(false);
 
-                // If it's a private trip, fetch guides and porters
                 if (response.data.data.trip_type === "private") {
                     fetchGuidesAndPorters();
                 }
@@ -132,14 +130,12 @@ const TripDetail = () => {
         const token = Cookies.get('token');
         if (!token) return;
 
-        // Fetch available guides
         axios.get("https://gapakerem.vercel.app/guides", {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(response => setGuides(response.data.data))
             .catch(error => console.error("Error fetching guides:", error));
 
-        // Fetch available porters
         axios.get("https://gapakerem.vercel.app/porters", {
             headers: { Authorization: `Bearer ${token}` }
         })
@@ -169,6 +165,7 @@ const TripDetail = () => {
                     </p>
                 </div>
             </div>
+
             <div className="flex justify-center items-center gap-50">
                 <div className="mt-10">
                     <h2 className="text-lg font-bold mb-4 text-center">Guide</h2>
@@ -189,6 +186,7 @@ const TripDetail = () => {
                     </div>
                 </div>
             </div>
+
             <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
             <div className="mt-10">
                 <form onSubmit={handleBook}>
@@ -259,7 +257,6 @@ const TripDetail = () => {
                         </select>
                     </div>
 
-                    {/* Private trip fields - only show if trip type is private */}
                     {trip.trip_type === "private" && (
                         <>
                             <div className="mt-8 mb-4">
@@ -362,6 +359,56 @@ const TripDetail = () => {
                         </div>
                     )}
                 </form>
+
+                <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
+                <div className="mt-10">
+                    <div className="flex space-x-4 mb-4">
+                        <button
+                            className={`px-4 py-2 rounded-lg transition ${selectedTab === 'agenda' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
+                            onClick={() => setSelectedTab('agenda')}
+                        >
+                            Agenda
+                        </button>
+
+                        <button
+                            className={`px-4 py-2 rounded-lg transition ${selectedTab === 'equipment' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
+                            onClick={() => setSelectedTab('equipment')}
+                        >
+                            Perlengkapan
+                        </button>
+
+                        <button
+                            className={`px-4 py-2 rounded-lg transition ${selectedTab === 'estimation_time' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
+                            onClick={() => setSelectedTab('estimation_time')}
+                        >
+                            Estimasi Waktu
+                        </button>
+
+                    </div>
+
+                    <div className="mt-10">
+                        {selectedTab === 'agenda' && (
+                            <div>
+                                <h4 className="font-bold text-lg">Agenda</h4>
+                                <p className="mt-4">{trip.agenda}</p>
+                            </div>
+                        )}
+
+                        {selectedTab === 'equipment' && (
+                            <div>
+                                <h4 className="font-bold text-lg">Perlengkapan</h4>
+                                <p className="mt-4">{trip.equipment}</p>
+                            </div>
+                        )}
+
+                        {selectedTab === 'estimation_time' && (
+                            <div>
+                                <h4 className="font-bold text-lg">Estimasi Waktu</h4>
+                                <p className="mt-4">{trip.estimation_time}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );
