@@ -4,6 +4,8 @@ import axios from 'axios';
 import Loading from '../component/Loading';
 import Cookies from 'js-cookie';
 import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 
 const TripDetail = () => {
@@ -440,6 +442,16 @@ const TripDetail = () => {
                     </div>
                 </div>
             </div>
+
+            <a
+                href="https://wa.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
+            >
+                <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
+                <span className="font-medium">Chat via WhatsApp</span>
+            </a>
 
             <ToastContainer
                 className="absolute top-5 right-5"

@@ -2,10 +2,11 @@ import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../component/Loading';
 import { Link } from 'react-router-dom';
-import Background from '../assets/background/trip.png'
-import Icon1 from '../assets/icon/mount.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import Background from '../assets/background/trip.png';
+import Icon1 from '../assets/icon/mount.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faChevronLeft, faChevronRight, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,6 +14,8 @@ const Trip = () => {
     const [openTrip, setOpenTrip] = useState([]);
     const [privateTrip, setPrivateTrip] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [openTripSearch, setOpenTripSearch] = useState('');
+    const [privateTripSearch, setPrivateTripSearch] = useState('');
 
     const [openTripPagination, setOpenTripPagination] = useState({
         current_page: 1,
@@ -27,10 +30,11 @@ const Trip = () => {
     });
 
     const fetchData = (openPage = 1, privatePage = 1) => {
+        window.scrollTo(0, 0);
         setLoading(true);
         axios.all([
-            axios.get(`https://gapakerem.vercel.app/trips/open?page=${openPage}`),
-            axios.get(`https://gapakerem.vercel.app/trips/private?page=${privatePage}`)
+            axios.get(`https://gapakerem.vercel.app/trips/open?page=${openPage}&search=${openTripSearch}`),
+            axios.get(`https://gapakerem.vercel.app/trips/private?page=${privatePage}&search=${privateTripSearch}`)
         ])
             .then(axios.spread((openRes, privateRes) => {
                 setOpenTrip(openRes.data.data.trips);
@@ -43,7 +47,7 @@ const Trip = () => {
             }))
             .catch((error) => {
                 console.error("Error :", error);
-                toast.error(error.response.data.message, {
+                toast.error(error.response?.data?.message || "Failed to fetch trip data", {
                     position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: true,
@@ -51,6 +55,16 @@ const Trip = () => {
 
                 setLoading(false)
             });
+    };
+
+    const handleOpenTripSearch = (e) => {
+        e.preventDefault();
+        fetchData(1, privateTripPagination.current_page);
+    };
+
+    const handlePrivateTripSearch = (e) => {
+        e.preventDefault();
+        fetchData(openTripPagination.current_page, 1);
     };
 
     const handleOpenTripPageChange = (newPage) => {
@@ -124,7 +138,25 @@ const Trip = () => {
                 </h1>
                 <p>Pendakian bersama grup terbuka, dengan jadwal dan rute yang sudah ditentukan.</p>
 
-                <div className='grid grid-cols-3 gap-10 mt-10'>
+                <div className="mt-4">
+                    <form onSubmit={handleOpenTripSearch} className="flex gap-2 w-full max-w-md mb-6">
+                        <input
+                            type="text"
+                            value={openTripSearch}
+                            onChange={(e) => setOpenTripSearch(e.target.value)}
+                            placeholder="Cari trip berdasarkan nama gunung..."
+                            className="px-4 py-2 border border-gray-300 rounded-md flex-grow focus:outline-none focus:ring-2 focus:ring-[#FFC100]"
+                        />
+                        <button
+                            type="submit"
+                            className="bg-[#FFC100] text-white px-4 py-2 rounded-md hover:bg-[#e6ae00] transition duration-200"
+                        >
+                            <FontAwesomeIcon icon={faSearch} />
+                        </button>
+                    </form>
+                </div>
+
+                <div className='grid grid-cols-3 gap-10 mt-6'>
                     {openTrip.length > 0 ? openTrip.map((trip, index) => (
                         <Link
                             to={`/trip/${trip.mountain_name}`}
@@ -174,7 +206,25 @@ const Trip = () => {
                 </h1>
                 <p>Pendakian eksklusif untuk grup, dengan kebebasan mengatur jadwal dan rute perjalanan.</p>
 
-                <div className='grid grid-cols-3 gap-10 mt-10'>
+                <div className="mt-4">
+                    <form onSubmit={handlePrivateTripSearch} className="flex gap-2 w-full max-w-md mb-6">
+                        <input
+                            type="text"
+                            value={privateTripSearch}
+                            onChange={(e) => setPrivateTripSearch(e.target.value)}
+                            placeholder="Cari trip berdasarkan nama gunung..."
+                            className="px-4 py-2 border border-gray-300 rounded-md flex-grow focus:outline-none focus:ring-2 focus:ring-[#FFC100]"
+                        />
+                        <button
+                            type="submit"
+                            className="bg-[#FFC100] text-white px-4 py-2 rounded-md hover:bg-[#e6ae00] transition duration-200"
+                        >
+                            <FontAwesomeIcon icon={faSearch} />
+                        </button>
+                    </form>
+                </div>
+
+                <div className='grid grid-cols-3 gap-10 mt-6'>
                     {privateTrip.length > 0 ? privateTrip.map((trip, index) => (
                         <Link
                             to={`/trip/${trip.mountain_name}`}
@@ -222,6 +272,15 @@ const Trip = () => {
                 className="absolute top-5 right-5"
             />
 
+            <a
+                href="https://wa.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
+            >
+                <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
+                <span className="font-medium">Chat via WhatsApp</span>
+            </a>
         </div>
     );
 };

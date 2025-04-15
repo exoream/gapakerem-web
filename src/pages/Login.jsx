@@ -2,9 +2,9 @@ import { React, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import Logo from '../assets/logo/logo.png'
-import Background from '../assets/background/bgmount3.png'
-import Icon1 from '../assets/icon/mount.png'
+import Logo from '../assets/logo/logo.png';
+import Background from '../assets/background/bgmount3.png';
+import Icon1 from '../assets/icon/mount.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -29,7 +29,7 @@ const Login = () => {
         let { username, password } = input;
         axios.post(`https://gapakerem.vercel.app/login`, { username, password })
             .then((res) => {
-                toast.success("Berhasil Login!", {
+                toast.success(res.message, {
                     position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: true,

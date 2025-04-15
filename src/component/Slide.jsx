@@ -25,19 +25,19 @@ const Slide = ({ items, renderItem, itemsPerView = 3 }) => {
                     <button
                         onClick={prevSlide}
                         disabled={currentSlide === 0}
-                        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-[#FFC100] text-white ${currentSlide === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#e0a800]'}`}
+                        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 w-12 h-12 rounded-full bg-[#FFC100] text-white ${currentSlide === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#e0a800]'}`}
                         aria-label="Previous slide"
                     >
-                        <FontAwesomeIcon icon={faChevronLeft} />
+                        <FontAwesomeIcon icon={faChevronLeft} className="text-lg" />
                     </button>
 
                     <button
                         onClick={nextSlide}
                         disabled={currentSlide >= Math.ceil(items.length / slidesPerView) - 1}
-                        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-[#FFC100] text-white ${currentSlide >= Math.ceil(items.length / slidesPerView) - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#e0a800]'}`}
+                        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 w-12 h-12 rounded-full bg-[#FFC100] text-white ${currentSlide >= Math.ceil(items.length / slidesPerView) - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#e0a800]'}`}
                         aria-label="Next slide"
                     >
-                        <FontAwesomeIcon icon={faChevronRight} />
+                        <FontAwesomeIcon icon={faChevronRight} className="text-lg" />
                     </button>
                 </>
             )}

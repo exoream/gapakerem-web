@@ -132,7 +132,6 @@ const BookingDetail = () => {
         }).format(value);
     };
 
-
     const paymentStatus = (status) => {
         switch (status) {
             case 'unpaid':
