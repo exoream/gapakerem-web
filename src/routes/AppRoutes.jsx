@@ -13,10 +13,14 @@ import Book from "../pages/Book";
 import BookingDetail from "../pages/BookingDetail";
 import UpdateProfile from "../pages/UpdateProfile";
 import UpdatePassword from "../pages/UpdatePassword";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AppRoutes = () => {
     return (
         <>
+            <ToastContainer />
+
             <Routes>
                 <Route path="" element={
                     <>

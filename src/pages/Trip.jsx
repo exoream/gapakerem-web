@@ -6,13 +6,13 @@ import Background from '../assets/background/trip.png'
 import Icon1 from '../assets/icon/mount.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Trip = () => {
     const [openTrip, setOpenTrip] = useState([]);
     const [privateTrip, setPrivateTrip] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
     const [openTripPagination, setOpenTripPagination] = useState({
         current_page: 1,
@@ -42,13 +42,14 @@ const Trip = () => {
                 setLoading(false);
             }))
             .catch((error) => {
-                console.error("Error fetching data:", error);
-                setErrorMessage(error.response?.data?.message || "Something went wrong");
-                setError(true);
-                setLoading(false);
-                setTimeout(() => {
-                    setError(false);
-                }, 3000);
+                console.error("Error :", error);
+                toast.error(error.response.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
+                setLoading(false)
             });
     };
 
@@ -217,11 +218,10 @@ const Trip = () => {
                 )}
             </div>
 
-            {error && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
-                    {errorMessage}
-                </div>
-            )}
+            <ToastContainer
+                className="absolute top-5 right-5"
+            />
+
         </div>
     );
 };

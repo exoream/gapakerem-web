@@ -4,14 +4,14 @@ import Cookies from 'js-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateProfile = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [profile, setProfile] = useState({ name: '' });
     const [photoProfile, setPhotoProfile] = useState(null);
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
     const handleUpdate = (e) => {
         e.preventDefault();
@@ -30,19 +30,28 @@ const UpdateProfile = () => {
                 'Content-Type': 'multipart/form-data',
             },
         })
-            .then(() => {
+            .then((res) => {
                 setLoading(false);
-                alert("Berhasil Update Profile");
-                navigate('/profile');
+                toast.success(res.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
+                setTimeout(() => {
+                    navigate('/profile');
+                }, 3000);
             })
+
             .catch((error) => {
                 console.error("Error :", error);
-                setErrorMessage(error.response.data.message);
-                setError(true);
-                setLoading(false);
-                setTimeout(() => {
-                    setError(false);
-                }, 3000);
+                toast.error(error.response.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
+                setLoading(false)
             });
     };
 
@@ -107,11 +116,10 @@ const UpdateProfile = () => {
                 </form>
             </div>
 
-            {error && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
-                    {errorMessage}
-                </div>
-            )}
+            <ToastContainer
+                className="absolute top-5 right-5"
+            />
+
         </div>
     )
 }

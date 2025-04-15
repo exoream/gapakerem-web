@@ -5,6 +5,8 @@ import Loading from '../component/Loading';
 import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BookingDetail = () => {
     const location = useLocation();
@@ -13,8 +15,6 @@ const BookingDetail = () => {
     const [loading, setLoading] = useState(true);
     const [loadingUploadFeedback, setLoadingUploadFeedback] = useState(false);
     const [loadingUploadPaymentProof, setLoadingUploadPaymentProof] = useState(false);
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
     const [paymentProof, setPaymentProof] = useState(null);
     const [feedback, setFeedback] = useState("")
     const [rating, setRating] = useState(0)
@@ -22,11 +22,6 @@ const BookingDetail = () => {
 
     useEffect(() => {
         const token = Cookies.get('token');
-
-        if (error) return
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
-            {errorMessage}
-        </div>
 
         setLoading(true);
         axios.get(`https://gapakerem.vercel.app/bookings/profile/${id}`, {
@@ -39,13 +34,14 @@ const BookingDetail = () => {
                 setLoading(false);
             })
             .catch((error) => {
-                console.error("Error fetching data:", error);
-                setErrorMessage(error.response.data.message);
-                setError(true);
-                setLoading(false);
-                setTimeout(() => {
-                    setError(false);
-                }, 3000);
+                console.error("Error :", error);
+                toast.error(error.response.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
+                setLoading(false)
             });
     }, [id]);
 
@@ -66,19 +62,27 @@ const BookingDetail = () => {
                 'Content-Type': 'multipart/form-data',
             },
         })
-            .then(() => {
+            .then((res) => {
                 setLoadingUploadPaymentProof(false);
-                alert("Bukti pembayaran berhasil diupload!");
-                window.location.reload();
+                toast.success(res.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
             })
             .catch((error) => {
                 console.error("Error :", error);
-                setErrorMessage(error.response.data.message);
-                setError(true);
-                setLoadingUploadPaymentProof(false);
-                setTimeout(() => {
-                    setError(false);
-                }, 3000);
+                toast.error(error.response.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
+                setLoadingUploadPaymentProof(false)
             });
     };
 
@@ -99,19 +103,24 @@ const BookingDetail = () => {
             },
         })
             .then((res) => {
-                alert('Feedback berhasil dikirim!');
+                toast.success(res.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
                 setFeedback("");
                 setRating(0);
                 setLoadingUploadFeedback(false)
             })
-            .catch((err) => {
+            .catch((error) => {
                 console.error("Error :", error);
-                setErrorMessage(error.response.data.message);
-                setError(true);
-                setLoadingUploadFeedback(false);
-                setTimeout(() => {
-                    setError(false);
-                }, 3000);
+                toast.error(error.response.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
+                setLoadingUploadFeedback(false)
             });
     };
 
@@ -308,11 +317,9 @@ const BookingDetail = () => {
                 </div>
             )}
 
-            {error && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
-                    {errorMessage}
-                </div>
-            )}
+            <ToastContainer
+                className="absolute top-5 right-5"
+            />
         </div>
     )
 }
