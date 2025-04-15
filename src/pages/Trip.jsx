@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Background from '../assets/background/trip.png'
 import Icon1 from '../assets/icon/mount.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 const Trip = () => {
     const [openTrip, setOpenTrip] = useState([]);
@@ -14,27 +14,96 @@ const Trip = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    useEffect(() => {
+    const [openTripPagination, setOpenTripPagination] = useState({
+        current_page: 1,
+        last_page: 1,
+        total_data: 0
+    });
+
+    const [privateTripPagination, setPrivateTripPagination] = useState({
+        current_page: 1,
+        last_page: 1,
+        total_data: 0
+    });
+
+    const fetchData = (openPage = 1, privatePage = 1) => {
         setLoading(true);
         axios.all([
-            axios.get('https://gapakerem.vercel.app/trips/open?page=1'),
-            axios.get('https://gapakerem.vercel.app/trips/private?page=1')
+            axios.get(`https://gapakerem.vercel.app/trips/open?page=${openPage}`),
+            axios.get(`https://gapakerem.vercel.app/trips/private?page=${privatePage}`)
         ])
             .then(axios.spread((openRes, privateRes) => {
                 setOpenTrip(openRes.data.data.trips);
                 setPrivateTrip(privateRes.data.data.trips);
+
+                setOpenTripPagination(openRes.data.data.pagination);
+                setPrivateTripPagination(privateRes.data.data.pagination);
+
                 setLoading(false);
             }))
             .catch((error) => {
                 console.error("Error fetching data:", error);
-                setErrorMessage(error.response.data.message);
+                setErrorMessage(error.response?.data?.message || "Something went wrong");
                 setError(true);
                 setLoading(false);
                 setTimeout(() => {
                     setError(false);
                 }, 3000);
             });
+    };
+
+    // Change page handlers
+    const handleOpenTripPageChange = (newPage) => {
+        if (newPage < 1 || newPage > openTripPagination.last_page) return;
+        fetchData(newPage, privateTripPagination.current_page);
+    };
+
+    const handlePrivateTripPageChange = (newPage) => {
+        if (newPage < 1 || newPage > privateTripPagination.last_page) return;
+        fetchData(openTripPagination.current_page, newPage);
+    };
+
+    useEffect(() => {
+        fetchData();
     }, []);
+
+    const Pagination = ({ pagination, onPageChange }) => {
+        return (
+            <div className="flex justify-center mt-8 gap-2">
+                <button
+                    onClick={() => onPageChange(pagination.current_page - 1)}
+                    disabled={pagination.current_page === 1}
+                    className={`px-3 py-1 rounded-md ${pagination.current_page === 1 ? 'bg-gray-200 text-gray-500' : 'bg-gray-300 hover:bg-gray-400 text-gray-700'}`}
+                >
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                </button>
+
+                <div className="flex gap-1">
+                    {Array.from({ length: pagination.last_page }, (_, i) => i + 1).map(page => (
+                        <button
+                            key={page}
+                            onClick={() => onPageChange(page)}
+                            className={`px-3 py-1 rounded-md ${pagination.current_page === page
+                                ? 'bg-[#FFC100] text-white'
+                                : 'bg-gray-200 hover:bg-gray-300 text-gray-700'}`}
+                        >
+                            {page}
+                        </button>
+                    ))}
+                </div>
+
+                <button
+                    onClick={() => onPageChange(pagination.current_page + 1)}
+                    disabled={pagination.current_page === pagination.last_page}
+                    className={`px-3 py-1 rounded-md ${pagination.current_page === pagination.last_page
+                        ? 'bg-gray-200 text-gray-500'
+                        : 'bg-gray-300 hover:bg-gray-400 text-gray-700'}`}
+                >
+                    <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+            </div>
+        );
+    };
 
     if (loading) return <Loading />;
 
@@ -88,9 +157,15 @@ const Trip = () => {
                                 />
                             </div>
                         </Link>
-
                     )) : <p className="text-gray-500">Tidak ada data trip tersedia.</p>}
                 </div>
+
+                {openTripPagination.last_page > 1 && (
+                    <Pagination
+                        pagination={openTripPagination}
+                        onPageChange={handleOpenTripPageChange}
+                    />
+                )}
             </div>
 
             <div className='mt-20'>
@@ -134,6 +209,13 @@ const Trip = () => {
                         </Link>
                     )) : <p className="text-gray-500">Tidak ada data trip tersedia.</p>}
                 </div>
+
+                {privateTripPagination.last_page > 1 && (
+                    <Pagination
+                        pagination={privateTripPagination}
+                        onPageChange={handlePrivateTripPageChange}
+                    />
+                )}
             </div>
 
             {error && (
