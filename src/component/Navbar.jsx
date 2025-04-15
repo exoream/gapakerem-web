@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className='py-5 px-20 flex justify-between items-center'>
             <img src={Logo} alt='Logo' className='h-10' />
 
-            <div className='flex gap-10'>
+            <div className='flex gap-10 text-lg'>
                 <Link to="/" className={navLinkClass('/')}>Home</Link>
                 <Link to="/tentangkami" className={navLinkClass('/tentangkami')}>Tentang</Link>
                 <Link to="/daftartrip" className={navLinkClass('/daftartrip')}>Daftar Trip</Link>
@@ -32,7 +32,12 @@ const Navbar = () => {
             <div className='flex justify-center items-center gap-10'>
                 {isLogin ? (
                     <Link to="/bookings">
-                        <FontAwesomeIcon icon={faShoppingCart} className='text-[#FF6500] cursor-pointer' />
+                        <div className={`w-10 h-10 flex items-center justify-center rounded-full transition ${location.pathname === '/bookings'
+                            ? 'bg-[#FF6500] text-white'
+                            : 'text-[#FF6500] hover:bg-[#FF6500] hover:text-white'
+                            }`}>
+                            <FontAwesomeIcon icon={faShoppingCart} className="text-lg" />
+                        </div>
                     </Link>
                 ) : (
                     <FontAwesomeIcon icon={faShoppingCart} className='text-gray-400 cursor-not-allowed' />
@@ -40,7 +45,12 @@ const Navbar = () => {
 
                 {isLogin ? (
                     <Link to="/profile">
-                        <FontAwesomeIcon icon={faUser} className='text-[#FF6500] cursor-pointer' />
+                        <div className={`w-10 h-10 flex items-center justify-center rounded-full transition ${location.pathname === '/profile'
+                            ? 'bg-[#FF6500] text-white'
+                            : 'text-[#FF6500] hover:bg-[#FF6500] hover:text-white'
+                            }`}>
+                            <FontAwesomeIcon icon={faUser} className="text-lg" />
+                        </div>
                     </Link>
                 ) : (
                     <button

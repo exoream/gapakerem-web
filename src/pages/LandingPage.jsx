@@ -1,4 +1,5 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react'
+import '../App.css';
 import Logo from '../assets/logo/logo.png'
 import Icon1 from '../assets/icon/mount.png'
 import { P1, P2, P3, P4 } from '../assets/photo'
@@ -6,20 +7,19 @@ import { L1, L2, L3, L4 } from '../assets/service'
 import { G1, G2, G3, G4, G5, G6 } from '../assets/gallery'
 import Background from '../assets/background/bgmount.png'
 import Background2 from '../assets/background/bgmount2.png'
+import Background3 from '../assets/background/bgmount4.png'
 import Tools from '../assets/icon/tools.png'
 import Logo2 from '../assets/logo/seven.png'
-import Guide1 from '../assets/guide/yasinhabibie.png'
-import Guide2 from '../assets/guide/fajrul.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { faMousePointer, faImages, faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 import Card1 from '../component/Card1'
 import Testimoni from '../component/Testimoni'
-import axios from 'axios';
-import Loading from '../component/Loading';
-import Slide from '../component/Slide';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import axios from 'axios'
+import Loading from '../component/Loading'
+import Slide from '../component/Slide'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 const LandingPage = () => {
     const [guide, setGuide] = useState([]);
@@ -29,7 +29,6 @@ const LandingPage = () => {
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        // Initialize AOS animation library
         AOS.init({
             duration: 800,
             once: false,
@@ -48,7 +47,7 @@ const LandingPage = () => {
             }))
             .catch((error) => {
                 console.error("Error fetching data:", error);
-                setErrorMessage(error.response?.data?.message || "Failed to fetch data");
+                setErrorMessage(error.response.data.message);
                 setError(true);
                 setLoading(false);
             });
@@ -59,36 +58,29 @@ const LandingPage = () => {
     return (
         <div className='overflow-x-hidden'>
             {/* Hero Section */}
-            <section className='px-8 md:px-20 lg:px-50 py-16 md:py-20'>
+            <section className='px-8 md:px-20 lg:px-50 py-16 md:py-20 mb-20'>
                 <div className='flex flex-col md:flex-row justify-center items-center gap-8 md:gap-10'>
+                    <img src={Background3} alt="background" className="absolute bottom-0 left-0 w-full z-0 h-100 w-100 opacity-50" />
+
                     <div data-aos="fade-right">
                         <img src={Logo} alt="Logo" className='h-24 md:h-28 lg:h-100' />
                     </div>
 
                     <div className='relative text-center' data-aos="fade-left">
-                        <img
-                            src={Icon1}
-                            className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-75 h-20 md:h-24 lg:h-28'
-                        />
 
                         <h1 className='font-bold text-3xl md:text-4xl lg:text-5xl relative z-10'>
                             GaPakeRem Adventure
                         </h1>
 
-                        <h4 className='text-xl md:text-2xl lg:text-3xl relative z-10 mt-2'>
+                        <h4 className='text-xl text-[#FF6500] md:text-2xl lg:text-3xl relative z-10 mt-2'>
                             Lifetime brotherhood
                         </h4>
 
-                        <div className='relative mt-6 md:mt-8 lg:mt-10 h-10'>
-                            <img
-                                src={Icon1}
-                                className='absolute left-[20%] top-0 h-6 md:h-8 opacity-75'
-                            />
-                            <img
-                                src={Icon1}
-                                className='absolute left-[60%] top-2 h-8 md:h-10 opacity-75'
-                            />
-                        </div>
+                        <button
+                            className="bg-[#FF6500] text-2xl text-white px-4 py-2 rounded-lg shadow-lg hover:bg-yellow-400 transition mt-10"
+                        >
+                            Mulai Petualanganmu!
+                        </button>
                     </div>
                 </div>
             </section>
@@ -129,9 +121,8 @@ const LandingPage = () => {
             </section>
 
             {/* Services Section */}
-            <section className="relative px-8 md:px-20 lg:px-40 py-16 md:py-20">
+            <section className="relative px-8 md:px-20 lg:px-50 py-16 md:py-20">
                 <img src={Background} alt="background" className="absolute top-0 left-0 w-full h-full z-0" />
-
 
                 <div className='mt-20 md:mt-32 lg:mt-40 flex items-center gap-6 md:gap-10 relative z-10' data-aos="fade-right">
                     <h1 className='text-2xl md:text-3xl font-bold text-gray-500'>Layanan trip Kami</h1>
@@ -143,29 +134,29 @@ const LandingPage = () => {
                         <div className='w-16 h-16 md:w-20 md:h-20 bg-gray-500 rounded-full overflow-hidden'>
                             <img src={L1} alt='layanan1' className='w-full h-full object-cover' />
                         </div>
-                        <h4 className='font-semibold text-gray-500 mt-2'>Pendaki Open Trip</h4>
-                        <p className='text-sm text-center max-w-md'>Pendakian bersama grup terbuka untuk umum dengan pemanduan profesional, cocok bagi individu yang ingin menikmati pendakian seru dan bertemu teman baru.</p>
+                        <h4 className='font-semibold text-gray-500 text-xl mt-2'>Pendaki Open Trip</h4>
+                        <p className='text-lg text-center max-w-md'>Pendakian bersama grup terbuka untuk umum dengan pemanduan profesional, cocok bagi individu yang ingin menikmati pendakian seru dan bertemu teman baru.</p>
                     </div>
                     <div className='flex flex-col gap-2 items-center' data-aos="zoom-in" data-aos-delay="200">
                         <div className='w-16 h-16 md:w-20 md:h-20 bg-gray-500 rounded-full overflow-hidden'>
                             <img src={L2} alt='layanan2' className='w-full h-full object-cover' />
                         </div>
-                        <h4 className='font-semibold text-gray-500 mt-2'>Pendaki Private Trip</h4>
-                        <p className='text-sm text-center max-w-md'>Layanan pendakian eksklusif untuk grup dengan fleksibilitas rute dan waktu yang dapat disesuaikan sesuai kebutuhan.</p>
+                        <h4 className='font-semibold text-gray-500 text-xl mt-2'>Pendaki Private Trip</h4>
+                        <p className='text-lg text-center max-w-md'>Layanan pendakian eksklusif untuk grup dengan fleksibilitas rute dan waktu yang dapat disesuaikan sesuai kebutuhan.</p>
                     </div>
                     <div className='flex flex-col gap-2 items-center' data-aos="zoom-in" data-aos-delay="300">
                         <div className='w-16 h-16 md:w-20 md:h-20 bg-gray-500 rounded-full overflow-hidden'>
                             <img src={L3} alt='layanan3' className='w-full h-full object-cover' />
                         </div>
-                        <h4 className='font-semibold text-gray-500 mt-2'>Pemandu Bersertifikat</h4>
-                        <p className='text-sm text-center max-w-md'>Pendakian dipandu oleh guide bersertifikat APGI yang berpengalaman, memastikan pengalaman aman, nyaman dan menyenangkan.</p>
+                        <h4 className='font-semibold text-gray-500 text-xl mt-2'>Pemandu Bersertifikat</h4>
+                        <p className='text-lg text-center max-w-md'>Pendakian dipandu oleh guide bersertifikat APGI yang berpengalaman, memastikan pengalaman aman, nyaman dan menyenangkan.</p>
                     </div>
                     <div className='flex flex-col gap-2 items-center' data-aos="zoom-in" data-aos-delay="400">
                         <div className='w-16 h-16 md:w-20 md:h-20 bg-gray-500 rounded-full overflow-hidden'>
                             <img src={L4} alt='layanan4' className='w-full h-full object-cover' />
                         </div>
-                        <h4 className='font-semibold text-gray-500 mt-2'>Jasa Porter</h4>
-                        <p className='text-sm text-center max-w-md'>Layanan porter untuk membawa alat dan logistik, memudahkan peserta fokus pada pengalaman pendakian.</p>
+                        <h4 className='font-semibold text-gray-500 text-xl mt-2'>Jasa Porter</h4>
+                        <p className='text-lg text-center text-lg max-w-md'>Layanan porter untuk membawa alat dan logistik, memudahkan peserta fokus pada pengalaman pendakian.</p>
                     </div>
                 </div>
             </section>
@@ -179,24 +170,24 @@ const LandingPage = () => {
 
                 <div className='mt-12 md:mt-16 lg:mt-20 flex flex-col md:flex-row justify-center items-center gap-10 md:gap-20'>
                     <div className='w-full md:w-1/3' data-aos="fade-right">
-                        <p className="text-center md:text-left">
+                        <p className="text-center md:text-left text-lg">
                             Kami di <span className='text-[#FFC100] font-semibold'>Gapakerem Outdoor & Service</span> menyediakan peralatan berkualitas tinggi untuk
                             perjalanan yang aman dan nyaman. Sewa sekarang dan fokuslah pada petualangan
                         </p>
-                        <img src={Tools} alt='image1' className="mt-4 md:mt-6" />
+                        <img src={Tools} alt='image1' className="mt-4 md:mt-6 animate-floating" />
                     </div>
                     <div className="relative flex flex-col items-center" data-aos="fade-left">
                         <FontAwesomeIcon
                             icon={faInstagram}
-                            className="absolute top-0 right-0 text-[#FFC100] opacity-50 text-3xl md:text-5xl rotate-12"
+                            className="absolute top-0 right-0 text-[#FFC100] opacity-50 text-3xl md:text-5xl rotate-12 animate-floating"
                         />
 
                         <FontAwesomeIcon
                             icon={faInstagram}
-                            className="absolute left-[-10px] top-1/2 -translate-y-1/2 text-[#FFC100] opacity-50 text-3xl md:text-5xl -rotate-12"
+                            className="absolute left-[-10px] top-1/2 -translate-y-1/2 text-[#FFC100] opacity-50 text-3xl md:text-5xl -rotate-12 animate-floating"
                         />
 
-                        <div className="absolute right-[0.1px] top-1/2 -translate-y-1/2 flex flex-col items-center">
+                        <div className="absolute right-[0.1px] top-1/2 -translate-y-1/2 flex flex-col items-center animate-floating">
                             <FontAwesomeIcon
                                 icon={faMousePointer}
                                 className="text-gray-400 text-2xl md:text-3xl -rotate-20"
@@ -229,15 +220,15 @@ const LandingPage = () => {
                 <div className="relative">
                     <FontAwesomeIcon
                         icon={faImages}
-                        className='absolute left-[5%] md:left-[10%] opacity-50 -rotate-12 text-[#FFC100] text-3xl md:text-5xl'
+                        className='absolute left-[5%] md:left-[10%] opacity-50 -rotate-12 text-[#FFC100] text-3xl md:text-5xl animate-floating'
                     />
 
                     <FontAwesomeIcon
                         icon={faImages}
-                        className='absolute right-[5%] md:right-[10%] opacity-50 rotate-12 text-[#FFC100] text-3xl md:text-5xl'
+                        className='absolute right-[5%] md:right-[10%] opacity-50 rotate-12 text-[#FFC100] text-3xl md:text-5xl animate-floating'
                     />
 
-                    <p className='text-center mt-4 md:mt-6'>
+                    <p className='text-center text-lg mt-4 md:mt-6'>
                         Lihat koleksi foto dan video dari petualangan mendaki kami.
                     </p>
                 </div>
@@ -268,7 +259,7 @@ const LandingPage = () => {
 
             {/* Guide & Porter Section */}
             <section className='px-8 md:px-20 lg:px-50 py-12 md:py-16'>
-                <p className='text-center' data-aos="fade-up">Jelajahi Gunung Bersama Guide & Porter Berpengalaman</p>
+                <p className='text-center text-lg' data-aos="fade-up">Jelajahi Gunung Bersama Guide & Porter Berpengalaman</p>
 
                 <div data-aos="fade-up">
                     <h1 className='text-2xl md:text-3xl text-[#FFC100] text-center mt-5'>-- Guide --</h1>
@@ -334,6 +325,26 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
+
+            <div className="mt-40 text-center text-[#FFC100] font-extrabold opacity-10 whitespace-nowrap pointer-events-none select-none" data-aos="slide-left">
+                <span className="text-[150px]" >GAPAKEREM</span><span className="text-[50px]">Adventure</span>
+            </div>
+
+            <a
+                href="https://wa.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
+            >
+                <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
+                <span className="font-medium">Chat via WhatsApp</span>
+            </a>
+
+            {error && (
+                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
+                    {errorMessage}
+                </div>
+            )}
         </div>
     )
 }

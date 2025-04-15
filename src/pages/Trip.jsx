@@ -28,6 +28,9 @@ const Trip = () => {
                 setErrorMessage(error.response.data.message);
                 setError(true);
                 setLoading(false);
+                setTimeout(() => {
+                    setError(false);
+                }, 3000);
             });
     }, []);
 
