@@ -87,6 +87,7 @@ const TripDetail = () => {
             .then((res) => {
                 alert("Booking Berhasil");
                 navigate('/');
+                window.scrollTo(0, 0);
             })
             .catch((error) => {
                 console.error("Error Response:", error.response);
@@ -393,26 +394,44 @@ const TripDetail = () => {
                         {selectedTab === 'agenda' && (
                             <div>
                                 <h4 className="font-bold text-lg">Agenda</h4>
-                                <p className="mt-4">{trip.agenda}</p>
+                                <ul className="mt-4 list-disc pl-4">
+                                    {trip.agenda.split(',').map((item, index) => (
+                                        <li key={index} className="mb-2">{item.trim()}</li>
+                                    ))}
+                                </ul>
                             </div>
                         )}
 
                         {selectedTab === 'equipment' && (
                             <div>
                                 <h4 className="font-bold text-lg">Perlengkapan</h4>
-                                <p className="mt-4">{trip.equipment}</p>
+                                <ul className="mt-4 list-disc pl-4">
+                                    {trip.equipment.split(',').map((item, index) => (
+                                        <li key={index} className="mb-2">{item.trim()}</li>
+                                    ))}
+                                </ul>
                             </div>
                         )}
 
                         {selectedTab === 'estimation_time' && (
                             <div>
                                 <h4 className="font-bold text-lg">Estimasi Waktu</h4>
-                                <p className="mt-4">{trip.estimation_time}</p>
+                                <ul className="mt-4 list-disc pl-4">
+                                    {trip.estimation_time.split(',').map((item, index) => (
+                                        <li key={index} className="mb-2">{item.trim()}</li>
+                                    ))}
+                                </ul>
                             </div>
                         )}
                     </div>
                 </div>
             </div>
+
+            {error && (
+                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
+                    {errorMessage}
+                </div>
+            )}
         </div>
     );
 };

@@ -52,7 +52,6 @@ const Trip = () => {
             });
     };
 
-    // Change page handlers
     const handleOpenTripPageChange = (newPage) => {
         if (newPage < 1 || newPage > openTripPagination.last_page) return;
         fetchData(newPage, privateTripPagination.current_page);
