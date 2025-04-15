@@ -4,6 +4,8 @@ import Loading from '../component/Loading';
 import { Link } from 'react-router-dom';
 import Background from '../assets/background/trip.png'
 import Icon1 from '../assets/icon/mount.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 const Trip = () => {
     const [openTrip, setOpenTrip] = useState([]);
@@ -66,15 +68,25 @@ const Trip = () => {
                                 alt={trip.mountain_name}
                                 className="w-full h-50 object-cover rounded-md"
                             />
-                            <div className="p-4">
+                            <div className="relative p-4">
                                 <h2 className="text-xl font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
                                 <p className="font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
+                                <div className="mt-2 flex justify-between items-center">
+                                    <h4 className="text-sm text-gray-500">Peserta Terdaftar: {trip.total_participants}</h4>
+                                    {trip.feedback?.average_rating ? (
+                                        <div className="flex gap-1 mt-2 text-yellow-400">
+                                            {Array.from({ length: trip.feedback.average_rating }, (_, i) => (
+                                                <FontAwesomeIcon icon={faStar} key={i} />
+                                            ))}
+                                        </div>
+                                    ) : null}
+                                </div>
+                                <img
+                                    src={Icon1}
+                                    alt="mount"
+                                    className="h-10 absolute top-2 right-0 opacity-25"
+                                />
                             </div>
-                            <img
-                                src={Icon1}
-                                alt="mount"
-                                className="h-10 absolute bottom-0 right-0 opacity-50"
-                            />
                         </Link>
 
                     )) : <p className="text-gray-500">Tidak ada data trip tersedia.</p>}
@@ -100,15 +112,25 @@ const Trip = () => {
                                 alt={trip.mountain_name}
                                 className="w-full h-50 object-cover rounded-md"
                             />
-                            <div className="p-4">
+                            <div className="relative p-4">
                                 <h2 className="text-xl font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
                                 <p className="font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
+                                <div className="mt-2 flex justify-between items-center">
+                                    <h4 className="text-sm text-gray-500">Peserta Terdaftar: {trip.total_participants}</h4>
+                                    {trip.feedback?.average_rating ? (
+                                        <div className="flex gap-1 mt-2 text-yellow-400">
+                                            {Array.from({ length: trip.feedback.average_rating }, (_, i) => (
+                                                <FontAwesomeIcon icon={faStar} key={i} />
+                                            ))}
+                                        </div>
+                                    ) : null}
+                                </div>
+                                <img
+                                    src={Icon1}
+                                    alt="mount"
+                                    className="h-10 absolute top-2 right-0 opacity-25"
+                                />
                             </div>
-                            <img
-                                src={Icon1}
-                                alt="mount"
-                                className="h-10 absolute bottom-0 right-0 opacity-50"
-                            />
                         </Link>
                     )) : <p className="text-gray-500">Tidak ada data trip tersedia.</p>}
                 </div>
