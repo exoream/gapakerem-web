@@ -3,6 +3,10 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../component/Loading';
 import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TripDetail = () => {
     const navigate = useNavigate();
@@ -11,8 +15,6 @@ const TripDetail = () => {
     const [trip, setTrip] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingBook, setLoadingBook] = useState(false);
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
     const [guides, setGuides] = useState([]);
     const [porters, setPorters] = useState([]);
     const [selectedPorters, setSelectedPorters] = useState([]);
@@ -85,66 +87,52 @@ const TripDetail = () => {
             }
         )
             .then((res) => {
-                alert("Booking Berhasil");
-                navigate('/');
-            })
-            .catch((error) => {
-                console.error("Error Response:", error.response);
-                setErrorMessage(error.response.data.message);
-                setError(true);
+                toast.success(res.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
                 setTimeout(() => {
-                    setError(false);
+                    navigate('/');
+                    window.scrollTo(0, 0);
                 }, 3000);
             })
-            .finally(() => {
-                setLoadingBook(false);
-            });
+            .catch((error) => {
+                console.error("Error :", error);
+                toast.error(error.response.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
+                setLoading(false)
+            })
     };
 
     useEffect(() => {
-        if (error) return
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
-            {errorMessage}
-        </div>
-
         setLoading(true);
 
-        axios.get(`https://gapakerem.vercel.app/trips/${id}`)
-            .then((response) => {
-                setTrip(response.data.data);
+        axios.all([
+            axios.get(`https://gapakerem.vercel.app/trips/${id}`),
+            axios.get('https://gapakerem.vercel.app/porters'),
+            axios.get('https://gapakerem.vercel.app/guides')
+        ])
+            .then(axios.spread((tripRes, portersRes, guidesRes) => {
+                setTrip(tripRes.data.data);
+                setPorters(portersRes.data.data.porters);
+                setGuides(guidesRes.data.data.guides);
                 setLoading(false);
-
-                if (response.data.data.trip_type === "private") {
-                    fetchGuidesAndPorters();
-                }
-            })
+            }))
             .catch((error) => {
-                console.error("Error fetching data:", error);
-                setErrorMessage(error.response.data.message);
-                setError(true);
+                console.error("Error :", error);
+                toast.error(error.response?.data?.message || 'Error fetching data', {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
                 setLoading(false);
-                setTimeout(() => {
-                    setError(false);
-                }, 3000);
             });
     }, [id]);
-
-    const fetchGuidesAndPorters = () => {
-        const token = Cookies.get('token');
-        if (!token) return;
-
-        axios.get("https://gapakerem.vercel.app/guides", {
-            headers: { Authorization: `Bearer ${token}` }
-        })
-            .then(response => setGuides(response.data.data))
-            .catch(error => console.error("Error fetching guides:", error));
-
-        axios.get("https://gapakerem.vercel.app/porters", {
-            headers: { Authorization: `Bearer ${token}` }
-        })
-            .then(response => setPorters(response.data.data))
-            .catch(error => console.error("Error fetching porters:", error));
-    };
 
     if (loading) return <Loading />;
 
@@ -170,24 +158,29 @@ const TripDetail = () => {
             </div>
 
             <div className="flex justify-center items-center gap-50">
-                <div className="mt-10">
-                    <h2 className="text-lg font-bold mb-4 text-center">Guide</h2>
-                    <div className="flex flex-col items-center">
-                        <img src={trip.guide?.photo} alt={trip.guide?.name} className="w-20 h-20 rounded-full object-cover" />
-                        <p className="mt-2 text-center">{trip.guide?.name}</p>
+                {trip.guide ? (
+                    <div className="mt-10">
+                        <h2 className="text-lg font-bold mb-4 text-center">Guide</h2>
+                        <div className="flex flex-col items-center">
+                            <img src={trip.guide.photo} alt={trip.guide.name} className="w-20 h-20 rounded-full object-cover" />
+                            <p className="mt-2 text-center">{trip.guide.name}</p>
+                        </div>
                     </div>
-                </div>
-                <div className="mt-10">
-                    <h2 className="text-lg font-bold mb-4 text-center">Porters</h2>
-                    <div className="grid grid-cols-2 gap-2">
-                        {trip.porters?.map((porter, index) => (
-                            <div key={index} className="flex flex-col items-center">
-                                <img src={porter.photo} alt={porter.name} className="w-20 h-20 rounded-full object-cover" />
-                                <p className="mt-2 text-center">{porter.name}</p>
-                            </div>
-                        ))}
+                ) : null}
+
+                {trip.porters && trip.porters.length > 0 ? (
+                    <div className="mt-10">
+                        <h2 className="text-lg font-bold mb-4 text-center">Porters</h2>
+                        <div className="grid grid-cols-2 gap-2">
+                            {trip.porters.map((porter, index) => (
+                                <div key={index} className="flex flex-col items-center">
+                                    <img src={porter.photo} alt={porter.name} className="w-20 h-20 rounded-full object-cover" />
+                                    <p className="mt-2 text-center">{porter.name}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                ) : null}
             </div>
 
             <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
@@ -262,10 +255,6 @@ const TripDetail = () => {
 
                     {trip.trip_type === "private" && (
                         <>
-                            <div className="mt-8 mb-4">
-                                <h3 className="text-xl text-[#FFC100] font-semibold">Detail Private Trip</h3>
-                            </div>
-
                             <div className="mb-5 grid grid-cols-3 items-center gap-4">
                                 <label htmlFor="id_guide" className="font-medium text-gray-500">
                                     Pilih Guide
@@ -280,11 +269,18 @@ const TripDetail = () => {
                                     required
                                 >
                                     <option value="">Pilih Guide</option>
-                                    {guides.map(guide => (
-                                        <option key={guide.id} value={guide.id}>
-                                            {guide.name}
-                                        </option>
-                                    ))}
+                                    {
+                                        Array.isArray(guides) && guides.length > 0 ? (
+                                            guides.map(guide => (
+                                                <option key={guide.id} value={guide.id}>
+                                                    {guide.name}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option disabled>Tidak ada guide yang tersedia</option>
+                                        )
+                                    }
+
                                 </select>
                             </div>
 
@@ -325,20 +321,27 @@ const TripDetail = () => {
                                     Pilih Porter
                                 </label>
                                 <div className="grid grid-cols-2 gap-4">
-                                    {porters.map(porter => (
-                                        <div key={porter.id} className="flex items-center">
-                                            <input
-                                                type="checkbox"
-                                                id={`porter-${porter.id}`}
-                                                className="mr-2 h-4 w-4 text-[#FFC100] focus:ring-[#FFC100] border-gray-300 rounded"
-                                                onChange={() => handlePorterSelection(porter.id)}
-                                                checked={selectedPorters.includes(porter.id)}
-                                            />
-                                            <label htmlFor={`porter-${porter.id}`}>
-                                                {porter.name}
-                                            </label>
-                                        </div>
-                                    ))}
+                                    {
+                                        Array.isArray(porters) && porters.length > 0 ? (
+                                            porters.map(porter => (
+                                                <div key={porter.id} className="flex items-center">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`porter-${porter.id}`}
+                                                        className="mr-2 h-4 w-4 text-[#FFC100] focus:ring-[#FFC100] border-gray-300"
+                                                        onChange={() => handlePorterSelection(porter.id)}
+                                                        checked={selectedPorters.includes(porter.id)}
+                                                    />
+
+                                                    <label htmlFor={`porter-${porter.id}`}>
+                                                        {porter.name}
+                                                    </label>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p>Tidak ada porter yang tersedia</p>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </>
@@ -393,26 +396,67 @@ const TripDetail = () => {
                         {selectedTab === 'agenda' && (
                             <div>
                                 <h4 className="font-bold text-lg">Agenda</h4>
-                                <p className="mt-4">{trip.agenda}</p>
+                                <ul className="mt-4 list-disc pl-4">
+                                    {
+                                        trip.agenda && trip.agenda.includes(',') ? (
+                                            trip.agenda.split(',').map((item, index) => (
+                                                <li key={index} className="mb-2">{item.trim()}</li>
+                                            ))
+                                        ) : (
+                                            <p>{trip.agenda}</p>
+                                        )
+                                    }
+                                </ul>
                             </div>
                         )}
 
                         {selectedTab === 'equipment' && (
                             <div>
                                 <h4 className="font-bold text-lg">Perlengkapan</h4>
-                                <p className="mt-4">{trip.equipment}</p>
+                                <ul className="mt-4 list-disc pl-4">
+                                    {trip.equipment && trip.equipment.includes(',') ? (
+                                        trip.equipment.split(',').map((item, index) => (
+                                            <li key={index} className="mb-2">{item.trim()}</li>
+                                        ))
+                                    ) : (
+                                        <p>{trip.equipment}</p>
+                                    )}
+                                </ul>
                             </div>
                         )}
 
                         {selectedTab === 'estimation_time' && (
                             <div>
                                 <h4 className="font-bold text-lg">Estimasi Waktu</h4>
-                                <p className="mt-4">{trip.estimation_time}</p>
+                                <ul className="mt-4 list-disc pl-4">
+                                    {trip.estimation_time && trip.estimation_time.includes(',') ? (
+                                        trip.estimation_time.split(',').map((item, index) => (
+                                            <li key={index} className="mb-2">{item.trim()}</li>
+                                        ))
+                                    ) : (
+                                        <p>{trip.estimation_time}</p>
+                                    )}
+                                </ul>
                             </div>
                         )}
                     </div>
                 </div>
             </div>
+
+            <a
+                href="https://wa.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
+            >
+                <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
+                <span className="font-medium">Chat via WhatsApp</span>
+            </a>
+
+            <ToastContainer
+                className="absolute top-5 right-5"
+            />
+
         </div>
     );
 };

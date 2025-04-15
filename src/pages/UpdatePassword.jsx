@@ -2,11 +2,11 @@ import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateProfile = () => {
     const navigate = useNavigate();
-    const [errorMessage, setErrorMessage] = useState("");
-    const [error, setError] = useState(false);
 
     const [input, setInput] = useState({
         old_password: "",
@@ -37,19 +37,25 @@ const UpdateProfile = () => {
             }
         )
             .then((res) => {
-                alert("Berhasil Update Password");
-                navigate('/profile');
-            })
-            .catch((error) => {
-                console.error("Error :", error.response);
-                setErrorMessage(error.response.data.message);
-                setError(true);
+                toast.success(res.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
                 setTimeout(() => {
-                    setError(false);
+                    navigate('/profile');
                 }, 3000);
             })
-            .finally(() => {
-                setLoading(false);
+            .catch((error) => {
+                console.error("Error :", error);
+                toast.error(error.response.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
+                setLoading(false)
             });
     };
 
@@ -104,11 +110,10 @@ const UpdateProfile = () => {
                 </form>
             </div>
 
-            {error && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
-                    {errorMessage}
-                </div>
-            )}
+            <ToastContainer
+                className="absolute top-5 right-5"
+            />
+
         </div>
     )
 }

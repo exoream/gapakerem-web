@@ -1,11 +1,11 @@
 import { React, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const navigate = useNavigate();
-    const [errorMessage, setErrorMessage] = useState("");
-    const [error, setError] = useState(false);
 
     const [input, setInput] = useState({
         username: "",
@@ -28,18 +28,23 @@ const Register = () => {
         let { username, name, email, number, password } = input;
         axios.post(`https://gapakerem.vercel.app/register`, { username, name, email, number, password })
             .then((res) => {
-                alert("Akun Berhasil Dibuat")
-                navigate('/login');
-            })
-            .catch((error) => {
-                console.error("Error Response:", error.response);
-                setErrorMessage(error.response.data.message);
-                setError(true);
+                toast.success(res.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
+
                 setTimeout(() => {
-                    setError(false);
+                    navigate('/login');
                 }, 3000);
             })
-            .finally(() => {
+            .catch((error) => {
+                console.error("Error", error);
+                toast.error(error.response.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                });
                 setLoading(false);
             });
     };
@@ -144,6 +149,10 @@ const Register = () => {
                     )}
                 </form>
             </div>
+
+            <ToastContainer
+                className="absolute top-5 right-5"
+            />
 
             {error && (
                 <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
