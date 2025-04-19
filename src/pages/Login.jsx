@@ -27,17 +27,6 @@ const Login = () => {
         event.preventDefault();
         setLoading(true);
 
-        const decoded = jwtDecode(token);
-
-        if (decoded.role !== 'user') {
-            toast.error('Akses hanya untuk user!', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
-            });
-            return;
-        }
-
         let { username, password } = input;
         axios.post(`https://gapakerem.vercel.app/login`, { username, password })
             .then((res) => {
@@ -49,6 +38,18 @@ const Login = () => {
 
                 setTimeout(() => {
                     let token = res.data.data.token;
+
+                    const decoded = jwtDecode(token);
+
+                    if (decoded.role !== 'user') {
+                        toast.error('Akses hanya untuk user!', {
+                            position: "top-center",
+                            autoClose: 3000,
+                            hideProgressBar: true,
+                        });
+                        return;
+                    }
+
                     Cookies.set('token', token, { expires: 1 });
                     navigate('/');
                 }, 3000);
