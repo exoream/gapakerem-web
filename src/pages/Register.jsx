@@ -153,12 +153,6 @@ const Register = () => {
             <ToastContainer
                 className="absolute top-5 right-5"
             />
-
-            {error && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
-                    {errorMessage}
-                </div>
-            )}
         </div>
     );
 };

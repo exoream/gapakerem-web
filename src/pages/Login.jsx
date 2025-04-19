@@ -115,16 +115,17 @@ const Login = () => {
                         />
                     </div>
 
-                    <button
-                        type="submit"
-                        className="w-full bg-[#FFC100] text-white py-3 rounded-full font-semibold hover:bg-yellow-400 transition-all duration-200"
-                        disabled={loading}
-                    >
-                        Login
-                    </button>
+                    <div className='mt-10 max-w-md'>
+                        <button
+                            type="submit"
+                            className="w-full bg-[#FFC100] text-white py-3 rounded-full font-semibold hover:bg-yellow-400 transition-all duration-200"
+                            disabled={loading}
+                        >
+                            Login
+                        </button>
+                    </div>
 
                     <div className='mt-5 flex justify-between text-[#FFC100]'>
-                        <Link><h4>Lupa Password?</h4></Link>
                         <Link to="/register"><h4>Belum Punya Akun?</h4></Link>
                     </div>
 
