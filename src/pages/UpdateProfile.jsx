@@ -19,8 +19,14 @@ const UpdateProfile = () => {
         setLoading(true);
 
         const formData = new FormData();
-        formData.append('photo', photoProfile);
-        formData.append('name', profile.name);
+
+        if (photoProfile) {
+            formData.append('photo', photoProfile);
+        }
+
+        if (profile.name.trim() !== '') {
+            formData.append('name', profile.name);
+        }
 
         const token = Cookies.get('token');
 
@@ -32,7 +38,7 @@ const UpdateProfile = () => {
         })
             .then((res) => {
                 setLoading(false);
-                toast.success(res.message, {
+                toast.success(res.data.message, {
                     position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: true,
@@ -42,19 +48,17 @@ const UpdateProfile = () => {
                     navigate('/profile');
                 }, 3000);
             })
-
             .catch((error) => {
                 console.error("Error :", error);
-                toast.error(error.response.data.message, {
+                toast.error(error.response?.data?.message || "Terjadi kesalahan", {
                     position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: true,
                 });
 
-                setLoading(false)
+                setLoading(false);
             });
     };
-
 
     return (
         <div className="flex items-center justify-center mt-10">
