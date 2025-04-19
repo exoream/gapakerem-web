@@ -7,6 +7,7 @@ import Background from '../assets/background/bgmount3.png';
 import Icon1 from '../assets/icon/mount.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { jwtDecode } from 'jwt-decode';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -25,6 +26,17 @@ const Login = () => {
     const handleLogin = (event) => {
         event.preventDefault();
         setLoading(true);
+
+        const decoded = jwtDecode(token);
+
+        if (decoded.role !== 'user') {
+            toast.error('Akses hanya untuk user!', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+            });
+            return;
+        }
 
         let { username, password } = input;
         axios.post(`https://gapakerem.vercel.app/login`, { username, password })

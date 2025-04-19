@@ -214,7 +214,7 @@ const LandingPage = () => {
             </section>
 
             {/* Gallery Section */}
-            <section className='px-8 md:px-20 lg:px-50 py-12 md:py-16 lg:py-20 mt-10 md:mt-16 lg:mt-20'>
+            <section className='px-8 md:px-20 lg:px-50 py-12 md:py-10 lg:py-20 mt-10'>
                 <div className='flex items-center justify-center gap-6 md:gap-10' data-aos="fade-up">
                     <div className='h-3 md:h-5 w-1/4 md:w-1/2 bg-[#FFC100] rounded-lg' />
                     <h1 className='text-2xl md:text-3xl text-[#FFC100]'>Gallery</h1>
@@ -262,7 +262,7 @@ const LandingPage = () => {
             </section>
 
             {/* Guide & Porter Section */}
-            <section className='px-8 md:px-20 lg:px-50 py-12 md:py-16'>
+            <section className='px-8 md:px-20 lg:px-50 py-5'>
                 <p className='text-center text-lg' data-aos="fade-up">Jelajahi Gunung Bersama Guide & Porter Berpengalaman</p>
 
                 <div data-aos="fade-up">
