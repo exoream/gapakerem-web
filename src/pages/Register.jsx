@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Background from '../assets/background/bgmount5.png';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -150,15 +151,15 @@ const Register = () => {
                 </form>
             </div>
 
+            <img
+                src={Background}
+                alt="background"
+                className="absolute inset-0 w-full h-full object-cover z-[-1] pointer-events-none opacity-25"
+            />
+
             <ToastContainer
                 className="absolute top-5 right-5"
             />
-
-            {error && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 border-2 bg-white border-gray-300 text-[#FFC100] font-bold px-4 py-2 rounded-full shadow-lg z-50">
-                    {errorMessage}
-                </div>
-            )}
         </div>
     );
 };
