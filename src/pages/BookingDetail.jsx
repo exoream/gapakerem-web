@@ -193,7 +193,7 @@ const BookingDetail = () => {
 
             <div className="mt-10 flex justify-start gap-6">
                 <a
-                    href="https://wa.me/nomor-telepon?text=Halo,%20saya%20ingin%20reschedule%20trip%20saya."
+                    href="https://wa.me/082149831093?text=Halo,%20saya%20ingin%20reschedule%20trip%20saya."
                     className="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-lg gap-3 font-medium transition"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -203,7 +203,7 @@ const BookingDetail = () => {
                 </a>
 
                 <a
-                    href="https://wa.me/nomor-telepon?text=Halo,%20saya%20ingin%20membatalkan%20trip%20saya."
+                    href="https://wa.me/082149831093?text=Halo,%20saya%20ingin%20membatalkan%20trip%20saya."
                     className="bg-red-500 text-white hover:bg-red-600 px-4 py-2 rounded-lg gap-3 font-medium transition"
                     target="_blank"
                     rel="noopener noreferrer"
