@@ -12,6 +12,47 @@ const UpdateProfile = () => {
     const [loading, setLoading] = useState(false);
     const [profile, setProfile] = useState({ name: '' });
     const [photoProfile, setPhotoProfile] = useState(null);
+    const [profilePhoto, setProfilePhoto] = useState('/default-profile.png');
+
+    // Fungsi untuk mengambil data profil pengguna
+    const fetchUserProfile = async () => {
+        try {
+            setLoading(true);
+            const token = Cookies.get('token');
+
+            const response = await axios.get('https://gapakerem.vercel.app/profile', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            // Mengisi data profil dari API
+            if (response.data.data) {
+                setProfile({
+                    name: response.data.data.name || ''
+                });
+
+                // Jika ada foto profil, simpan URL-nya
+                if (response.data.data.photo) {
+                    setProfilePhoto(response.data.data.photo);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching profile:", error);
+            toast.error(error.response?.data?.message || "Gagal mengambil data profil", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Memanggil fungsi fetchUserProfile saat komponen dimuat
+    useEffect(() => {
+        fetchUserProfile();
+    }, []);
 
     const handleUpdate = (e) => {
         e.preventDefault();
@@ -69,14 +110,15 @@ const UpdateProfile = () => {
                     </h1>
 
                     <div className="mt-10 flex flex-col items-center">
-                        <div className="relative  mb-4">
+                        <div className="relative mb-4">
                             <img
                                 src={
                                     photoProfile
                                         ? URL.createObjectURL(photoProfile)
-                                        : '/default-profile.png'
+                                        : profilePhoto
                                 }
                                 className="w-32 h-32 object-cover rounded-full border border-gray-300"
+                                alt="Profile"
                             />
 
                             <label className="absolute bottom-0 right-0 bg-[#FFC100] text-white w-6 h-6 flex items-center justify-center rounded-full cursor-pointer hover:bg-yellow-400 transition">
@@ -123,7 +165,6 @@ const UpdateProfile = () => {
             <ToastContainer
                 className="absolute top-5 right-5"
             />
-
         </div>
     )
 }
