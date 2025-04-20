@@ -73,7 +73,7 @@ const LandingPage = () => {
                     <div className='relative text-center' data-aos="fade-left">
 
                         <h1 className='font-bold text-3xl md:text-4xl lg:text-5xl relative z-10'>
-                            GaPakeRem Adventure
+                            Gapakerem Adventure
                         </h1>
 
                         <h4 className='text-xl text-[#FF6500] md:text-2xl lg:text-3xl relative z-10 mt-2'>
@@ -113,7 +113,7 @@ const LandingPage = () => {
 
                     <div className="w-full md:w-2/3 mt-6 md:mt-0" data-aos="fade-left">
                         <p className="text-justify">
-                            <span className='text-[#FFC100] font-semibold'>GaPakeRem Adventure</span>, singkatan dari Gerakan Pecinta Alam Kreatif Makassar, adalah komunitas dan operator wisata yang bergerak di bidang pemanduan
+                            <span className='text-[#FFC100] font-semibold'>Gapakerem Adventure</span>, singkatan dari Gerakan Pecinta Alam Kreatif Makassar, adalah komunitas dan operator wisata yang bergerak di bidang pemanduan
                             pendakian gunung di Sulawesi Selatan. Didirikan oleh Yasin Habibi di Makassar pada 25 Agustus 2021, komunitas ini menyediakan layanan open trip dan
                             private trip, khususnya untuk kawasan pegunungan di Sulawesi Selatan. Dengan mengedepankan kreativitas, setiap kegiatan selalu didokumentasikan dalam
                             bentuk konten atau vlog yang menarik, memberikan kenangan yang abadi bagi para peserta. Didukung oleh tim profesional yang terdiri dari dua guide
@@ -214,7 +214,7 @@ const LandingPage = () => {
             </section>
 
             {/* Gallery Section */}
-            <section className='px-8 md:px-20 lg:px-50 py-12 md:py-10 lg:py-20 mt-10'>
+            <section className='px-8 md:px-20 lg:px-50  mt-10'>
                 <div className='flex items-center justify-center gap-6 md:gap-10' data-aos="fade-up">
                     <div className='h-3 md:h-5 w-1/4 md:w-1/2 bg-[#FFC100] rounded-lg' />
                     <h1 className='text-2xl md:text-3xl text-[#FFC100]'>Gallery</h1>
@@ -262,7 +262,7 @@ const LandingPage = () => {
             </section>
 
             {/* Guide & Porter Section */}
-            <section className='px-8 md:px-20 lg:px-50 py-5'>
+            <section className='px-8 md:px-20 lg:px-50 py-10'>
                 <p className='text-center text-lg' data-aos="fade-up">Jelajahi Gunung Bersama Guide & Porter Berpengalaman</p>
 
                 <div data-aos="fade-up">

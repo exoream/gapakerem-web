@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
+import Testimoni from '../component/Testimoni2';
 
 const TripDetail = () => {
     const navigate = useNavigate();
@@ -87,7 +88,7 @@ const TripDetail = () => {
             }
         )
             .then((res) => {
-                toast.success(res.message, {
+                toast.success(res.data.message, {
                     position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: true,
@@ -441,6 +442,30 @@ const TripDetail = () => {
                         )}
                     </div>
                 </div>
+            </div>
+
+            <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
+            <div className="mt-10">
+                <h4 className="font-bold text-lg">Feedback</h4>
+
+                {trip.feedback?.items?.length > 0 ? (
+                    <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {trip.feedback.items.slice(0, 6).map((item) => (
+                            <Testimoni
+                                key={item.id}
+                                image={item.user.photo}
+                                text={item.message}
+                                username={item.user.name}
+                                rating={item.rating}
+                                date={item.created_at}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="mt-5 text-gray-500 text-sm">
+                        Belum ada feedback untuk trip ini.
+                    </div>
+                )}
             </div>
 
             <a

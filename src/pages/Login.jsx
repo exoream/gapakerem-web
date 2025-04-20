@@ -47,6 +47,8 @@ const Login = () => {
                             autoClose: 3000,
                             hideProgressBar: true,
                         });
+                        setLoading(false)
+
                         return;
                     }
 
