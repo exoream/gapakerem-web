@@ -37,7 +37,7 @@ const UpdateProfile = () => {
             }
         )
             .then((res) => {
-                toast.success(res.message, {
+                toast.success(res.data.message, {
                     position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: true,
