@@ -14,7 +14,6 @@ const UpdateProfile = () => {
     const [photoProfile, setPhotoProfile] = useState(null);
     const [profilePhoto, setProfilePhoto] = useState('/default-profile.png');
 
-    // Fungsi untuk mengambil data profil pengguna
     const fetchUserProfile = async () => {
         try {
             setLoading(true);
@@ -26,13 +25,11 @@ const UpdateProfile = () => {
                 }
             });
 
-            // Mengisi data profil dari API
             if (response.data.data) {
                 setProfile({
                     name: response.data.data.name || ''
                 });
 
-                // Jika ada foto profil, simpan URL-nya
                 if (response.data.data.photo) {
                     setProfilePhoto(response.data.data.photo);
                 }
@@ -49,7 +46,6 @@ const UpdateProfile = () => {
         }
     };
 
-    // Memanggil fungsi fetchUserProfile saat komponen dimuat
     useEffect(() => {
         fetchUserProfile();
     }, []);
