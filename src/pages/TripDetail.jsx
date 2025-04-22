@@ -111,6 +111,7 @@ const TripDetail = () => {
     };
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         setLoading(true);
 
         axios.all([
@@ -147,7 +148,16 @@ const TripDetail = () => {
                 <div className="w-2/3">
                     <div className="flex gap-20">
                         <h4 className='text-lg font-bold'>Rp {trip.price.toLocaleString('id-ID')}</h4>
-                        <h4 className='text-gray-500 capitalize'>{trip.trip_type} Trip</h4>
+                        <h4
+                            className={`capitalize px-2 py-1 rounded-md inline-block text-sm font-medium ${trip.trip_type === 'private'
+                                ? 'bg-green-100 text-green-700'
+                                : trip.trip_type === 'open'
+                                    ? 'bg-yellow-100 text-yellow-700'
+                                    : 'bg-gray-100 text-gray-500'
+                                }`}
+                        >
+                            {trip.trip_type} Trip
+                        </h4>
                     </div>
                     <p className="mt-5">
                         Gunung Bulu Baria adalah salah satu destinasi pendakian populer di Sulawesi Selatan. Dengan pemandangan alam yang memukau dan jalur pendakian
@@ -299,6 +309,9 @@ const TripDetail = () => {
                                     disabled={loading}
                                     required
                                 />
+                                {trip.trip_type === "private" && (
+                                    <h4 className="test-sm font text-gray-400 ">Perhari : + Rp {trip.price_per_day.toLocaleString('id-ID')}</h4>
+                                )}
                             </div>
 
                             <div className="mb-5 grid grid-cols-3 items-center gap-4">
