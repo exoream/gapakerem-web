@@ -146,7 +146,7 @@ const TripDetail = () => {
                     <img src={trip.mountain_photo} alt={trip.mountain_name} className='h-50 w-50 rounded-lg' />
                 </div>
                 <div className="w-2/3">
-                    <div className="flex gap-20">
+                    <div className="flex items-center gap-20">
                         <h4 className='text-lg font-bold'>Rp {trip.price.toLocaleString('id-ID')}</h4>
                         <h4
                             className={`capitalize px-2 py-1 rounded-md inline-block text-sm font-medium ${trip.trip_type === 'private'
@@ -158,12 +158,12 @@ const TripDetail = () => {
                         >
                             {trip.trip_type} Trip
                         </h4>
+                        {trip.trip_type === "open" && (
+                            <h4 className='text-sm text-gray-500'>{trip.traveling_time}</h4>
+                        )}
                     </div>
                     <p className="mt-5">
-                        Gunung Bulu Baria adalah salah satu destinasi pendakian populer di Sulawesi Selatan. Dengan pemandangan alam yang memukau dan jalur pendakian
-                        yang menantang, gunung ini menawarkan pengalaman yang tak terlupakan bagi para pecinta alam. Memiliki ketinggian sekitar 1.415 meter di atas
-                        permukaan laut, pendakian ke puncaknya menyuguhkan panorama luas dari puncak gunung, hamparan hutan tropis, dan udara segar yang menyegarkan.
-                        Gunung Bulu Baria cocok bagi pendaki yang mencari tantangan serta keindahan alam yang mempesona.
+                        {trip.description}
                     </p>
                 </div>
             </div>
@@ -482,7 +482,7 @@ const TripDetail = () => {
             </div>
 
             <a
-                href="https://wa.me/082149831093"
+                href="https://wa.me/6285394895257"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-const Slide = ({ items, renderItem, itemsPerView = 3 }) => {
+const Slide = ({ items, renderItem, itemsPerView = 2 }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const slidesPerView = itemsPerView;
 
