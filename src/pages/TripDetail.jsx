@@ -259,8 +259,8 @@ const TripDetail = () => {
                             required
                         >
                             <option value="">Pilih Meeting Point</option>
-                            <option value="Basecamp">Basecamp</option>
-                            <option value="Terminal Batu">Terminal Batu</option>
+                            <option value="Basecamp Gunung">Basecamp Gunung</option>
+                            <option value="Gapakerem Store">Gapakerem Store</option>
                         </select>
                     </div>
 
