@@ -2,6 +2,8 @@ import { React, useState, useEffect } from 'react'
 import '../App.css';
 import Logo from '../assets/logo/logo.png'
 import Icon1 from '../assets/icon/mount.png'
+import Tes1 from '../assets/testimoni/1.jpeg'
+import Tes2 from '../assets/testimoni/2.jpeg'
 import { P1, P2, P3, P4 } from '../assets/photo'
 import { L1, L2, L3, L4 } from '../assets/service'
 import { G1, G2, G3, G4, G5, G6 } from '../assets/gallery'
@@ -9,7 +11,7 @@ import Background from '../assets/background/bgmount.png'
 import Background2 from '../assets/background/bgmount2.png'
 import Background3 from '../assets/background/bgmount4.png'
 import Tools from '../assets/icon/tools.png'
-import Logo2 from '../assets/logo/seven.png'
+import Logo2 from '../assets/logo/store.jpeg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { faMousePointer, faImages, faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
@@ -192,21 +194,23 @@ const LandingPage = () => {
                         />
 
                         <div className="absolute right-[0.1px] top-1/2 -translate-y-1/2 flex flex-col items-center animate-floating">
-                            <FontAwesomeIcon
-                                icon={faMousePointer}
-                                className="text-gray-400 text-2xl md:text-3xl -rotate-20"
-                            />
-                            <span className="text-xs md:text-sm text-gray-500 mt-1">klik disini</span>
+                            <a href="https://www.instagram.com/gapakerem.store?igsh=MTc4cnFoeWxiMDk4OQ==" target="blank">
+                                <FontAwesomeIcon
+                                    icon={faMousePointer}
+                                    className="text-gray-400 text-2xl md:text-3xl -rotate-20"
+                                />
+                                <span className="text-xs md:text-sm ml-2 text-gray-500 mt-1">klik disini</span>
+                            </a>
                         </div>
 
-                        <img src={Logo2} alt="Logo2" className="h-48 md:h-64 w-auto" />
+                        <img src={Logo2} alt="Logo2" className="h-48 md:h-64 w-auto rounded-full" />
 
                         <div className="mt-4 text-center">
                             <span className="mr-2 italic font-semibold">
                                 Lihat koleksi perlengkapan kami di instagram
                             </span>
                             <span className="p-2 border rounded-full font-semibold underline">
-                                @outsevencamp
+                                @gapakerem.store
                             </span>
                         </div>
                     </div>
@@ -267,13 +271,17 @@ const LandingPage = () => {
 
                 <div data-aos="fade-up">
                     <h1 className='text-2xl md:text-3xl text-[#FFC100] text-center mt-5'>-- Guide --</h1>
-                    <div data-aos="fade-right" data-aos-delay="200">
-                        <Slide
-                            items={guide}
-                            renderItem={(item) => <Card1 imageUrl={item.photo} name={item.name} />}
-                            itemsPerView={3}
-                        />
+                    <div className="flex justify-center gap-10 mt-10" data-aos="fade-right" data-aos-delay="200">
+                        {guide.map((guide) => (
+                            <Card1 className="" imageUrl={guide.photo} name={guide.name} />
+                        ))}
                     </div>
+
+                    {/* <Slide
+                                items={guide}
+                                renderItem={(item) => <Card1 imageUrl={item.photo} name={item.name} />}
+                                itemsPerView={3}
+                            /> */}
                 </div>
 
                 <div className="mt-8 md:mt-10" data-aos="fade-up">
@@ -282,7 +290,7 @@ const LandingPage = () => {
                         <Slide
                             items={porter}
                             renderItem={(item) => <Card1 imageUrl={item.photo} name={item.name} />}
-                            itemsPerView={3}
+                            itemsPerView={4}
                         />
                     </div>
                 </div>
@@ -307,22 +315,26 @@ const LandingPage = () => {
                 </div>
 
                 <div className='mt-20 md:mt-32 lg:mt-40 z-10 relative'>
-                    <div className='flex flex-col md:flex-row gap-6 md:gap-10 justify-center'>
+                    <div className='flex flex-col gap-10 md:flex-row justify-center'>
                         <div data-aos="fade-right" data-aos-delay="200">
                             <Testimoni
-                                text="Pengalaman pendakian bersama GakPakeRem Adventure luar biasa! Guide yang profesional, perjalanan yang aman, dan keindahan alam yang tak 
-                                terlupakan. Saya ikut open trip dan bisa bertemu banyak teman baru. Pasti akan ikut lagi!"
-                                username="Anonim"
-                                mount="Gunung Lompobattang"
+                                text="Gak nyangka pendakian Gunung Bawakarang yang memiliki pesona hutan lumut yang sangat indah ternyata bisa semenyenangkan ini!! 
+                                    Berkat GakPakeRem Adventure, gak cuma sekadar perjalanan pendakian, tapi juga cerita yang akan selalu dikenang. Bener-bener memahami 
+                                    kebutuhan kita—bebas stres, bebas repot. Pelayanan yang ramah, tim yang profesional, dan pengalaman yang tak terlupakan. Recommended 
+                                    banget buat siapa pun yang pengen nikmatin alam tanpa ribet! 👌🏻"
+                                photo={Tes1}
+                                username="Vanessa Amanda"
                                 rating={4}
                             />
                         </div>
                         <div data-aos="fade-left" data-aos-delay="400">
                             <Testimoni
-                                text="Pengalaman pendakian bersama GakPakeRem Adventure luar biasa! Guide yang profesional, perjalanan yang aman, dan keindahan alam yang tak 
-                                terlupakan. Saya ikut open trip dan bisa bertemu banyak teman baru. Pasti akan ikut lagi!"
-                                username="Anonim"
-                                mount="Gunung Lompobattang"
+                                text="Pendakian ke Gunung Latimojong, gunung tertinggi di Sulawesi, jadi salah satu pengalaman paling berkesan dalam hidup saya! 
+                                    Bersama GakPakeRem Adventure, setiap langkah terasa lebih ringan. Semua sudah dipersiapkan dengan matang—dari logistik sampai 
+                                    pendampingan guide yang berpengalaman. Pemandangannya luar biasa, perjalanannya menantang tapi menyenangkan, dan yang paling penting, 
+                                    saya bisa menikmati semuanya tanpa harus pusing mikirin hal teknis. Terima kasih GakPakeRem, sukses selalu! 💪🏻✨"
+                                photo={Tes2}
+                                username="EJAAK | Reza Dwi Yanda"
                                 rating={4}
                             />
                         </div>
@@ -335,7 +347,7 @@ const LandingPage = () => {
             </div>
 
             <a
-                href="https://wa.me/082149831093"
+                href="https://wa.me/6285394895257"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"

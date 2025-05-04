@@ -138,8 +138,10 @@ const BookingDetail = () => {
                 return { text: 'Belum Membayar', color: 'bg-red-200 text-red-600' };
             case 'paid':
                 return { text: 'Sudah Membayar', color: 'bg-green-200 text-green-600' };
-            case 'pending':
-                return { text: 'Menunggu Konfirmasi', color: 'bg-yellow-200 text-yellow-600' };
+            case 'approved':
+                return { text: 'Disetujui', color: 'bg-green-200 text-green-600' };
+            case 'rejected':
+                return { text: 'Ditolak', color: 'bg-red-200 text-red-600' };
             default:
                 return { text: status, color: 'bg-gray-200 text-gray-600' };
         }
@@ -193,7 +195,7 @@ const BookingDetail = () => {
 
             <div className="mt-10 flex justify-start gap-6">
                 <a
-                    href="https://wa.me/082149831093?text=Halo,%20saya%20ingin%20reschedule%20trip%20saya."
+                    href="https://wa.me/6285394895257?text=Halo,%20saya%20ingin%20reschedule%20trip%20saya."
                     className="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-lg gap-3 font-medium transition"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -203,7 +205,7 @@ const BookingDetail = () => {
                 </a>
 
                 <a
-                    href="https://wa.me/082149831093?text=Halo,%20saya%20ingin%20membatalkan%20trip%20saya."
+                    href="https://wa.me/6285394895257?text=Halo,%20saya%20ingin%20membatalkan%20trip%20saya."
                     className="bg-red-500 text-white hover:bg-red-600 px-4 py-2 rounded-lg gap-3 font-medium transition"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -213,9 +215,10 @@ const BookingDetail = () => {
                 </a>
             </div>
 
-            <div className="grid grid-cols-3 items-center gap-4 max-w-xl mt-10">
+            <div className="grid w-full grid-cols-5 items-center gap-4 mt-10">
                 <label className="font-medium text-gray-500">No. Rekening</label>
-                <p className="col-span-2">1136609602 (BSI) - MUH YASIN HABIBIE</p>
+                <p className="col-span-2 text-sm">4985 0102 8171 534 (BRI) - A.N Muh Yasin Habibie</p>
+                <p className="col-span-2 text-sm">7893042964 (BCA) - A.N Muh Yasin Habibie</p>
             </div>
 
             {book.payment_proof && (

@@ -30,10 +30,16 @@ const Footer = () => {
                 <div className="flex flex-col gap-6">
                     <div>
                         <h1 className="text-2xl text-[#FFC100] mb-2">Ikuti Kami</h1>
-                        <div className="flex gap-10 text-5xl">
-                            <FontAwesomeIcon icon={faInstagram} className='hover:text-[#FFC100] transition' />
-                            <FontAwesomeIcon icon={faYoutube} className='hover:text-[#FFC100] transition' />
-                            <FontAwesomeIcon icon={faTiktok} className='hover:text-[#FFC100] transition' />
+                        <div className="flex gap-10 text-3xl">
+                            <a href="https://www.instagram.com/gapakerem.adventure?igsh=MWk5NjlnN2NjbDhudg==" target='blank'>
+                                <FontAwesomeIcon icon={faInstagram} className='hover:text-[#FFC100] transition' />
+                            </a>
+                            <a href="https://www.youtube.com/@gapakeremadventure1258" target='blank'>
+                                <FontAwesomeIcon icon={faYoutube} className='hover:text-[#FFC100] transition' />
+                            </a>
+                            <a href="https://www.tiktok.com/@basecampga?_t=ZS-8vxVEaUmpce&_r=1" target='blank'>
+                                <FontAwesomeIcon icon={faTiktok} className='hover:text-[#FFC100] transition' />
+                            </a>
                         </div>
                     </div>
 
@@ -41,7 +47,7 @@ const Footer = () => {
                         <h1 className="text-2xl text-[#FFC100] mb-2">Kontak</h1>
                         <p>(+62) 853 9489 5257</p>
                         <p>
-                            Jalan Kompleks Btn. Antang Jaya No.10 Blok G, Antang, Kec. Manggala, Kota Makassar, Sulawesi Selatan
+                            Jl. Antang Raya No.17, Tello Baru, Kec. Panakkukang, Kota Makassar, Sulawesi Selatan 9234
                         </p>
                     </div>
                 </div>

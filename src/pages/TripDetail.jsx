@@ -146,7 +146,7 @@ const TripDetail = () => {
                     <img src={trip.mountain_photo} alt={trip.mountain_name} className='h-50 w-50 rounded-lg' />
                 </div>
                 <div className="w-2/3">
-                    <div className="flex gap-20">
+                    <div className="flex items-center gap-20">
                         <h4 className='text-lg font-bold'>Rp {trip.price.toLocaleString('id-ID')}</h4>
                         <h4
                             className={`capitalize px-2 py-1 rounded-md inline-block text-sm font-medium ${trip.trip_type === 'private'
@@ -158,40 +158,48 @@ const TripDetail = () => {
                         >
                             {trip.trip_type} Trip
                         </h4>
+                        {trip.trip_type === "open" && (
+                            <h4 className='text-sm text-gray-500'>{trip.traveling_time}</h4>
+                        )}
                     </div>
                     <p className="mt-5">
-                        Gunung Bulu Baria adalah salah satu destinasi pendakian populer di Sulawesi Selatan. Dengan pemandangan alam yang memukau dan jalur pendakian
-                        yang menantang, gunung ini menawarkan pengalaman yang tak terlupakan bagi para pecinta alam. Memiliki ketinggian sekitar 1.415 meter di atas
-                        permukaan laut, pendakian ke puncaknya menyuguhkan panorama luas dari puncak gunung, hamparan hutan tropis, dan udara segar yang menyegarkan.
-                        Gunung Bulu Baria cocok bagi pendaki yang mencari tantangan serta keindahan alam yang mempesona.
+                        {trip.description}
                     </p>
                 </div>
             </div>
 
             <div className="flex justify-center items-center gap-50">
-                {trip.guide ? (
+                {trip?.guide?.name && (
                     <div className="mt-10">
                         <h2 className="text-lg font-bold mb-4 text-center">Guide</h2>
                         <div className="flex flex-col items-center">
-                            <img src={trip.guide.photo} alt={trip.guide.name} className="w-20 h-20 rounded-full object-cover" />
-                            <p className="mt-2 text-center">{trip.guide.name}</p>
+                            <img
+                                src={trip.guide.photo}
+                                alt={trip.guide.name}
+                                className="w-20 h-20 rounded-full object-cover"
+                            />
+                            <p className="mt-2 text-center text-sm">{trip.guide.name}</p>
                         </div>
                     </div>
-                ) : null}
+                )}
 
-                {trip.porters && trip.porters.length > 0 ? (
+                {trip.porters && trip.porters.length > 0 && (
                     <div className="mt-10">
                         <h2 className="text-lg font-bold mb-4 text-center">Porters</h2>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="flex flex-wrap justify-center gap-4">
                             {trip.porters.map((porter, index) => (
-                                <div key={index} className="flex flex-col items-center">
-                                    <img src={porter.photo} alt={porter.name} className="w-20 h-20 rounded-full object-cover" />
-                                    <p className="mt-2 text-center">{porter.name}</p>
+                                <div key={index} className="w-28 flex flex-col items-center">
+                                    <img
+                                        src={porter.photo}
+                                        alt={porter.name}
+                                        className="w-20 h-20 rounded-full object-cover"
+                                    />
+                                    <p className="mt-2 text-center text-sm">{porter.name}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
-                ) : null}
+                )}
             </div>
 
             <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
@@ -259,8 +267,8 @@ const TripDetail = () => {
                             required
                         >
                             <option value="">Pilih Meeting Point</option>
-                            <option value="Basecamp">Basecamp</option>
-                            <option value="Terminal Batu">Terminal Batu</option>
+                            <option value="Basecamp Gunung">Basecamp Gunung</option>
+                            <option value="Gapakerem Store">Gapakerem Store</option>
                         </select>
                     </div>
 
@@ -410,19 +418,30 @@ const TripDetail = () => {
                         {selectedTab === 'agenda' && (
                             <div>
                                 <h4 className="font-bold text-lg">Agenda</h4>
-                                <ul className="mt-4 list-disc pl-4">
-                                    {
-                                        trip.agenda && trip.agenda.includes(',') ? (
-                                            trip.agenda.split(',').map((item, index) => (
-                                                <li key={index} className="mb-2">{item.trim()}</li>
-                                            ))
-                                        ) : (
-                                            <p>{trip.agenda}</p>
-                                        )
-                                    }
-                                </ul>
+                                <div className="mt-4 space-y-4">
+                                    {[...trip.agenda.matchAll(/(Hari\s\d:.*?)((?=Hari\s\d:)|$)/gs)].map(([_, dayBlock], index) => {
+                                        const [title, ...rest] = dayBlock.split(',');
+                                        const activities = rest
+                                            .join(',')
+                                            .split(/,\s*(?=\d{2}:\d{2}\s–)/)
+                                            .map(item => item.trim())
+                                            .filter(Boolean);
+
+                                        return (
+                                            <div key={index}>
+                                                <h5 className="font-semibold">{title.trim()}</h5>
+                                                <ul className="list-disc pl-5 mt-2">
+                                                    {activities.map((item, i) => (
+                                                        <li key={i} className="mb-1">{item}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
                         )}
+
 
                         {selectedTab === 'equipment' && (
                             <div>
@@ -443,16 +462,19 @@ const TripDetail = () => {
                             <div>
                                 <h4 className="font-bold text-lg">Estimasi Waktu</h4>
                                 <ul className="mt-4 list-disc pl-4">
-                                    {trip.estimation_time && trip.estimation_time.includes(',') ? (
-                                        trip.estimation_time.split(',').map((item, index) => (
-                                            <li key={index} className="mb-2">{item.trim()}</li>
-                                        ))
-                                    ) : (
-                                        <p>{trip.estimation_time}</p>
-                                    )}
+                                    {
+                                        trip.estimation_time && trip.estimation_time.includes(',') ? (
+                                            trip.estimation_time.split(',').map((item, index) => (
+                                                <li key={index} className="mb-2">{item.trim()}</li>
+                                            ))
+                                        ) : (
+                                            <p>{trip.estimation_time}</p>
+                                        )
+                                    }
                                 </ul>
                             </div>
                         )}
+
                     </div>
                 </div>
             </div>
@@ -482,7 +504,7 @@ const TripDetail = () => {
             </div>
 
             <a
-                href="https://wa.me/082149831093"
+                href="https://wa.me/6285394895257"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
