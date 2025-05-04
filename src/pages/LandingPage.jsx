@@ -278,10 +278,10 @@ const LandingPage = () => {
                     </div>
 
                     {/* <Slide
-                            items={guide}
-                            renderItem={(item) => <Card1 imageUrl={item.photo} name={item.name} />}
-                            itemsPerView={3}
-                        /> */}
+                                items={guide}
+                                renderItem={(item) => <Card1 imageUrl={item.photo} name={item.name} />}
+                                itemsPerView={3}
+                            /> */}
                 </div>
 
                 <div className="mt-8 md:mt-10" data-aos="fade-up">
@@ -290,7 +290,7 @@ const LandingPage = () => {
                         <Slide
                             items={porter}
                             renderItem={(item) => <Card1 imageUrl={item.photo} name={item.name} />}
-                            itemsPerView={2}
+                            itemsPerView={4}
                         />
                     </div>
                 </div>
@@ -319,9 +319,9 @@ const LandingPage = () => {
                         <div data-aos="fade-right" data-aos-delay="200">
                             <Testimoni
                                 text="Gak nyangka pendakian Gunung Bawakarang yang memiliki pesona hutan lumut yang sangat indah ternyata bisa semenyenangkan ini!! 
-                                Berkat GakPakeRem Adventure, gak cuma sekadar perjalanan pendakian, tapi juga cerita yang akan selalu dikenang. Bener-bener memahami 
-                                kebutuhan kita—bebas stres, bebas repot. Pelayanan yang ramah, tim yang profesional, dan pengalaman yang tak terlupakan. Recommended 
-                                banget buat siapa pun yang pengen nikmatin alam tanpa ribet! 👌🏻"
+                                    Berkat GakPakeRem Adventure, gak cuma sekadar perjalanan pendakian, tapi juga cerita yang akan selalu dikenang. Bener-bener memahami 
+                                    kebutuhan kita—bebas stres, bebas repot. Pelayanan yang ramah, tim yang profesional, dan pengalaman yang tak terlupakan. Recommended 
+                                    banget buat siapa pun yang pengen nikmatin alam tanpa ribet! 👌🏻"
                                 photo={Tes1}
                                 username="Vanessa Amanda"
                                 rating={4}
@@ -330,9 +330,9 @@ const LandingPage = () => {
                         <div data-aos="fade-left" data-aos-delay="400">
                             <Testimoni
                                 text="Pendakian ke Gunung Latimojong, gunung tertinggi di Sulawesi, jadi salah satu pengalaman paling berkesan dalam hidup saya! 
-                                Bersama GakPakeRem Adventure, setiap langkah terasa lebih ringan. Semua sudah dipersiapkan dengan matang—dari logistik sampai 
-                                pendampingan guide yang berpengalaman. Pemandangannya luar biasa, perjalanannya menantang tapi menyenangkan, dan yang paling penting, 
-                                saya bisa menikmati semuanya tanpa harus pusing mikirin hal teknis. Terima kasih GakPakeRem, sukses selalu! 💪🏻✨"
+                                    Bersama GakPakeRem Adventure, setiap langkah terasa lebih ringan. Semua sudah dipersiapkan dengan matang—dari logistik sampai 
+                                    pendampingan guide yang berpengalaman. Pemandangannya luar biasa, perjalanannya menantang tapi menyenangkan, dan yang paling penting, 
+                                    saya bisa menikmati semuanya tanpa harus pusing mikirin hal teknis. Terima kasih GakPakeRem, sukses selalu! 💪🏻✨"
                                 photo={Tes2}
                                 username="EJAAK | Reza Dwi Yanda"
                                 rating={4}
