@@ -33,8 +33,8 @@ const Trip = () => {
         window.scrollTo(0, 0);
         setLoading(true);
         axios.all([
-            axios.get(`https://gapakerem.vercel.app/trips/open?page=${openPage}&search=${openTripSearch}`),
-            axios.get(`https://gapakerem.vercel.app/trips/private?page=${privatePage}&search=${privateTripSearch}`)
+            axios.get(`https://gapakerem.vercel.app/trips/open?page=${openPage}&search=${openTripSearch}&limit=12`),
+            axios.get(`https://gapakerem.vercel.app/trips/private?page=${privatePage}&search=${privateTripSearch}&limit=12`)
         ])
             .then(axios.spread((openRes, privateRes) => {
                 setOpenTrip(openRes.data.data.trips);
@@ -156,7 +156,7 @@ const Trip = () => {
                     </form>
                 </div>
 
-                <div className='grid grid-cols-3 gap-10 mt-6'>
+                <div className='grid grid-cols-6 gap-5 mt-6'>
                     {openTrip.length > 0 ? openTrip.map((trip, index) => (
                         <Link
                             to={`/trip/${trip.mountain_name}`}
@@ -167,15 +167,15 @@ const Trip = () => {
                             <img
                                 src={trip.mountain_photo}
                                 alt={trip.mountain_name}
-                                className="w-full h-50 object-cover rounded-md"
+                                className="w-full h-30 object-cover rounded-md"
                             />
                             <div className="relative p-4">
-                                <h2 className="text-xl font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
-                                <p className="font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
+                                <h2 className="text-sm font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
+                                <p className="text-sm font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
                                 <div className="mt-2 flex justify-between items-center">
-                                    <h4 className="text-sm text-gray-500">Peserta Terdaftar: {trip.total_participants}</h4>
+                                    <h4 className="text-xs text-gray-500">Peserta Terdaftar: {trip.total_participants}</h4>
                                     {trip.feedback?.average_rating ? (
-                                        <div className="flex gap-1 mt-2 text-yellow-400">
+                                        <div className="text-sm flex gap-1 mt-2 text-yellow-400">
                                             {Array.from({ length: trip.feedback.average_rating }, (_, i) => (
                                                 <FontAwesomeIcon icon={faStar} key={i} />
                                             ))}
@@ -224,7 +224,7 @@ const Trip = () => {
                     </form>
                 </div>
 
-                <div className='grid grid-cols-3 gap-10 mt-6'>
+                <div className='grid grid-cols-6 gap-5 mt-6'>
                     {privateTrip.length > 0 ? privateTrip.map((trip, index) => (
                         <Link
                             to={`/trip/${trip.mountain_name}`}
@@ -235,15 +235,15 @@ const Trip = () => {
                             <img
                                 src={trip.mountain_photo}
                                 alt={trip.mountain_name}
-                                className="w-full h-50 object-cover rounded-md"
+                                className="w-full h-30 object-cover rounded-md"
                             />
                             <div className="relative p-4">
-                                <h2 className="text-xl font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
-                                <p className="font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
+                                <h2 className="text-sm font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
+                                <p className="text-sm font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
                                 <div className="mt-2 flex justify-between items-center">
-                                    <h4 className="text-sm text-gray-500">Peserta Terdaftar: {trip.total_participants}</h4>
+                                    <h4 className="text-xs text-gray-500">Peserta Terdaftar: {trip.total_participants}</h4>
                                     {trip.feedback?.average_rating ? (
-                                        <div className="flex gap-1 mt-2 text-yellow-400">
+                                        <div className="text-sm flex gap-1 mt-2 text-yellow-400">
                                             {Array.from({ length: trip.feedback.average_rating }, (_, i) => (
                                                 <FontAwesomeIcon icon={faStar} key={i} />
                                             ))}

@@ -136,6 +136,12 @@ const TripDetail = () => {
             });
     }, [id]);
 
+    useEffect(() => {
+        if (trip?.trip_type === "private") {
+            setSelectedTab("equipment");
+        }
+    }, [trip?.trip_type]);
+
     if (loading) return <Loading />;
 
     return (
@@ -350,7 +356,7 @@ const TripDetail = () => {
                                                     <input
                                                         type="checkbox"
                                                         id={`porter-${porter.id}`}
-                                                        className="mr-2 h-4 w-4 text-[#FFC100] focus:ring-[#FFC100] border-gray-300"
+                                                        className="mr-2 text-[#FFC100] focus:ring-[#FFC100] border-gray-300 appearance-none w-6 aspect-square shrink-0 rounded-full border border-gray-400 checked:bg-yellow-500 checked:border-yellow-500"
                                                         onChange={() => handlePorterSelection(porter.id)}
                                                         checked={selectedPorters.includes(porter.id)}
                                                     />
@@ -391,12 +397,14 @@ const TripDetail = () => {
                 <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
                 <div className="mt-10">
                     <div className="flex space-x-4 mb-4">
-                        <button
-                            className={`px-4 py-2 rounded-lg transition ${selectedTab === 'agenda' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
-                            onClick={() => setSelectedTab('agenda')}
-                        >
-                            Agenda
-                        </button>
+                        {trip.trip_type === "open" && (
+                            <button
+                                className={`px-4 py-2 rounded-lg transition ${selectedTab === 'agenda' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
+                                onClick={() => setSelectedTab('agenda')}
+                            >
+                                Agenda
+                            </button>
+                        )}
 
                         <button
                             className={`px-4 py-2 rounded-lg transition ${selectedTab === 'equipment' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
@@ -415,7 +423,7 @@ const TripDetail = () => {
                     </div>
 
                     <div className="mt-10">
-                        {selectedTab === 'agenda' && (
+                        {trip.trip_type === "open" && selectedTab === 'agenda' && (
                             <div>
                                 <h4 className="font-bold text-lg">Agenda</h4>
                                 <div className="mt-4 space-y-4">
@@ -441,7 +449,6 @@ const TripDetail = () => {
                                 </div>
                             </div>
                         )}
-
 
                         {selectedTab === 'equipment' && (
                             <div>
