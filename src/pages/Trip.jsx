@@ -43,6 +43,8 @@ const Trip = () => {
                 setOpenTripPagination(openRes.data.data.pagination);
                 setPrivateTripPagination(privateRes.data.data.pagination);
 
+                console.log(openRes)
+
                 setLoading(false);
             }))
             .catch((error) => {

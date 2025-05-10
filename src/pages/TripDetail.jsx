@@ -124,6 +124,7 @@ const TripDetail = () => {
                 setPorters(portersRes.data.data.porters);
                 setGuides(guidesRes.data.data.guides);
                 setLoading(false);
+                console.log(tripRes)
             }))
             .catch((error) => {
                 console.error("Error :", error);
@@ -427,25 +428,28 @@ const TripDetail = () => {
                             <div>
                                 <h4 className="font-bold text-lg">Agenda</h4>
                                 <div className="mt-4 space-y-4">
-                                    {[...trip.agenda.matchAll(/(Hari\s\d:.*?)((?=Hari\s\d:)|$)/gs)].map(([_, dayBlock], index) => {
-                                        const [title, ...rest] = dayBlock.split(',');
-                                        const activities = rest
-                                            .join(',')
-                                            .split(/,\s*(?=\d{2}:\d{2}\s–)/)
-                                            .map(item => item.trim())
-                                            .filter(Boolean);
+                                    {trip.agenda
+                                        ?.split(/(?:\s*,\s*)?(?=Hari\s\d+:)/g)
+                                        .filter(Boolean)
+                                        .map((dayBlock, index) => {
+                                            const [title, ...rest] = dayBlock.split(',');
+                                            const activities = rest
+                                                .join(',')
+                                                .split(/,\s*(?=\d{2}:\d{2}\s–)/)
+                                                .map(item => item.trim())
+                                                .filter(Boolean);
 
-                                        return (
-                                            <div key={index}>
-                                                <h5 className="font-semibold">{title.trim()}</h5>
-                                                <ul className="list-disc pl-5 mt-2">
-                                                    {activities.map((item, i) => (
-                                                        <li key={i} className="mb-1">{item}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        );
-                                    })}
+                                            return (
+                                                <div key={index}>
+                                                    <h5 className="font-semibold">{title.trim()}</h5>
+                                                    <ul className="list-disc pl-5 mt-2">
+                                                        {activities.map((item, i) => (
+                                                            <li key={i} className="mb-1">{item}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            );
+                                        })}
                                 </div>
                             </div>
                         )}
