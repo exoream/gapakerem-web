@@ -149,7 +149,7 @@ const TripDetail = () => {
         <div className='mx-60 my-10 p-10 border-2 rounded-lg border-gray-300'>
             <h1 className='text-3xl text-[#FFC100] text-center'>{trip.mountain_name}</h1>
             <div className="flex justify-center items-center mt-10">
-                <div className="w-1/3">
+                <div className="w-1/3 flex justify-center items-center">
                     <img src={trip.mountain_photo} alt={trip.mountain_name} className='h-50 w-50 rounded-lg' />
                 </div>
                 <div className="w-2/3">
@@ -169,7 +169,7 @@ const TripDetail = () => {
                             <h4 className='text-sm text-gray-500'>{trip.traveling_time}</h4>
                         )}
                     </div>
-                    <p className="mt-5">
+                    <p className="mt-5 text-justify">
                         {trip.description}
                     </p>
                 </div>
@@ -518,7 +518,7 @@ const TripDetail = () => {
                 href="https://wa.me/6285394895257"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
+                className="fixed bottom-6 right-6 z-50 flex it ems-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
             >
                 <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
                 <span className="font-medium">Chat via WhatsApp</span>
