@@ -14,7 +14,7 @@ const Testimoni = ({ text, photo, username, rating }) => {
                 </div>
             </div>
 
-            <p className="mb-4 text-xs text-gray-700">
+            <p className="mb-4 text-xs text-gray-700 text-justify">
                 {text}
             </p>
 

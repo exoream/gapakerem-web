@@ -124,6 +124,7 @@ const TripDetail = () => {
                 setPorters(portersRes.data.data.porters);
                 setGuides(guidesRes.data.data.guides);
                 setLoading(false);
+                console.log(tripRes)
             }))
             .catch((error) => {
                 console.error("Error :", error);
@@ -136,13 +137,19 @@ const TripDetail = () => {
             });
     }, [id]);
 
+    useEffect(() => {
+        if (trip?.trip_type === "private") {
+            setSelectedTab("equipment");
+        }
+    }, [trip?.trip_type]);
+
     if (loading) return <Loading />;
 
     return (
         <div className='mx-60 my-10 p-10 border-2 rounded-lg border-gray-300'>
             <h1 className='text-3xl text-[#FFC100] text-center'>{trip.mountain_name}</h1>
             <div className="flex justify-center items-center mt-10">
-                <div className="w-1/3">
+                <div className="w-1/3 flex justify-center items-center">
                     <img src={trip.mountain_photo} alt={trip.mountain_name} className='h-50 w-50 rounded-lg' />
                 </div>
                 <div className="w-2/3">
@@ -162,7 +169,7 @@ const TripDetail = () => {
                             <h4 className='text-sm text-gray-500'>{trip.traveling_time}</h4>
                         )}
                     </div>
-                    <p className="mt-5">
+                    <p className="mt-5 text-justify">
                         {trip.description}
                     </p>
                 </div>
@@ -350,7 +357,7 @@ const TripDetail = () => {
                                                     <input
                                                         type="checkbox"
                                                         id={`porter-${porter.id}`}
-                                                        className="mr-2 h-4 w-4 text-[#FFC100] focus:ring-[#FFC100] border-gray-300"
+                                                        className="mr-2 text-[#FFC100] focus:ring-[#FFC100] border-gray-300 appearance-none w-6 aspect-square shrink-0 rounded-full border border-gray-400 checked:bg-yellow-500 checked:border-yellow-500"
                                                         onChange={() => handlePorterSelection(porter.id)}
                                                         checked={selectedPorters.includes(porter.id)}
                                                     />
@@ -391,12 +398,14 @@ const TripDetail = () => {
                 <div className='mt-10 h-2 w-full bg-[#FFC100] rounded-lg' />
                 <div className="mt-10">
                     <div className="flex space-x-4 mb-4">
-                        <button
-                            className={`px-4 py-2 rounded-lg transition ${selectedTab === 'agenda' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
-                            onClick={() => setSelectedTab('agenda')}
-                        >
-                            Agenda
-                        </button>
+                        {trip.trip_type === "open" && (
+                            <button
+                                className={`px-4 py-2 rounded-lg transition ${selectedTab === 'agenda' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
+                                onClick={() => setSelectedTab('agenda')}
+                            >
+                                Agenda
+                            </button>
+                        )}
 
                         <button
                             className={`px-4 py-2 rounded-lg transition ${selectedTab === 'equipment' ? 'bg-[#FFC100] text-white' : 'bg-gray-200 hover:bg-[#e6b800] hover:text-white'}`}
@@ -415,33 +424,35 @@ const TripDetail = () => {
                     </div>
 
                     <div className="mt-10">
-                        {selectedTab === 'agenda' && (
+                        {trip.trip_type === "open" && selectedTab === 'agenda' && (
                             <div>
                                 <h4 className="font-bold text-lg">Agenda</h4>
                                 <div className="mt-4 space-y-4">
-                                    {[...trip.agenda.matchAll(/(Hari\s\d:.*?)((?=Hari\s\d:)|$)/gs)].map(([_, dayBlock], index) => {
-                                        const [title, ...rest] = dayBlock.split(',');
-                                        const activities = rest
-                                            .join(',')
-                                            .split(/,\s*(?=\d{2}:\d{2}\s–)/)
-                                            .map(item => item.trim())
-                                            .filter(Boolean);
+                                    {trip.agenda
+                                        ?.split(/(?:\s*,\s*)?(?=Hari\s\d+:)/g)
+                                        .filter(Boolean)
+                                        .map((dayBlock, index) => {
+                                            const [title, ...rest] = dayBlock.split(',');
+                                            const activities = rest
+                                                .join(',')
+                                                .split(/,\s*(?=\d{2}:\d{2}\s–)/)
+                                                .map(item => item.trim())
+                                                .filter(Boolean);
 
-                                        return (
-                                            <div key={index}>
-                                                <h5 className="font-semibold">{title.trim()}</h5>
-                                                <ul className="list-disc pl-5 mt-2">
-                                                    {activities.map((item, i) => (
-                                                        <li key={i} className="mb-1">{item}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        );
-                                    })}
+                                            return (
+                                                <div key={index}>
+                                                    <h5 className="font-semibold">{title.trim()}</h5>
+                                                    <ul className="list-disc pl-5 mt-2">
+                                                        {activities.map((item, i) => (
+                                                            <li key={i} className="mb-1">{item}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            );
+                                        })}
                                 </div>
                             </div>
                         )}
-
 
                         {selectedTab === 'equipment' && (
                             <div>
@@ -507,7 +518,7 @@ const TripDetail = () => {
                 href="https://wa.me/6285394895257"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
+                className="fixed bottom-6 right-6 z-50 flex it ems-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
             >
                 <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
                 <span className="font-medium">Chat via WhatsApp</span>
