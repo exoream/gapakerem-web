@@ -174,7 +174,7 @@ const Trip = () => {
                             <div className="relative p-4">
                                 <h2 className="text-sm font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
                                 <p className="text-sm font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
-                                <div className="mt-2 flex justify-between items-center">
+                                <div className="mt-2">
                                     <h4 className="text-xs text-gray-500">Peserta Terdaftar: {trip.total_participants}</h4>
                                     {trip.feedback?.average_rating ? (
                                         <div className="text-sm flex gap-1 mt-2 text-yellow-400">

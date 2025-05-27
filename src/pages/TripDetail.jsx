@@ -352,21 +352,29 @@ const TripDetail = () => {
                                 <div className="grid grid-cols-2 gap-4">
                                     {
                                         Array.isArray(porters) && porters.length > 0 ? (
-                                            porters.map(porter => (
-                                                <div key={porter.id} className="flex items-center">
-                                                    <input
-                                                        type="checkbox"
-                                                        id={`porter-${porter.id}`}
-                                                        className="mr-2 text-[#FFC100] focus:ring-[#FFC100] border-gray-300 appearance-none w-6 aspect-square shrink-0 rounded-full border border-gray-400 checked:bg-yellow-500 checked:border-yellow-500"
-                                                        onChange={() => handlePorterSelection(porter.id)}
-                                                        checked={selectedPorters.includes(porter.id)}
-                                                    />
+                                            <>
+                                                {
+                                                    porters.map(porter => (
+                                                        <div key={porter.id} className="flex items-center">
+                                                            <input
+                                                                type="checkbox"
+                                                                id={`porter-${porter.id}`}
+                                                                className="mr-2 text-[#FFC100] focus:ring-[#FFC100] border-gray-300 appearance-none w-6 aspect-square shrink-0 rounded-full border border-gray-400 checked:bg-yellow-500 checked:border-yellow-500"
+                                                                onChange={() => handlePorterSelection(porter.id)}
+                                                                checked={selectedPorters.includes(porter.id)}
+                                                            />
+                                                            <label htmlFor={`porter-${porter.id}`}>
+                                                                {porter.name}
+                                                            </label>
+                                                        </div>
+                                                    ))
+                                                }
 
-                                                    <label htmlFor={`porter-${porter.id}`}>
-                                                        {porter.name}
-                                                    </label>
-                                                </div>
-                                            ))
+                                                {/* Tambahan keterangan */}
+                                                <p className="col-span-2 text-sm text-gray-400 mt-2">
+                                                    * Lebih dari 3 porter akan dikenakan biaya tambahan Rp 350.000
+                                                </p>
+                                            </>
                                         ) : (
                                             <p>Tidak ada porter yang tersedia</p>
                                         )
