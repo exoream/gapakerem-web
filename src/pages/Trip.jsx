@@ -242,7 +242,7 @@ const Trip = () => {
                             <div className="relative p-4">
                                 <h2 className="text-sm font-semibold text-[#FFC100]">{trip.mountain_name}</h2>
                                 <p className="text-sm font-bold mt-2">Rp {trip.price.toLocaleString('id-ID')}</p>
-                                <div className="mt-2 flex justify-between items-center">
+                                <div className="mt-2">
                                     <h4 className="text-xs text-gray-500">Peserta Terdaftar: {trip.total_participants}</h4>
                                     {trip.feedback?.average_rating ? (
                                         <div className="text-sm flex gap-1 mt-2 text-yellow-400">
@@ -275,7 +275,7 @@ const Trip = () => {
             />
 
             <a
-                href="https://wa.me/6285394895257"
+                href="https://wa.me/6289517398959"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition duration-300"
