@@ -45,7 +45,7 @@ const Footer = () => {
 
                     <div>
                         <h1 className="text-2xl text-[#FFC100] mb-2">Kontak</h1>
-                        <p>(+62) 853 9489 5257</p>
+                        <p>+62 895-1739-8959</p>
                         <p>
                             Jl. Antang Raya No.17, Tello Baru, Kec. Panakkukang, Kota Makassar, Sulawesi Selatan 9234
                         </p>
